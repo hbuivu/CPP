@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   contacts.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 12:08:19 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/13 12:08:19 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "contacts.hpp"
 
 Contact::Contact()
+	:	p_index(-1)
 {
-	m_index = -1;
 }
 
 Contact::~Contact()
@@ -36,16 +48,13 @@ std::string	Contact::GetInput(std::string str)
 
 void	Contact::NewContact(int i)
 {
-	std::cin.ignore();
 	std::cout << "All fields must be filled." << std::endl;
-	// this->m_valid = true;
-	this->m_firstName = this->GetInput("First name: ");
-	this->m_lastName = this->GetInput("Last name: ");
-	this->m_nickname = this->GetInput("Nickname: ");
-	this->m_phoneNumber = this->GetInput("Phone number: ");
-	this->m_secret = this->GetInput("Secret: ");
-	this->m_index = i;
-	// if (this->m_valid == true)
+	_firstName = this->GetInput("First name: ");
+	_lastName = this->GetInput("Last name: ");
+	_nickname = this->GetInput("Nickname: ");
+	_phoneNumber = this->GetInput("Phone number: ");
+	_secret = this->GetInput("Secret: ");
+	p_index = i;
 	std::cout << "Contact successfully added!" << std::endl;
 }
 
@@ -57,23 +66,28 @@ void	Contact::printContact(std::string m_str) const
 		std::cout << "|" << std::setw(10) << m_str; 
 }
 
-//index, first name, last name, nickname, must be 10 characters long, trunc with .
 void	Contact::ViewContact() const
 {
-	std::cout << "|" << std::setw(10) << this->m_index; 
-	printContact(this->m_firstName);
-	printContact(this->m_lastName);
-	printContact(this->m_nickname);
+	std::cout << "|" << std::setw(10) << p_index; 
+	printContact(_firstName);
+	printContact(_lastName);
+	printContact(_nickname);
 	std::cout << "|\n";
 	
 }
 
 void	Contact::DisplayContact() const
 {
-	std::cout << "First name: " << this->m_firstName << "\n";
-	std::cout << "Last name: " << this->m_lastName << "\n";
-	std::cout << "Nickname: " << this->m_nickname << "\n";
-	std::cout << "Phone number: " << this->m_phoneNumber << "\n";
-	std::cout << "Secret: " << this->m_secret << std::endl;
+	std::cout << "First name:   " << _firstName << "\n";
+	std::cout << "Last name:    " << _lastName << "\n";
+	std::cout << "Nickname:     " << _nickname << "\n";
+	std::cout << "Phone number: " << _phoneNumber << "\n";
+	std::cout << "Secret:       " << _secret << std::endl;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
+
+/* NOTES:
+setw -> sets the width parameter of the stream out or in to exactly n.
+string substr (size_t pos = 0, size_t len = npos) const;
+*/
 

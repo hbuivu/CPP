@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   contacts.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 12:08:29 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/13 12:08:29 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CONTACTS_HPP
 # define CONTACTS_HPP
 
@@ -7,19 +19,17 @@
 # include <cstdlib>
 # include <iomanip>
 
-
 class Contact
 {
 private:
-	std::string	m_firstName;
-	std::string m_lastName;
-	std::string	m_nickname;
-	std::string	m_phoneNumber;
-	std::string	m_secret;
-	// bool		m_valid;
+	std::string	_firstName;
+	std::string _lastName;
+	std::string	_nickname;
+	std::string	_phoneNumber;
+	std::string	_secret;
 	void		printContact(std::string m_str) const;
 public:
-	int			m_index;
+	int			p_index;
 	Contact();
 	~Contact();
 	std::string	GetInput(std::string str);
