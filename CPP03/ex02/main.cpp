@@ -17,7 +17,6 @@ int main()
 	ScavTrap a = ScavTrap("Tracy");
 	ScavTrap b = a;
 	ScavTrap c = ScavTrap("Ben");
-	ScavTrap d = ScavTrap(c);
 	a.attack("Rob");
 	a.guardGate();
 	b.beRepaired(29);

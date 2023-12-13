@@ -3,6 +3,7 @@
 /* NOTE: consts and ref requires initialization, cannot be assigned in the body */
 
 ScavTrap::ScavTrap()
+	:	ClapTrap();
 {
 	_hitPts = 100; //_hitPts is already initialized, now we are assigning different values
 	_energyPts = 50;
@@ -17,6 +18,15 @@ ScavTrap::ScavTrap(std::string name)
 	_energyPts = 50;
 	_attackDmg = 20;
 	std::cout << "ScavTrap constructor called for " << _name << std::endl;
+}
+
+ScavTrap::ScavTrap(const ScavTrap& cpy)
+{
+	this->_name = cpy._name;
+	this->_hitPts = cpy._hitPts;
+	this->_energyPts = cpy._energyPts;
+	this->_attackDmg = cpy._attackDmg;
+	std::cout << "ScavTrap copy constructor called for " << _name << std::endl;
 }
 
 ScavTrap::~ScavTrap()
