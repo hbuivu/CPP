@@ -1,44 +1,128 @@
 #include "Account.hpp"
-#include <chrono>
+#include <iostream>
 #include <ctime>
 
+int Account::_nbAccounts = 0;
+int Account::_totalAmount= 0;
+int Account::_totalNbDeposits= 0;
+int Account::_totalNbWithdrawals = 0;
+
 Account::Account(int initial_deposit)
-	:	_amount(initial_deposit)
+	:	_amount(initial_deposit),
+		_nbDeposits(0),
+		_nbWithdrawals(0)
 {
-	std::cout << 
+	_nbAccounts++;
+	_accountIndex = _nbAccounts - 1;
+	_totalAmount += initial_deposit;
+	_displayTimestamp();
+	std::cout	<< "index:" << _accountIndex << ";" 
+				<< "amount:" << _amount << ";"
+				<< "created" << std::endl;
 }
 
 Account::~Account()
 {
+	_displayTimestamp();
+	std::cout	<< "index:" << _accountIndex << ";"
+				<< "amount:" << _amount << ";"
+				<< "closed" <<std::endl;
 }
 
-static int	Account::getNbAccounts()
+int	Account::getNbAccounts()
 {
 	return (_nbAccounts);
 }
 
-static int	Account::getTotalAmount()
+int	Account::getTotalAmount()
 {
 	return (_totalAmount);
 }
 
-static int	Account:: getNbDeposits()
+int	Account:: getNbDeposits()
 {
-	return (_nbDeposits);
+	return (_totalNbDeposits);
 }
 
-static int	Account::getNbWithdrawals()
+int	Account::getNbWithdrawals()
 {
-	return (_nbWithdrawals);
-}
-static void	Account::displayAccountsInfos()
-{
-	//index, amount, deposits, withdrawls
+	return (_totalNbWithdrawals);
 }
 
-static void	_displayTimestamp()
+void	Account::displayAccountsInfos()
 {
-	time_t		t = time(nullptr);
+	_displayTimestamp();
+	std::cout	<< "accounts:" << _nbAccounts << ";"
+				<< "total:" << _totalAmount << ";"
+				<< "deposits:" << _totalNbDeposits << ";"
+				<< "withdrawals:" << _totalNbWithdrawals << std::endl;
+}
+
+void	Account::makeDeposit(int deposit)
+{
+	if (deposit == 0)
+	{
+		_displayTimestamp();
+		std::cout	<< "index:" << _accountIndex << ";"
+					<< "p_amount:" << _amount << ";"
+					<< "deposit:none" << std::endl;
+		return ;
+	}
+	int	p_amount = _amount;
+	_amount += deposit;
+	_totalAmount += deposit;
+	_nbDeposits++;
+	_totalNbDeposits++;
+	_displayTimestamp();
+	std::cout	<< "index:" << _accountIndex << ";"
+				<< "p_amount:" << p_amount << ";"
+				<< "deposit:" << deposit << ";"
+				<< "amount:" << _amount << ";"
+				<< "nb_deposits:" << _nbDeposits << std::endl;
+}
+
+bool	Account:: makeWithdrawal(int withdrawal)
+{
+	if (checkAmount() < withdrawal)
+	{
+		_displayTimestamp();
+		std::cout	<< "index:" << _accountIndex << ";"
+					<< "p_amount:" << _amount << ";"
+					<< "withdrawal:refused" << std::endl;
+		return (false);
+	}
+	int	p_amount = _amount;
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	_nbWithdrawals++;
+	_totalNbWithdrawals++;
+	_displayTimestamp();
+	std::cout	<< "index:" << _accountIndex << ";"
+				<< "p_amount:" << p_amount << ";"
+				<< "withdrawal:" << withdrawal << ";"
+				<< "amount:" << _amount << ";"
+				<< "nb_withdrawals:" << _nbWithdrawals << std::endl;
+	return (true);
+
+}
+
+int	Account::checkAmount() const
+{
+	return (_amount);
+}
+
+void	Account::displayStatus() const
+{
+	_displayTimestamp();
+	std::cout	<< "index:" << _accountIndex << ";"
+				<< "amount:" << _amount << ";"
+				<< "deposits:" << _nbDeposits << ";"
+				<< "withdrawals:" << _nbWithdrawals << std::endl;
+}
+
+void	Account::_displayTimestamp()
+{
+	time_t		t = time(0);
 	struct tm	*tm = localtime(&t);
 
 	int day = tm ->tm_mday;
@@ -50,3 +134,7 @@ static void	_displayTimestamp()
 
 	std::cout << "[" << year << month << day << "_" << hour << minutes << seconds << "] ";
 }
+
+/* NOTES:
+static functions can only access STATIC VARIABLES in a class
+however, it can return a non static variable if that variable is passed into the function or returned like (return 0)*/
