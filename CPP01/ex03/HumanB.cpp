@@ -1,8 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/14 15:37:34 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/14 15:37:34 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "HumanB.hpp"
 
-HumanB::HumanB(std::string name) : m_name(name)
+HumanB::HumanB()
 {
-	this->m_weapon = NULL;
+}
+
+HumanB::HumanB(std::string name)
+	: 	_name(name),
+		_weapon(NULL)
+{
 }
 
 HumanB::~HumanB()
@@ -11,12 +28,12 @@ HumanB::~HumanB()
 
 void	HumanB::setWeapon(Weapon& weapon)
 {
-	this->m_weapon = &weapon;
+	_weapon = &weapon;
 }
 void	HumanB::attack() const
 {
-	if (!this->m_weapon || this->m_weapon->getType().empty())
-		std::cout << this->m_name << " does not have a weapon." << std::endl;
+	if (!_weapon || _weapon->getType().empty())
+		std::cout << _name << " does not have a weapon." << std::endl;
 	else
-		std::cout << this->m_name << " attacks with their " << this->m_weapon->getType() << std::endl;
+		std::cout << _name << " attacks with their " << _weapon->getType() << std::endl;
 }

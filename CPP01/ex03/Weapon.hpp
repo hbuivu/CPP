@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Weapon.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/14 15:37:13 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/14 15:37:13 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef WEAPON_HPP
 # define WEAPON_HPP
 
@@ -7,7 +19,8 @@
 class Weapon
 {
 private:
-	std::string m_type;
+	std::string	_type;
+	Weapon();
 public:
 	Weapon(std::string type);
 	~Weapon();

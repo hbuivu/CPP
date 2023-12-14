@@ -1,16 +1,28 @@
-NAME = HiThisIsBrain
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/14 15:31:14 by hbui-vu           #+#    #+#              #
+#    Updated: 2023/12/14 15:31:14 by hbui-vu          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = Brain
 
 SRCS = main.cpp
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 
-CC = c++
+CXX = c++
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:.cpp=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
+	$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
 
 all: $(NAME)
 

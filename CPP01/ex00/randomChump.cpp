@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   randomChump.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/14 14:39:50 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/14 14:39:50 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Zombie.hpp"
 
-//It creates a zombie, name it, and the zombie announces itself
 void	randomChump(std::string name)
 {
-	Zombie	*zombie = newZombie(name);
+	Zombie z = Zombie(name);
 
-	zombie->announce();
-	delete(zombie);
+	z.announce();
 }
