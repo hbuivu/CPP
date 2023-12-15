@@ -1,1 +1,32 @@
-Using a pointer vs reference
+Pointer vs reference
+Reference
+-can pass the actual object and avoid passing by copy
+-alias cannot be changed to anything else
+-must refer to an object that is mutable
+
+Pointer
+-dynamic memory allocation
+-use when you need to represent the absence of an object(NULL or nullptr)
+-can be reassigned
+-polymorphism - an entity can have multiple forms
+	-overloading a function
+	-a pointer to a derived class is type-compatible with a pointer to its base class
+	ex: class Polygon -> base class
+		class Triangle -> child class
+		class Rectangle -> child class
+
+		Polygon *p1 = &rect;
+		Polygon *p2 = &triang; 
+
+constructor member initializer list (not initializer list) vs in body
+-members in list must always be initialized in the order they are defined in the class
+-order:
+	1. member initializer list
+	2. if no list, default member initializer (set when variable is defined in class)
+	2. default (dependent on type of variable)
+-Generally, the body is used to execute an action like open a file, print something, allocate memory, etc.
+-some members require member list init ONLY, such as const and ref
+-list comes before body
+-better to initialize in list if possible
+
+-if there are any CONST or REF member variables, they must be initalized (see HumanA.hpp)

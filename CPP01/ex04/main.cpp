@@ -14,16 +14,31 @@
 
 int main(int argc, char **argv)
 {
+	//Check for correct number of arguments
 	if (argc != 4)
 	{
 		std::cout << "Usage: ./SedIsForLosers <filename> <stringToReplace> <stringReplacement>" << std::endl;
 		return (1);
 	}
+	//Check if stringtoreplace is empty
 	if (std::string(argv[2]).empty())
 	{
 		std::cout << "WARNING: stringToReplace cannot be empty" << std::endl;
 		return (1);
 	}
-	Sed s = Sed(argv[1], argv[2], argv[3]);
-	s.replace();
+	//check if the file exists or is a directory
+	struct stat	s;
+	if (stat(argv[1], &s) != 0)
+	{
+		std::cout << "File does not exist" << std::endl;
+		return (1);
+	}
+	if (s.st_mode & S_IFDIR)
+	{
+		std::cout << "This file is a directory" << std::endl;
+		return (1);
+	}
+	//run Sed
+	Sed sed = Sed(argv[1], argv[2], argv[3]);
+	sed.replace();
 }

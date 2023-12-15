@@ -38,4 +38,6 @@ public:
 	void		DisplayContact() const;
 };
 
+bool	OnlyWhiteSpace(std::string str);
+
 #endif

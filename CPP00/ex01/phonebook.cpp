@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:08:44 by hbui-vu           #+#    #+#             */
-/*   Updated: 2023/12/13 13:32:53 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2023/12/15 17:35:08 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	PhoneBook::Intro() const
 {
 	std::string	name = "";
 
-	while (!std::cin.good() || name.empty())
+	while (!std::cin.good() || name.empty() || OnlyWhiteSpace(name))
 	{
 		std::cout << "Please enter your first name: " << std::flush;
 		std::getline(std::cin, name);
@@ -72,7 +72,7 @@ void	PhoneBook::Intro() const
 			std::cin.clear(); //clear error state of stream
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignores 1. up to n number (max streamsize) or 2. until the delimiter (\n). basically restart cin
 		}
-		else if (name.empty())
+		else if (name.empty() || OnlyWhiteSpace(name))
 			std::cout << "The field is empty.\n";
 	}
 	PhoneBook::_PrintName(name);
@@ -94,24 +94,25 @@ void	PhoneBook::SearchContacts() const
 
 	if (!PhoneBook::_PrintContacts())
 		return ;
-	std::cout << "Please enter an index number to see contact details: " << std::flush;
-	std::cin >> index;
-	if (std::cin.eof())
+	while (index < 0 || index >= 8 || _contact[index].p_index < 0)
 	{
-		std::cout << "\nClosing your PhoneBook...\n";
-		std::exit(1);
+		std::cout << "Please enter an index number to see contact details: " << std::flush;
+		std::cin >> index;
+		if (std::cin.eof())
+		{
+			std::cout << "\nClosing your PhoneBook...\n";
+			std::exit(1);
+		}
+		else if (!std::cin.good())
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Input invalid." << std::endl;
+		}
+		else if (index < 0 || index >= 8 || _contact[index].p_index < 0)
+			std::cout << "Index invalid" << std::endl;
 	}
-	else if (index < 0 || index >= 8 ||
-			!std::cin.good() || _contact[index].p_index < 0)
-	{
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		std::cout << "Input invalid." << std::endl;
-	}
-	else
-	{
-		_contact[index].DisplayContact();
-	}
+	_contact[index].DisplayContact();
 }
 
 /* NOTES:

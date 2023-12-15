@@ -16,7 +16,7 @@ void	Harl::debug(void)
 void	Harl::info(void)
 {
 	std::cout << "<INFO>" << std::endl;
-
+}
 void	Harl::warning(void)
 {
 	std::cout << "<WARNING>" << std::endl;

@@ -12,6 +12,17 @@
 
 #include "contacts.hpp"
 
+//returns true if only white spaces, false if there 
+bool	OnlyWhiteSpace(std::string str)
+{
+	for (size_t i = 0; i < str.length(); i++)
+	{
+		if (!std::isspace(str[i]))
+			return (false);
+	}
+	return (true);
+}
+
 Contact::Contact()
 	:	p_index(-1)
 {
@@ -25,7 +36,7 @@ std::string	Contact::GetInput(std::string str)
 {
 	std::string	input = "";
 
-	while (!std::cin.good() || input.empty())
+	while (!std::cin.good() || input.empty() || OnlyWhiteSpace(input))
 	{
 		std::cout << str << std::flush;
 		std::getline(std::cin, input);
@@ -40,7 +51,7 @@ std::string	Contact::GetInput(std::string str)
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			std::cout << "Input invalid. Please enter a valid option." << std::endl;
 		}
-		else if (input.empty())
+		else if (input.empty() || OnlyWhiteSpace(input))
 			std::cout << "The field is empty. All fields must be filled." << std::endl;
 	}
 	return (input);

@@ -12,10 +12,6 @@
 
 #include "HumanA.hpp"
 
-// HumanA::HumanA() why is this an error
-// {
-// }
-
 HumanA::HumanA(std::string name, Weapon& weapon)
 	:	_name(name), 
 		_weapon(weapon)

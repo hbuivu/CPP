@@ -23,7 +23,6 @@ private:
 	std::string	_name;
 	Weapon&		_weapon;
 public:
-	// HumanA(); why is this an error
 	HumanA(std::string name, Weapon& weapon);
 	~HumanA();
 

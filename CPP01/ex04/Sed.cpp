@@ -12,6 +12,10 @@
 
 #include "Sed.hpp"
 
+Sed::Sed()
+{
+}
+
 Sed::Sed(std::string infile, std::string find, std::string replace) 
 	:	_infile(infile),
 		_find(find),
@@ -26,42 +30,29 @@ Sed::~Sed()
 
 void	Sed::replace()
 {
-	//check if file is a directory
-	// std::filesystem::is_directory()
-	struct stat	s;
-	if (stat(_infile.c_str(), &s) != 0)
-	{
-		std::cout << "File does not exist" << std::endl;
-		return ;
-	}
-	if (s.st_mode & S_IFDIR)
-	{
-		std::cout << "This file is a directory" << std::endl;
-		return ;
-	}
 	//open file for reading
 	std::ifstream	infile(_infile); //ifstream opens up a file for input
 	if (infile.is_open())
 	{
 		//if infile is valid open outfile to be written into
 		std::ofstream	outfile(_outfile); //ofstream opens up a file for output
-		if (outfile.is_open())
+		if (outfile.is_open()) //check that outfile was opened properly
 		{
-			//if s1 is the same as s2, copy files and exit
+			//if s1 is the same as s2, or infile exists but is empty, copy files and exit
 			if (_find.compare(_replace) == 0 || 
 				infile.peek() == std::ifstream::traits_type::eof())
 			{
-				outfile << infile.rdbuf();
+				outfile << infile.rdbuf(); // send contents of infile to outfile
 				outfile.close();
 				infile.close();
 				return ;
 			}
-			//stream contents of intfile into file - another method would be to getline the whole file into a string
-			std::ostringstream contents;
+			//stream contents of infile into file - another method would be to getline the whole file into a string
+			std::ostringstream contents; //ostringstream is an output stream that you can write to
 			contents << infile.rdbuf();
-			std::string stringContents = contents.str();
+			std::string stringContents = contents.str(); //convert output stream to a string
 			size_t	pos = stringContents.find(_find);
-			while (pos != std::string::npos)
+			while (pos != std::string::npos) //std::string::npos = last index of the string
 			{
 				stringContents.erase(pos, _find.length());
 				stringContents.insert(pos, _replace);
@@ -82,5 +73,12 @@ void	Sed::replace()
 /* NOTE:
 Overloading means that a function can take several different types of parameters
 An operator can perform different functions depending on the context
-member initializer list*/
+member initializer list*
+check if file is a directory -> std::filesystem::is_directory() - C++11
+
+istream& getline(istream& is, string& str, char delim)
+is - input stream
+str - str to hold contents
+delimiter - where should the function stop reading
+*/
 
