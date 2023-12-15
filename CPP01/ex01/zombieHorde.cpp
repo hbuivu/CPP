@@ -21,6 +21,8 @@ Zombie*	zombieHorde(int N, std::string name)
 }
 
 /* NOTES:
-when using a copy constructor, a temp obj is created. temp obj is used to create new obj. temp obj is destroyed
+when using the default copy constructor, a temp obj is created. temp obj is used to create new obj. temp obj is destroyed
+1. Zombie(name) creates a temp Zombie object
+2. assignmnet operator (=) copies the temp Zombie object into horde array
 when dynamically allocating an array, c++ does not use of constructor with parameters
 */
