@@ -27,4 +27,6 @@ public:
 	void	announce(void) const;
 };
 
+Zombie*	zombieHorde(int N, std::string name);
+
 #endif

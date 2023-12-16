@@ -1,0 +1,158 @@
+NOTES:
+
+Different uses of CONST keyword:
+1. const variables - cannot be changed in the code.
+	- must be initialized at time of declaration
+	ex: const int
+2. const pointer - value pointed to by ptr cannot be changed in code
+	-even if data type itself is not const, a pointer to const can still point to it
+	-however, you just cannot change the value inside the ptr
+	ex: const int *
+3. pointer to const - ptr cannot be reassigned BUT value that ptr points to can be changed
+	ex: int * const ptr
+4. const member function - function cannot modify member values
+	ex: void fun() const {}
+5. const ref parameters - function cannot modify value of that parameter
+	ex: void fun(const int& a)
+6. const member variables - cannot be modified after initialization
+	-does not need to be initialized at declaration in class but must be init in constructor
+	-must be init in member initializer list
+	same as const variables
+7. const objects - member functions of obj cannot modify object's state
+	ex: const MyClass obj
+8. const member functions for pointers/ref - apply const to indicate that the object itself won't be modified when using ptrs and ref to obj
+	ex: const MyClass* objPtr
+		const MyClass& objRef = fun();
+
+Different uses of STATIC keyword
+1. Static variables in functions - initialized only once
+	-retains its value in between function calls
+	-default initialization is 0 for primitive datatypes, NOT user defined datatypes
+2. Static var in global scope - only accessible within the source file where it is declared
+3. static functions - if declared in a class, it can be called without requiring an instance of the class
+	-it can only access static variables and functions in the class
+	-It can be called using the object and direct member access . operator (class.func())
+	-however, more common to call it using scope resolution operator (X::f())
+	-does not have any this keyword
+4. static data member in class - this single data member is shared among all instances of the class
+	-they are not initialized using constructor because they are not dependent on object initialization
+	-instead they must be explicitly initialized outside the class!
+		ex: class X {static int i; /* other class stuff here */}
+			int X::i = 1; <- note static keyword is only declared once in the class
+	-user may not redefine the static data member but arithmetic operations can be performed on member
+5. static class objects - have scope until end of program
+	-initialized using constructors
+6. static_assert - checks a condition at compile time and produces error if condition is false
+	ex: static_assert(sizeof(int) == 4, "int must be 4 bytes")
+		parameters: condition, error msg
+
+
+Derived classes are instantiated base by base -> 
+Base class constructed first -> child class 1 constructed -> child class 2 that inherited from child class 1 constructed ->etc
+Child class can call any base class constructor -> useful for instantiation of values
+	-also this means we can keep members private
+Destructors are called in reverse order of construction (generally)
+Derived classes cannot access base class's private members directly
+Protected members can be accessed other class members, friends, and derived classes
+-3 types of member access specifiers
+	-public
+	-Protected
+	-private
+-3 types of inheritance
+	-public (most commonly used)
+	-Protected
+	-private (default)
+Public inheritance
+	public members - public
+	protected members - protected
+	private members - inaccessible to child class
+Protected inheritance - least commonly used
+	public members - protected
+	protected members - protected
+	private members - inaccessible
+Private inheritance
+	public members - private
+	protected members - private
+	private members - inaccessible
+	This means that in the parent class, public members are treated as public
+	In the child class, public members are treated as private members
+	The child class can still access public and protected members of the parent class
+	Useful when derived class has no obvious relationship to base class, but uses base class for internal implementatoin
+
+Calling a base class function
+1.Compiler first looks for function inside class
+2. If compiler cannot find function, it looks for the most immediate function in parent classes
+	-it looks for the most derived version of that function
+-the function, if redefined, can also have its access specifier defined
+	ex: parent class function is private, child class function is public
+
+Adding to a base class function functionality
+	call base class function before rest of function implementation!
+	ex: void fun()
+		{
+			Base::fun(); -> we have to call Base::
+			//fun() -> calling only fun() will make compiler think we are calling fun in the current class
+			/* code here */
+		}
+	For friend functions, use static_cast
+	ex: void fun()
+		{
+			static_cast<const Base&>fun();
+			/* code here */
+		}
+
+Some operators require implementation as a friend function (or outside function not in a class)
+	-usualy those that involve converting one or both operands to a different typedef
+	ex: << >> 
+
+Changing an inherited member's access level
+-use "using" declaration
+	ex: Parent function is protected
+		Child function -
+		Public:
+			using Parent::fun; <- no parenthesis here
+		
+		Can now use Child::fun in main
+		CanNOT use Parent::fun in main
+-You can only change access level of accessible members to the child. Therefore, private members cannot be changed
+-changing access value of a function will change it for ALL overloaded function of the same name from the base class
+
+Deleting functions in derived class
+void fun() = delete
+access function through Base class where it is still accessible:
+	static_cast<Base&>(derived).getValue(); <- use Base& to avoid making a copy of the Base portion of derived
+
+Multiple inheritance
+child class inherits from two parent classes
+ex: class Teacher: Public Person, Public Employee
+-Can cause problems if there are too many inheritances, also Diamond problem, so best not to use it unless necessary
+
+-A mixin is a small class that can be inherited to add properties to a class
+	-intended to mix into other classes and no instantiated on its own
+	-with mixins, best practice is to call mixin Class name and function
+		ex: Box::SetText();
+			Tool::SetText();
+	-often templatized
+	-a derived class can inherit from a mixin class using derived class as template type parameter (whatever that means)
+
+Virtual functions
+Parent type reference and pointer can be used on Child class object
+However, these variables can only access the Parent portion of the class, not the Child portion
+ex: both class Parent and Child contains void fun() which prints out "Parent" and "Child" respectively
+	Child c;
+	Parent& p(c);
+	p.fun() -> prints out "Parent"
+
+A virtual function is a member function that resolves to the most-derived version of the function
+for the actual type of the object beig referenced or pointed to
+	-considered match if
+		1. has same signature (name, parameter types, and const or not)
+		2. return type is same as parent version of function
+	-called and overrride
+
+
+
+
+
+
+

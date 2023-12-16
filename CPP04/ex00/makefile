@@ -1,6 +1,6 @@
 NAME = Polymorphism
 
-SRCS = main.cpp
+SRCS = main.cpp Polymorphism.cpp
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
