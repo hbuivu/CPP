@@ -18,10 +18,15 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 CXX = c++
 
+DEPS = Zombie.hpp
+
 OBJS = $(SRCS:.cpp=.o)
 
 $(NAME): $(OBJS)
 	$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
+
+%.o: %.cpp $(DEPS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 all: $(NAME)
 

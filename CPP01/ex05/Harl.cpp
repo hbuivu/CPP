@@ -10,21 +10,21 @@ Harl::~Harl()
 
 void	Harl::debug(void)
 {
-	std::cout << "<DEBUG>" << std::endl;
+	std::cout << "<DEBUG> We're going to debug something now" << std::endl;
 }
 
 void	Harl::info(void)
 {
-	std::cout << "<INFO>" << std::endl;
+	std::cout << "<INFO> Please give me some info" << std::endl;
 }
 void	Harl::warning(void)
 {
-	std::cout << "<WARNING>" << std::endl;
+	std::cout << "<WARNING> A bunch of warnings" << std::endl;
 }
 
 void	Harl::error(void)
 {
-	std::cout << "<ERROR>" << std::endl;
+	std::cout << "<ERROR> There's an error" << std::endl;
 }
 
 void	Harl::complain(std::string level)

@@ -1,8 +1,8 @@
-NAME = ClapTrap
+NAME = harlFilter
 
-SRCS = main.cpp ClapTrap.cpp
+SRCS = main.cpp HarlFilter.cpp
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -Wimplicit-fallthrough=0 -std=c++98 
 
 CXX = c++
 
