@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:08:44 by hbui-vu           #+#    #+#             */
-/*   Updated: 2023/12/15 17:35:08 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2023/12/17 14:11:08 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	PhoneBook::SearchContacts() const
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			std::cout << "Input invalid." << std::endl;
+			index = -1;
 		}
 		else if (index < 0 || index >= 8 || _contact[index].p_index < 0)
 			std::cout << "Index invalid" << std::endl;

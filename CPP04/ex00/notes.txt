@@ -24,6 +24,17 @@ Different uses of CONST keyword:
 	ex: const MyClass* objPtr
 		const MyClass& objRef = fun();
 
+TOP LEVEL CONST
+-const qualifier that is applied to object itself:
+	ex: const int x;
+		int* const ptr; -> const is applied to the pointer
+LOW LEVEL CONST
+-const is applied to the object being referenced or pointed to
+	ex: const int& ref
+		const int* ptr; -> const is applied to the object ptr points to
+-a ref to a const value is always low level
+-a pointer can have top or low level or both
+	ex: both -> cont int* const ptr;
 Different uses of STATIC keyword
 1. Static variables in functions - initialized only once
 	-retains its value in between function calls
@@ -148,7 +159,69 @@ for the actual type of the object beig referenced or pointed to
 	-considered match if
 		1. has same signature (name, parameter types, and const or not)
 		2. return type is same as parent version of function
-	-called and overrride
+	-called an override 
+	ex: 
+		class Base { virtual void fun(); } -> prints Base
+		class Derived { virtual void fun(); } -> prints Derived
+		if we set Base& B(derivedObject) and call B.fun() -> prints Derived
+-Some compilers require virtual destructors too
+	virtual ~Base() = default
+-only functions within classes between the object and the parent will be called
+	ex: classes A, B, C, D 
+		setting A& rBase(C) - > compiler will only look at classes A->c
+-virtual functions ony work when function is called through a pointer or reference to a class object type
+	-calling function through object directly will always invoke the member functino to that object
+	ex: A a(c);
+		a.fun() -> you will get A::fun()
+
+		A& a(c);
+		a.fun() -> you will get C::fun()
+
+Polymorphism - the ability of an entity to have multiple forms
+	ex: overloading a function
+		int add(int, int);
+		double add (double, double);
+
+Signature of a function = parameter list
+-for virtual functions, the signature MUST EXACTLY match signature of base class virtual function
+-return type must also match
+-if a function is marked virtual, all matching overrides in derived classes are also implicitly considered virtual even if not marked
+	-only base->derived, but does not work derived->base
+-Never call virtual functions in constructors or destructors
+	in constructor, base class is constructed before derived class -> compiler can't call derived function bc derived class isn't constructed yet
+	in destructor, derived class is destroyed before constructor -> function wil always resolve to the base class
+-virtual functions take longer to call than normal function. also pointers need to be allocated?
+	-not as efficient as normal functions
+
+AUTO keyword - used for type deduction(inference) - allows compiler to deduce the type of object from object's initializer
+	ex: auto d{ 5.0 } -> type double
+	-if type is const, const will be dropped
+		ex: const int x {5};
+			auto y {x}; <- type int, const is dropped
+		adding const to auto will reapply const back to the variable
+	-if type is std::string -> will be converted to char *
+		-use s to denote string (or sv for stringview)
+		ex:
+			auto s1 {"goo"s};
+	-references also get dropped
+		-also reapply ref -> auto& ref (something)
+	-auto only drops top-level const (const applied to the object itself)
+		-low level consts are not dropped
+	-const ref
+		ref is dropped. if const then becomes top level it is also dropped
+		ex: const std::string&
+	-does not drop pointers so will return type pointer if a pointer is passed into auto
+		-auto * - compilation is different. type deduced does not include pointer. pointer is reapplied after
+			-doing this means that the auto* MUST resolve to pointer initializer -> error if a nonpointer is passed to auto*
+		-const pointers
+			-auto const or const auto mean the same thing -> it will give you a const version of deduced type
+			-with auto* the order matters
+				const auto* -> make deduced pointer type a pointer to const
+				auto* const -> make deduced pointer a const pointer
+
+
+
+
 
 
 
