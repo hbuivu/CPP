@@ -166,6 +166,10 @@ for the actual type of the object beig referenced or pointed to
 		if we set Base& B(derivedObject) and call B.fun() -> prints Derived
 -Some compilers require virtual destructors too
 	virtual ~Base() = default
+	-Why make destructors virtual?
+		-Most useful when we have an instance of a child through pointer to parent
+			ex: BaseClass* B = new DerivedClass();
+		-When destroying such class, delete will terminate BASE CLASS leaving the child portion of the class dangling
 -only functions within classes between the object and the parent will be called
 	ex: classes A, B, C, D 
 		setting A& rBase(C) - > compiler will only look at classes A->c

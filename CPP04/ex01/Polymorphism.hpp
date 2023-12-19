@@ -4,6 +4,17 @@
 # include <iostream>
 # include <string>
 
+class Brain
+{
+private:
+	std::string	ideas[100];
+public:
+	Brain();
+	~Brain();
+	Brain(const Brain& cpy);
+	Brain&	operator=(const Brain& og);
+};
+
 class Animal
 {
 protected:
@@ -21,6 +32,8 @@ public:
 
 class Dog:	public Animal
 {
+private:
+	Brain	*_brain;
 public:
 	Dog();
 	~Dog();
@@ -32,6 +45,8 @@ public:
 
 class Cat:	public Animal
 {
+private:
+	Brain	*_brain;
 public:
 	Cat();
 	~Cat();
