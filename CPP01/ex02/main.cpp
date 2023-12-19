@@ -28,9 +28,5 @@ int main()
 }
 
 /* NOTES:
-a ref is an alias for an existing object - ex: int x = 5, int& ref = x;
-refs must be bound to a modifiable object (so no const var, etc)
-refs cannot be changed to refer to another object
-refs are not objects
-a dangling ref is when the object the ref is referring to is destroyed before the ref. undef behavior
+
 */

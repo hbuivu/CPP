@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	//Check for correct number of arguments
 	if (argc != 4)
 	{
-		std::cout << "Usage: ./SedIsForLosers <filename> <stringToReplace> <stringReplacement>" << std::endl;
+		std::cout << "Usage: ./Sed <filename> <stringToReplace> <stringReplacement>" << std::endl;
 		return (1);
 	}
 	//Check if stringtoreplace is empty
@@ -42,3 +42,14 @@ int main(int argc, char **argv)
 	Sed sed = Sed(argv[1], argv[2], argv[3]);
 	sed.replace();
 }
+
+/* TESTS:
+nonexistent file
+empty file
+directory
+change permissions file
+replace "a" with "a"
+replace "a" with "aba"
+replace "" with "a"
+replace "a" with ""
+*/

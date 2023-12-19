@@ -24,5 +24,5 @@ int main()
 	//Heap Zombie
 	Zombie *z2 = newZombie("B");
 	z2->announce();
-	delete(z2);
+	delete z2;
 }

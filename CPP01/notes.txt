@@ -1,0 +1,98 @@
+ex00
+new returns a pointer - it allocates memory and calls the constructor of the object
+use delete to free - it will call the destructor
+if allocating with square brackets, delete with square brackets
+there is also placement new - look that up later
+
+ex01
+when using the default copy constructor, a temp obj is created. temp obj is used to create new obj. temp obj is destroyed
+1. Zombie(name) creates a temp Zombie object
+2. assignmnet operator (=) copies the temp Zombie object into horde array
+when dynamically allocating an array, c++ does not use of constructor with parameters
+
+Instead of creating multiple temp copies, we can use PLACEMENT NEW
+Normal new allocates memory and constructs an object in that memory
+Placement new - pass pre-allocated memory and construct an object in that passed memory
+	ex: new (&horde[i]) Zombie(name)
+		&horde[i] - memory address
+		Zombie(name) - call constructor
+Technically when calling placement new, we also need to call the destructor for each object constructed
+However, at least in the laptop linux, this seems to be unnecessary
+
+ex02
+a ref is an alias for an existing object - ex: int x = 5, int& ref = x;
+refs must be bound to a modifiable object (so no const var, etc)
+refs cannot be changed to refer to another object
+refs are not objects
+a dangling ref is when the object the ref is referring to is destroyed before the ref. undef behavior
+
+ex03
+list initialization is true initialization
+when setting things inside of constructor body, you are setting the variable not initializing it
+we are including a ref to weapon in constructor, because the object must have been precreated
+Otherwise, HumanA constructor tries to call default constructor of weapon which does not exist
+ALSO, ORDER OF INITIALIZATION IN CONSTRUCTORS MATTER
+if _name comes first, it also must be initialized first in constructor
+Pointer vs reference
+Reference
+-can pass the actual object and avoid passing by copy
+-alias cannot be changed to anything else
+-must refer to an object that is mutable
+If a function is returning a ref, you can just return the object, as the ref and obj are the same
+a getter gets private members for public use
+a setter allows users to set private members
+Always include semicolon after class!!!!
+look up when const comes before and after a type
+& comes at the end of type if its a ref
+
+Pointer
+-dynamic memory allocation
+-use when you need to represent the absence of an object(NULL or nullptr)
+-can be reassigned
+-polymorphism - an entity can have multiple forms
+	-overloading a function
+	-a pointer to a derived class is type-compatible with a pointer to its base class
+	ex: class Polygon -> base class
+		class Triangle -> child class
+		class Rectangle -> child class
+
+		Polygon *p1 = &rect;
+		Polygon *p2 = &triang; 
+
+constructor member initializer list (not initializer list) vs in body
+-members in list must always be initialized in the order they are defined in the class
+-order:
+	1. member initializer list
+	2. if no list, default member initializer (set when variable is defined in class)
+	2. default (dependent on type of variable)
+-Generally, the body is used to execute an action like open a file, print something, allocate memory, etc.
+-some members require member list init ONLY, such as const and ref
+-list comes before body
+-better to initialize in list if possible
+
+-if there are any CONST or REF member variables, they must be initalized (see HumanA.hpp)
+
+ex04
+Overloading means that a function can take several different types of parameters
+An operator can perform different functions depending on the context
+member initializer list*
+check if file is a directory -> std::filesystem::is_directory() - C++11
+
+istream& getline(istream& is, string& str, char delim)
+is - input stream
+str - str to hold contents
+delimiter - where should the function stop reading
+
+ifstream opens up file for input
+ofstream opens up file for output
+ifstream.peek returns the next character in the input sequence without extracting it
+ifstream.readbuf returns a pointer to to basic_streambuf
+ostringstream is an output stream that you can write to
+.str() returns a string object with a copy of the current contents of the stream.
+
+ex06
+Switch only takes int (or char int) as parameter.
+This is because switch uses jump tables, which only takes integer values
+Bc switch uses look up tables, it is faster than else-if statements that have to go through all previous if statements
+All case values must be known at compile time
+Fallthrough - if a case is found, that case as well as everything below it will be executed until break statement

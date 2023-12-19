@@ -1,8 +1,21 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/19 13:29:54 by hbui-vu           #+#    #+#              #
+#    Updated: 2023/12/19 13:29:54 by hbui-vu          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = harlFilter
 
 SRCS = main.cpp HarlFilter.cpp
 
-CXXFLAGS = -Wall -Wextra -Werror -Wimplicit-fallthrough=0 -std=c++98 
+CXXFLAGS = -Wall -Wextra -Werror -Wno-implicit-fallthrough -std=c++98
+# -Wimplicit-fallthrough=0 
 
 CXX = c++
 

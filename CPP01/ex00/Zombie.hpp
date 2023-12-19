@@ -20,8 +20,8 @@ class Zombie
 {
 private:
 	std::string _name;
-	Zombie();
 public:
+	Zombie();
 	Zombie(std::string name);
 	~Zombie();
 	

@@ -22,8 +22,8 @@ class HumanB
 private:
 	std::string	_name;
 	Weapon*		_weapon;
-	HumanB();
 public:
+	HumanB();
 	HumanB(std::string name);
 	~HumanB();
 

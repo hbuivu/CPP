@@ -31,11 +31,11 @@ Sed::~Sed()
 void	Sed::replace()
 {
 	//open file for reading
-	std::ifstream	infile(_infile); //ifstream opens up a file for input
+	std::ifstream infile(_infile); //ifstream opens up a file for input
 	if (infile.is_open())
 	{
 		//if infile is valid open outfile to be written into
-		std::ofstream	outfile(_outfile); //ofstream opens up a file for output
+		std::ofstream outfile(_outfile); //ofstream opens up a file for output
 		if (outfile.is_open()) //check that outfile was opened properly
 		{
 			//if s1 is the same as s2, or infile exists but is empty, copy files and exit
@@ -56,7 +56,7 @@ void	Sed::replace()
 			{
 				stringContents.erase(pos, _find.length());
 				stringContents.insert(pos, _replace);
-				pos = stringContents.find(_find, pos);
+				pos = stringContents.find(_find, pos + _replace.length()); // add length of replace bc we don't want to overlay the replaced string and get infinite lop ex: replace a with aba
 			}
 			//copy string into outfile
 			outfile << stringContents;
