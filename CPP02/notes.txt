@@ -1,0 +1,18 @@
+ex00
+A copy constructor is used to init an object with an existing object of the same type 
+ExampleClass (const ExampleClass& exClass) -> it contains a reference to the same class
+call with ExampleClass copyClass {existingObject};
+use =delete if you want to supress a copy constructor (object cannot be copied
+
+copy assignment operator (=) -> used to copy values from one object to another existing object
+basically like a copy constructor except its for something that already exists
+must be overloaded as  member function
+exampleClass& operator = const exampleClass& exampleclass
+
+static variables are used for the entire class rather than for individual instances of each class
+has to be initiated inside declaration of class rather than in constructor
+
+bitwise operation cannot be applied to floats
+left bit shift = * 2^n
+right bit shift = / 2^n
+operators like << must be implemented as a friend fucntion bc they convert one or both operands

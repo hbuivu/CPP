@@ -1,14 +1,14 @@
-/* NOTES: 
-A copy constructor is used to init an object with an existing object of the same type 
-ExampleClass (const ExampleClass& exClass) -> it contains a reference to the same class
-call with ExampleClass copyClass {existingObject};
-use =delete if you want to supress a copy constructor (object cannot be copied
-
-copy assignment operator (=) -> used to copy values from one object to another existing object
-basically like a copy constructor except its for something that already exists
-must be overloaded as  member function
-exampleClass& operator = const exampleClass& exampleclass
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/19 14:07:13 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/19 14:07:13 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef FIXED_HPP
 # define FIXED_HPP
@@ -19,17 +19,17 @@ exampleClass& operator = const exampleClass& exampleclass
 class Fixed
 {
 private:
-	//this is the value of the number if binary point is at 0
 	int					_fixedPointValue;
-	//static const - init one only does not need to be init again
 	static const int	_fractionalBits = 8;
 public:
 	Fixed();
+	Fixed(const Fixed& src);
+	Fixed&	operator=(const Fixed& src);
+	~Fixed();
+
 	Fixed(const int num);
 	Fixed(const float num);
-	Fixed(const Fixed& CopyFPN);
-	~Fixed();
-	Fixed&	operator= (const Fixed& OgFPN);
+	
 	int		getRawBits(void) const;
 	void	setRawBits(int const raw);
 	float	toFloat(void) const;
