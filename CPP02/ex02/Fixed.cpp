@@ -49,7 +49,7 @@ Fixed::Fixed(const float num)
 	std::cout << "Fixed point float parameter constructor called" << std::endl;
 }
 
-int	Fixed::getRawBits(void) const
+int	Fixed::getRawBits() const
 {
 	std::cout << "getRawBits member function called" <<std::endl;
 	return (_fixedPointValue);
@@ -61,12 +61,12 @@ void	Fixed::setRawBits(int const raw)
 	std::cout << "setRawBits member function called" << std::endl;
 }
 
-float	Fixed::toFloat(void) const
+float	Fixed::toFloat() const
 {
 	return (static_cast<float>(_fixedPointValue) / (1 << _fractionalBits));
 }
 
-int	Fixed::toInt(void) const
+int	Fixed::toInt() const
 {
 	return (_fixedPointValue >> _fractionalBits);
 }
@@ -127,65 +127,71 @@ Fixed	Fixed::operator/ (const Fixed& src) const
 	return Fixed(this->toFloat() / src.toFloat());
 }
 
-// //preincrement
-// Fixed&	Fixed::operator++ (void)
-// {
-// 	this->_fixedPointValue++;
-// 	return (*this);
-// }
+//preincrement
+/* 
+int i = 5;
+int value = ++i
+i is incremented first then value is assigned to value*/
+Fixed&	Fixed::operator++ ()
+{
+	++this->_fixedPointValue;
+	return (*this);
+}
 
-// //postincrement
-// Fixed&	Fixed::operator++(int i)
-// {
-// 	Fixed	temp(*this);
+//postincrement
+/* 
+int i = 5;
+int value = i++;
+current value of i (5) assigned to value, then i is incremented*/
+Fixed	Fixed::operator++(int)
+{
+	Fixed	temp(*this);
 	
-// 	temp->_fixedPointValue++;
-// 	return (temp);
-// }
+	this->_fixedPointValue++;
+	return (temp);
+}
 
-// //preincrement
-// Fixed&	Fixed::operator-- (void)
-// {
-// 	this->_fixedPointValue--;
-// 	return (*this);
-// }
+//preincrement
+Fixed&	Fixed::operator-- ()
+{
+	--this->_fixedPointValue;
+	return (*this);
+}
 
-// //postincrement
-// Fixed&	Fixed::operator--(int i)
-// {
-// 	Fixed	temp(*this);
+//postincrement
+Fixed	Fixed::operator--(int)
+{
+	Fixed	temp(*this);
 	
-// 	temp->_fixedPointValue--;
-// 	return (temp);
-// }
+	this->_fixedPointValue--;
+	return (temp);
+}
 
 
-// static Fixed&	min(Fixed& a, Fixed& b)
-// {
-// 	if (a < b)
-// 		return (a);
-// 	return (b);
-// }
+Fixed&	Fixed::min(Fixed& a, Fixed& b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
 
-// static Fixed&	min(const Fixed a, const Fixed b)
-// {
-// 	if (a < b)
-// 		return (a);
-// 	return (b);
-// }
+const Fixed&	Fixed::min(const Fixed& a, const Fixed& b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
 
-// static Fixed&	max(Fixed& a, Fixed& b)
-// {
-// 	if (a > b)
-// 		return (a);
-// 	return (b);
-// }
+Fixed&	Fixed::max(Fixed& a, Fixed& b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
-// static Fixed&	max(const Fixed a, const Fixed b)
-// {
-// 	if (a > b)
-// 		return (a);
-// 	return (b);
-// }
-
-
+const Fixed&	Fixed::max(const Fixed& a, const Fixed& b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}

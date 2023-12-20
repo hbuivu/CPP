@@ -16,3 +16,8 @@ bitwise operation cannot be applied to floats
 left bit shift = * 2^n
 right bit shift = / 2^n
 operators like << must be implemented as a friend fucntion bc they convert one or both operands
+
+static member function is associated with class rather than instance of class - does not need instance for usage
+cannot access non-static members of class
+often used with namespace of class before it
+REMEMBER: STATIC ONLY DECLARED ONCE DURING CLASS DEFINITION

@@ -30,10 +30,10 @@ public:
 	Fixed(const int num);
 	Fixed(const float num);
 
-	int		getRawBits(void) const;
+	int		getRawBits() const;
 	void	setRawBits(int const raw);
-	float	toFloat(void) const;
-	int		toInt(void) const;
+	float	toFloat() const;
+	int		toInt() const;
 
 	bool	operator> (const Fixed& src) const;
 	bool	operator< (const Fixed& src) const;
@@ -47,18 +47,18 @@ public:
 	Fixed	operator* (const Fixed& src) const;
 	Fixed	operator/ (const Fixed& src) const;
 
-	// Fixed&  operator++ (void); //pre increment
-    // Fixed   operator++ (int); // post increment
-    // Fixed&  operator-- (void); 
-    // Fixed   operator-- (int); 
+	Fixed&  operator++ (); //pre increment
+    Fixed   operator++ (int); // post increment
+    Fixed&  operator-- (); 
+    Fixed   operator-- (int); 
 
-	// static Fixed&	min(Fixed& a, Fixed& b);
-	// static Fixed&	min(const Fixed a, const Fixed b);
-	// static Fixed&	max(Fixed& a, Fixed& b);
-	// static Fixed&	max(const Fixed a, const Fixed b);
+	static Fixed&	min(Fixed& a, Fixed& b);
+	static const Fixed&	min(const Fixed& a, const Fixed& b);
+	static Fixed&	max(Fixed& a, Fixed& b);
+	static const Fixed&	max(const Fixed& a, const Fixed& b);
 
 };
 
-std::ostream&	operator<< (std::ostream& os, const Fixed& src) const;
+std::ostream&	operator<< (std::ostream& os, const Fixed& src);
 
 #endif
