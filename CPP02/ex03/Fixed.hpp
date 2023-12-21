@@ -61,19 +61,4 @@ public:
 
 std::ostream&	operator<< (std::ostream& os, const Fixed& src);
 
-typedef struct s_Point
-{
-	Fixed	x;
-	Fixed	y;
-}	Point;
-
-typedef struct s_Triangle
-{
-	Point&	p1;
-	Point&	p2;
-	Point&	p3;
-}	Triangle;
-
-bool	BSP(Triangle& t, Point& p);
-
 #endif

@@ -12,7 +12,7 @@
 
 NAME = Fixed
 
-SRCS = main.cpp Fixed.cpp bsp.cpp
+SRCS = main.cpp Fixed.cpp Point.cpp bsp.cpp
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
