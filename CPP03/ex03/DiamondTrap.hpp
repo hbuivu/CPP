@@ -30,7 +30,7 @@ public:
 	DiamondTrap&	operator=(const DiamondTrap& src);
 	
 	void	whoAmI();
-	using	ScavTrap::attack;
+	// using	ScavTrap::attack;
 };
 
 #endif

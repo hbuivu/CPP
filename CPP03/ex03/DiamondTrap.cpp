@@ -29,11 +29,22 @@ DiamondTrap::DiamondTrap(std::string name)
 	// _hitPts = FragTrap::_hitPts; //100
 	// _energyPts = ScavTrap::_energyPts; //50
 	// _attackDmg = FragTrap::_attackDmg; //30
-	FragTrap::_hitPts = 100;
-	ScavTrap::_energyPts = 50;
-	FragTrap::_attackDmg = 30;
+	// std::cout << "hitpts energypts attackdmg: " << _hitPts <<  _energyPts << _attackDmg << std::endl;
+	// FragTrap::_hitPts = 100;
+	// ScavTrap::_energyPts = 50;
+	// FragTrap::_attackDmg = 30;
+	_hitPts = 100;
+	_energyPts = 50;
+	_attackDmg = 30;
 	std::cout << "DiamondTrap parameter constructor called for " << _name <<  std::endl;
 }
+
+/* NOTES:
+DiamondTrap seems to take the last build, which is ScavTrap build
+ScavTrap FragTrap and ClapTrap all share the same variable _name. There is only one _name variable
+That's why if you change the _name in S, F, or C, the _name will be changed for all three
+similarly, _hitPts, _energyPts, and _attackDmg is a shared variable between all four classes
+*/
 
 DiamondTrap::DiamondTrap(const DiamondTrap& src)
 	:	ClapTrap(src), FragTrap(src), ScavTrap(src),
@@ -62,7 +73,6 @@ DiamondTrap&	DiamondTrap::operator=(const DiamondTrap& src)
 
 void	DiamondTrap::whoAmI()
 {
-	std::cout << "<DiamondTrap>" << _name << " is experiencing an existential crisis" << std::endl;
+	std::cout	<< "<DiamondTrap>" << _name << " is experiencing an existential crisis! " 
+				<< "Could its name be " << ClapTrap::_name << " instead?" << std::endl;
 }
-
-

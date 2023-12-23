@@ -22,7 +22,6 @@ protected:
 	unsigned int	_hitPts;
 	unsigned int	_energyPts;
 	unsigned int	_attackDmg;
-
 public:
 	ClapTrap();
 	ClapTrap(std::string name);
@@ -31,7 +30,7 @@ public:
 
 	ClapTrap&	operator=(const ClapTrap& src);
 
-	void	attack(const std::string& target);
+	virtual void	attack(const std::string& target);
 	void	takeDamage(unsigned int amount);
 	void	beRepaired(unsigned int amount);
 };
