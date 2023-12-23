@@ -1,15 +1,27 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/20 21:31:30 by hbui-vu           #+#    #+#              #
+#    Updated: 2023/12/20 21:31:30 by hbui-vu          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = ScavTrap
 
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-CC = c++
+CXX = c++
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:.cpp=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
+	$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
 
 all: $(NAME)
 

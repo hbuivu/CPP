@@ -1,0 +1,26 @@
+consts and ref requires initialization, cannot be assigned in the body
+In an inherited class, if you want to change any inherited variables, must be done in the body -> already initialized by parent
+
+Constructor chaining - allows delegation of constructors
+	-transfer responsibility for initialization to another constructor from the same class type
+	-to do this, call the constructor in the member intializer list
+	-delegation of constructors only used for C++11 and up
+	-
+
+Calling a constructor inside the body of another constructor (or any function) will result in creating a temp object inside of constructor
+
+Diamond Class problem
+		A
+	  /   \
+	 B	   C
+	  \   /
+		D
+D inherits from B and C
+Class B: virtual class A
+Class C: virtual Class A
+Use virtual so that only one A class is created when constructing Diamond
+If use virtual, D is the one responsible for creating A - this is true even in single inheritance cases
+all classes inheriting a viertual base class will have a virtual table, so instances of those classes will be larger by a pointer
+
+use name resolution/name qualification to specify parent attribute in child
+ex: ParentName::fun();

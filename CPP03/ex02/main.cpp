@@ -1,23 +1,14 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main()
 {
-	// ClapTrap a = ClapTrap("Amy");
-	// ClapTrap b = ClapTrap("Bob");
-	// ClapTrap c = ClapTrap(b);
-	// a.attack("Rob");
-	// b.attack("Pamy");
-	// c.attack("Ted");
-	// a.takeDamage(20);
-	// a.beRepaired(20);
-	// b.beRepaired(2);
-	// c = a;
-	// c.takeDamage(5);
+	FragTrap a("A");
+	FragTrap b("B");
+	FragTrap c(a);
 
-	ScavTrap a = ScavTrap("Tracy");
-	ScavTrap b = a;
-	ScavTrap c = ScavTrap("Ben");
-	a.attack("Rob");
-	a.guardGate();
-	b.beRepaired(29);
+	a.highFivesGuys();
+	b.attack("C");
+	b.takeDamage(50);
+	c = b;
+	c.beRepaired(100);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/20 20:57:41 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/20 20:57:41 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap()
@@ -14,15 +26,15 @@ ClapTrap::ClapTrap(std::string name)
 		_energyPts(10),
 		_attackDmg(0)
 {
-	std::cout << "ClapTrap constructor called for " << _name << std::endl;
+	std::cout << "ClapTrap parameter constructor called for " << _name << std::endl;
 }
 
-ClapTrap::ClapTrap(const ClapTrap& cpy)
+ClapTrap::ClapTrap(const ClapTrap& src)
+	:	_name(src._name),
+		_hitPts(src._hitPts),
+		_energyPts(src._energyPts),
+		_attackDmg(src._attackDmg)
 {
-	this->_name = cpy._name;
-	this->_hitPts = cpy._hitPts;
-	this->_energyPts = cpy._energyPts;
-	this->_attackDmg = cpy._attackDmg;
 	std::cout << "ClapTrap copy constructor called for " << _name << std::endl;
 }
 
@@ -31,17 +43,17 @@ ClapTrap::~ClapTrap()
 	std::cout << "ClapTrap destructor called for " << _name << std::endl;
 }
 
-ClapTrap&	ClapTrap::operator=(const ClapTrap& og)
+ClapTrap&	ClapTrap::operator=(const ClapTrap& src)
 {
-	if (this != &og)
+	if (this != &src)
 	{
-		this->_name = og._name;
-		this->_hitPts = og._hitPts;
-		this->_energyPts = og._energyPts;
-		this->_attackDmg = og._attackDmg;
+		this->_name = src._name;
+		this->_hitPts = src._hitPts;
+		this->_energyPts = src._energyPts;
+		this->_attackDmg = src._attackDmg;
 	}
 	std::cout << "ClapTrap copy assignment operator called for " << _name << std::endl;
-	return (*this);
+	return *this;
 }
 
 void	ClapTrap::attack(const std::string& target)
@@ -57,8 +69,8 @@ void	ClapTrap::attack(const std::string& target)
 		return ;
 	}
 	_energyPts--;
-	std::cout << "<ClapTrap> " << _name << " attacks " << target << " causing " << _attackDmg 
-		<< " points of damage and has " << _energyPts << " energy points left!" << std::endl;
+	std::cout 	<< "<ClapTrap> " << _name << " attacks " << target << " causing " << _attackDmg 
+				<< " points of damage and has " << _energyPts << " energy points left!" << std::endl;
 }
 
 void	ClapTrap::takeDamage(unsigned int amount)
@@ -70,7 +82,8 @@ void	ClapTrap::takeDamage(unsigned int amount)
 		return;
 	}
 	_hitPts -= amount;
-	std::cout << "<ClapTrap> " << _name << " took " << amount << " points of damage and now has " << _hitPts << " hit points!" << std::endl; 
+	std::cout	<< "<ClapTrap> " << _name << " took " << amount << " points of damage and now has " 
+				<< _hitPts << " hit points!" << std::endl; 
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)
@@ -87,5 +100,6 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	}
 	_energyPts--;
 	_hitPts += amount;
-	std::cout << "<ClapTrap> " << _name  << " regained " << amount << " hit points and now has a total of " << _hitPts << " hit points!" << std::endl;
+	std::cout	<< "<ClapTrap> " << _name  << " regained " << amount << " hit points and now has a total of " 
+				<< _hitPts << " hit points!" << std::endl;
 }

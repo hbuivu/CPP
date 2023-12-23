@@ -1,9 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/20 21:31:36 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/20 21:31:36 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScavTrap.hpp"
 
-/* NOTE: consts and ref requires initialization, cannot be assigned in the body */
-
 ScavTrap::ScavTrap()
-	:	ClapTrap();
+	:	ClapTrap()
 {
 	_hitPts = 100; //_hitPts is already initialized, now we are assigning different values
 	_energyPts = 50;
@@ -17,21 +27,31 @@ ScavTrap::ScavTrap(std::string name)
 	_hitPts = 100;
 	_energyPts = 50;
 	_attackDmg = 20;
-	std::cout << "ScavTrap constructor called for " << _name << std::endl;
+	std::cout << "ScavTrap parameter constructor called for " << _name << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap& cpy)
+ScavTrap::ScavTrap(const ScavTrap& src)
+	:	ClapTrap(src)
 {
-	this->_name = cpy._name;
-	this->_hitPts = cpy._hitPts;
-	this->_energyPts = cpy._energyPts;
-	this->_attackDmg = cpy._attackDmg;
 	std::cout << "ScavTrap copy constructor called for " << _name << std::endl;
 }
 
 ScavTrap::~ScavTrap()
 {
 	std::cout << "ScavTrap destructor called for " << _name << std::endl;
+}
+
+ScavTrap&	ScavTrap::operator=(const ScavTrap& src)
+{
+	if (this != &src)
+	{
+		this->_name = src._name;
+		this->_hitPts = src._hitPts;
+		this->_energyPts = src._energyPts;
+		this->_attackDmg = src._attackDmg;
+	}
+	std::cout << "ScavTrap copy assignment operator called for " << _name << std::endl; 
+	return *this;
 }
 
 void	ScavTrap::attack(const std::string& target)
@@ -47,8 +67,8 @@ void	ScavTrap::attack(const std::string& target)
 		return ;
 	}
 	_energyPts--;
-	std::cout << "<ScavTrap> " << _name << " attacks " << target << " causing " << _attackDmg 
-		<< " points of damage and has " << _energyPts << " energy points left!" << std::endl;
+	std::cout	<< "<ScavTrap> " << _name << " attacks " << target << " causing " << _attackDmg 
+				<< " points of damage and has " << _energyPts << " energy points left!" << std::endl;
 }
 
 void	ScavTrap::guardGate()

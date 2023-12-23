@@ -1,24 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/20 21:31:24 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/20 21:31:24 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScavTrap.hpp"
 
 int main()
 {
-	// ClapTrap a = ClapTrap("Amy");
-	// ClapTrap b = ClapTrap("Bob");
-	// ClapTrap c = ClapTrap(b);
-	// a.attack("Rob");
-	// b.attack("Pamy");
-	// c.attack("Ted");
-	// a.takeDamage(20);
-	// a.beRepaired(20);
-	// b.beRepaired(2);
-	// c = a;
-	// c.takeDamage(5);
-
-	ScavTrap a = ScavTrap("Tracy");
-	ScavTrap b = a;
-	ScavTrap c = ScavTrap("Ben");
-	ScavTrap d = ScavTrap(c);
+	ScavTrap a("Tracy");
+	ScavTrap b = a; //copy constructor bc b does not exist until it is set = to a
+	ScavTrap c("Ben");
+	ScavTrap d(c);
+	b = d; //an existing object is now set to another object. copy assignment operator is used
 	a.attack("Rob");
 	a.guardGate();
 	b.beRepaired(29);
+	d.attack("Jill");
+	d.beRepaired(40);
 }
