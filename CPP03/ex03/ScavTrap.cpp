@@ -16,7 +16,7 @@ ScavTrap::ScavTrap()
 	:	ClapTrap()
 {
 	_hitPts = 100; //_hitPts is already initialized, now we are assigning different values
-	_energyPts = 50;
+	_energyPts = 500;
 	_attackDmg = 20;
 	std::cout << "ScavTrap default constructor called" << std::endl;
 }
@@ -24,9 +24,9 @@ ScavTrap::ScavTrap()
 ScavTrap::ScavTrap(std::string name) 
 	:	ClapTrap(name)
 {
-	_hitPts = 100;
-	_energyPts = 50;
-	_attackDmg = 20;
+	_hitPts = 222;
+	_energyPts = 222;
+	_attackDmg = 222;
 	std::cout << "ScavTrap parameter constructor called for " << _name << std::endl;
 }
 

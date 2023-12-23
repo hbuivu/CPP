@@ -17,6 +17,10 @@
 
 class ScavTrap:	virtual public ClapTrap
 {
+protected:
+	unsigned int	_hitPts;
+	unsigned int	_energyPts;
+	unsigned int	_attackDmg;
 public:
 	ScavTrap();
 	ScavTrap(std::string name);
