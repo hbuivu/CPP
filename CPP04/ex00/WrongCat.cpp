@@ -1,4 +1,4 @@
-#include "Polymorphism.hpp"
+#include "WrongCat.hpp"
 
 WrongCat::WrongCat()
 	:	WrongAnimal()
@@ -12,17 +12,17 @@ WrongCat::~WrongCat()
 	std::cout << "<WrongCat> destructor called" << std::endl;
 }
 
-WrongCat::WrongCat(const WrongCat& cpy)
-	:	WrongAnimal(cpy)
+WrongCat::WrongCat(const WrongCat& src)
+	:	WrongAnimal(src)
 {
-	this->_type = cpy._type;
+	this->_type = src._type;
 	std::cout << "<WrongCat> copy constructor called" << std::endl;
 }
 
-WrongCat&	WrongCat::operator=(const WrongCat& og)
+WrongCat&	WrongCat::operator=(const WrongCat& src)
 {
-	if (this != &og)
-		this->_type = og._type;
+	if (this != &src)
+		this->_type = src._type;
 	std::cout << "<WrongCat> copy assignment operator called" << std::endl;
 	return (*this);
 }

@@ -24,15 +24,26 @@ protected:
 	unsigned int	_attackDmg;
 public:
 	ClapTrap();
-	ClapTrap(std::string name);
+	ClapTrap(const std::string& name);
+	ClapTrap(std::string* name);
 	ClapTrap(const ClapTrap& src);
 	~ClapTrap();
 
 	ClapTrap&	operator=(const ClapTrap& src);
 
-	virtual void	attack(const std::string& target);
+	void	attack(const std::string& target);
 	void	takeDamage(unsigned int amount);
 	void	beRepaired(unsigned int amount);
 };
 
 #endif
+
+/* NOTES:
+std::string CANNOT be NULL. it is not a pointer. an empty string is denoted as ""
+adding ClapTrap(std::string* name) just in case someone tests NULL.
+But if they test NULL, it means they dont fundamentally understand what std::string is. It is a class not a pointer
+A literal CANNOT be a ref! Except string values which count as an lvalue
+
+Lvalue is a reference
+Rvalue is a value
+*/

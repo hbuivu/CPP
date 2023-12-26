@@ -14,13 +14,19 @@
 
 int main()
 {
-	DiamondTrap a("A");
-	// DiamondTrap b("B");
-	// DiamondTrap c(a);
+	DiamondTrap a("Amelia");
+	DiamondTrap b("Bob");
+	DiamondTrap c(a);
+
+	b.takeDamage(20);
+	c = b;
 
 	a.attack("Ben");
 	a.beRepaired(100);
 	a.takeDamage(10);
 	a.whoAmI();
+
+	c.whoAmI();
+	c.takeDamage(10);
 
 }

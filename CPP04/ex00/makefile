@@ -1,8 +1,8 @@
-NAME = Polymorphism
+NAME = Animal
 
 SRCS = Animal.cpp Cat.cpp Dog.cpp main.cpp
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -Wshadow -std=c++98
 
 CC = c++
 

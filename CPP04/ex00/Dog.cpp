@@ -1,4 +1,4 @@
-#include "Polymorphism.hpp"
+#include "Dog.hpp"
 
 Dog::Dog()
 	:	Animal()
@@ -7,27 +7,28 @@ Dog::Dog()
 	std::cout << "<Dog> default constructor called" << std::endl;
 }
 
+Dog::Dog(const Dog& src)
+	:	Animal(src)
+{
+	this->_type = src._type;
+	std::cout << "<Dog> copy constructor called" << std::endl;
+}
+
 Dog::~Dog()
 {
 	std::cout << "<Dog> destructor called" << std::endl;
 }
 
-Dog::Dog(const Dog& cpy)
-	:	Animal(cpy)
-{
-	this->_type = cpy._type;
-	std::cout << "<Dog> copy constructor called" << std::endl;
-}
 
-Dog&	Dog::operator=(const Dog& og)
+Dog&	Dog::operator=(const Dog& src)
 {
-	if (this != &og)
-		this->_type = og._type;
+	if (this != &src)
+		this->_type = src._type;
 	std::cout << "<Dog> copy assignment operator called" << std::endl;
 	return (*this);
 }
 
-void	Dog::makeSound() const
+void	Dog::makeSound() const //virtual only has to be declared when creating class
 {
 	std::cout << "Woof" << std::endl;
 }

@@ -20,13 +20,23 @@ ClapTrap::ClapTrap()
 	std::cout << "ClapTrap default constructor called" << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string name)
+ClapTrap::ClapTrap(std::string* name)
+	:	_hitPts(0),
+		_energyPts(0),
+		_attackDmg(0)
+{
+	(void)name;
+	std::cout	<< "ClapTrap only takes an std::string parameter. Please review your input."
+				<< "An incomplete ClapTrap object has been formed" << std::endl;
+}
+
+ClapTrap::ClapTrap(const std::string& name)
 	:	_name(name),
 		_hitPts(10),
 		_energyPts(10),
 		_attackDmg(0)
 {
-	std::cout << "ClapTrap parameter constructor called for " << _name << std::endl;
+	std::cout << "ClapTrap str parameter constructor called for " << _name << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& src)

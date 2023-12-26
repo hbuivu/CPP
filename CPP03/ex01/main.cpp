@@ -24,4 +24,6 @@ int main()
 	b.beRepaired(29);
 	d.attack("Jill");
 	d.beRepaired(40);
+
+	ScavTrap e(NULL);
 }

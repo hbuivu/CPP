@@ -24,3 +24,8 @@ all classes inheriting a viertual base class will have a virtual table, so insta
 
 use name resolution/name qualification to specify parent attribute in child
 ex: ParentName::fun();
+
+alternatively, we can use virtual functions so that the child class takes the most derived function
+
+shadowing is when Variable shadowing occurs when a variable declared within a certain scope has the same name as a variable declared in an outer scope. 
+This can lead to confusion and potential bugs, as it may not be clear which variable is being referred to in a particular context.

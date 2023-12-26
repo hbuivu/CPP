@@ -15,18 +15,18 @@
 Fixed::Fixed()
 	:	_fixedPointValue(0)
 {
-	std::cout << "Fixed point default constructor called" << std::endl;
+	std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& src)
 	:	_fixedPointValue(src._fixedPointValue)
 {
-	std::cout << "Fixed point copy constructor called" << std::endl;
+	std::cout << "Copy constructor called" << std::endl;
 }
 
 Fixed& Fixed::operator= (const Fixed& src)
 {
-	std::cout << "Fixed point copy assignment operator called" << std::endl;
+	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &src)
 		this->_fixedPointValue = src._fixedPointValue;
 	return (*this);
@@ -34,19 +34,19 @@ Fixed& Fixed::operator= (const Fixed& src)
 
 Fixed::~Fixed()
 {
-	std::cout << "Fixed point destructor called" << std::endl;
+	std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(const int num)
 {
 	_fixedPointValue = num << _fractionalBits;
-	std::cout << "Fixed point int parameter constructor called" << std::endl;	
+	std::cout << "Int parameter constructor called" << std::endl;	
 }
 
 Fixed::Fixed(const float num)
 {
 	_fixedPointValue = roundf(num * (1 << _fractionalBits));
-	std::cout << "Fixed point float parameter constructor called" << std::endl;
+	std::cout << "Float parameter constructor called" << std::endl;
 }
 
 int	Fixed::getRawBits() const

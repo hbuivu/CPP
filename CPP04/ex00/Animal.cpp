@@ -1,4 +1,16 @@
-#include "Polymorphism.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/26 18:26:31 by hbui-vu           #+#    #+#             */
+/*   Updated: 2023/12/26 18:39:50 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Animal.hpp"
 
 Animal::Animal()
 	:	_type("animal")
@@ -6,28 +18,28 @@ Animal::Animal()
 	std::cout << "<Animal> default constructor called" << std::endl;
 }
 
+Animal::Animal(const Animal& src)
+{
+	this->_type = src._type;
+	std::cout << "<Animal> copy constructor called" << std::endl;
+}
+
 Animal::~Animal()
 {
 	std::cout << "<Animal> destructor called" << std::endl;
 }
 
-Animal::Animal(const Animal& cpy)
+Animal&	Animal::operator=(const Animal& src)
 {
-	this->_type = cpy._type;
-	std::cout << "<Animal> copy constructor called" << std::endl;
-}
-
-Animal&	Animal::operator=(const Animal& og)
-{
-	if (this != &og)
-		this->_type = og._type;
+	if (this != &src)
+		this->_type = src._type;
 	std::cout << "<Animal> copy assignment operator called" << std::endl;
-	return (*this);
+	return *this;
 }
 
 void	Animal::makeSound() const
 {
-	std::cout << "An animal sound" << std::endl;
+	std::cout << "Animal Noise" << std::endl;
 }
 
 std::string	Animal::getType() const

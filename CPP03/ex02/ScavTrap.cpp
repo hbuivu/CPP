@@ -15,19 +15,26 @@
 ScavTrap::ScavTrap()
 	:	ClapTrap()
 {
-	_hitPts = 100; //_hitPts is already initialized, now we are assigning different values
+	_hitPts = 100; //_hitPts is already initialized, now we are assigning that variable different values
 	_energyPts = 50;
 	_attackDmg = 20;
 	std::cout << "ScavTrap default constructor called" << std::endl;
 }
 
-ScavTrap::ScavTrap(std::string name) 
+ScavTrap::ScavTrap(const std::string& name) 
 	:	ClapTrap(name)
 {
 	_hitPts = 100;
 	_energyPts = 50;
 	_attackDmg = 20;
 	std::cout << "ScavTrap parameter constructor called for " << _name << std::endl;
+}
+
+ScavTrap::ScavTrap(std::string* name)
+	:	ClapTrap(name)
+{
+	std::cout	<< "ScavTrap only takes an std::string parameter. Please review your input." 
+				<< "An incomplete ScavTrap object has been formed." << std::endl;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& src)
@@ -43,7 +50,7 @@ ScavTrap::~ScavTrap()
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& src)
 {
-	if (this != &src)
+	if (this != &src) //this is technically not necessary if no dynamically allocated memory is in play
 	{
 		this->_name = src._name;
 		this->_hitPts = src._hitPts;

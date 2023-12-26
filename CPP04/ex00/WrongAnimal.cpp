@@ -1,8 +1,8 @@
-#include "WrongPolymorphism.hpp"
+#include "WrongAnimal.hpp"
 
 
 WrongAnimal::WrongAnimal()
-	:	_type("animal")
+	:	_type("wrong animal")
 {
 	std::cout << "<WrongAnimal> default constructor called" << std::endl;
 }
@@ -12,18 +12,18 @@ WrongAnimal::~WrongAnimal()
 	std::cout << "<WrongAnimal> destructor called" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal& cpy)
+WrongAnimal::WrongAnimal(const WrongAnimal& src)
 {
-	this->_type = cpy._type;
+	this->_type = src._type;
 	std::cout << "<WrongAnimal> copy constructor called" << std::endl;
 }
 
-WrongAnimal&	WrongAnimal::operator=(const WrongAnimal& og)
+WrongAnimal&	WrongAnimal::operator=(const WrongAnimal& src)
 {
-	if (this != &og)
-		this->_type = og._type;
+	if (this != &src)
+		this->_type = src._type;
 	std::cout << "<WrongAnimal> copy assignment operator called" << std::endl;
-	return (*this);
+	return *this;
 }
 
 void	WrongAnimal::makeSound() const

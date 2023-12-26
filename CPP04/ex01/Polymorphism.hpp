@@ -4,15 +4,15 @@
 # include <iostream>
 # include <string>
 
-class Brain
+class Brain //mixin class
 {
-private:
-	std::string	ideas[100];
+protected:
+	std::string*	_ideas;
 public:
 	Brain();
+	Brain(const Brain& src);
 	~Brain();
-	Brain(const Brain& cpy);
-	Brain&	operator=(const Brain& og);
+	Brain&	operator=(const Brain& src);
 };
 
 class Animal
@@ -30,7 +30,7 @@ public:
 	virtual void	makeSound() const;
 };
 
-class Dog:	public Animal
+class Dog:	public Animal, public Brain
 {
 private:
 	Brain	*_brain;
@@ -43,7 +43,7 @@ public:
 	virtual void	makeSound() const;
 };
 
-class Cat:	public Animal
+class Cat:	public Animal, public Brain
 {
 private:
 	Brain	*_brain;

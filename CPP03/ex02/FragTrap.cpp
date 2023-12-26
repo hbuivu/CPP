@@ -30,6 +30,12 @@ FragTrap::FragTrap(const std::string& name)
 	std::cout<< "Fragtrap parameter constructor called for " << _name << std::endl;
 }
 
+FragTrap::FragTrap(std::string *name)
+	:	ClapTrap(name)
+{
+	std::cout	<< "FragTrap only takes an std::string parameter. Please review your input."
+				<< "An incomplete FragTrap object has been formed" << std::endl;	
+}
 FragTrap::FragTrap(const FragTrap& src)
 	:	ClapTrap(src)
 {
@@ -51,7 +57,7 @@ FragTrap&	FragTrap::operator=(const FragTrap& src)
 		this->_attackDmg = src._attackDmg;
 	}
 	std::cout << "FragTrap copy assignment operator called for " << _name << std::endl;
-	return (*this);
+	return *this;
 }
 void	FragTrap::highFivesGuys()
 {
