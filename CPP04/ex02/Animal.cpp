@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 18:26:31 by hbui-vu           #+#    #+#             */
-/*   Updated: 2023/12/27 14:04:03 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2023/12/27 14:58:00 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ Animal&	Animal::operator=(const Animal& src)
 		this->_type = src._type;
 	std::cout << "<Animal> copy assignment operator called" << std::endl;
 	return *this;
-}
-
-void	Animal::makeSound() const
-{
-	std::cout << "Animal Noise" << std::endl;
 }
 
 std::string	Animal::getType() const
