@@ -223,6 +223,27 @@ AUTO keyword - used for type deduction(inference) - allows compiler to deduce th
 				const auto* -> make deduced pointer type a pointer to const
 				auto* const -> make deduced pointer a const pointer
 
+Interface classes
+class that has no member variables and where all functions are pure virtual
+-used for when you want to define functionality that derived classes must implementation
+-often named beginning with I 
+	ex: class IErrorLog
+		{
+		public:
+			virtual bool openLog(std::string filename) = 0;
+			virutal bool closeLog() = 0;
+
+			virtual ~IErrorLog() //must have a virtual destructor
+		}
+A concreteclass is a normal class that can be instantiated
+
+classes that reference each other is called circular dependency
+For circular dependency, make sure to use forward declarations
+
+When using new, the pointer allocated will not automatically be nullified (be emptied with 0s)
+to intialize to 0, use parantheses
+	ex: int *ptr = new int();
+
 
 
 
