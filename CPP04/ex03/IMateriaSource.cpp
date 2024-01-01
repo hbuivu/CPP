@@ -1,23 +1,38 @@
 #include "IMateriaSource.hpp"
 
 MateriaSource::MateriaSource()
-	:	_learnedMateria(new AMateria* [5]), //or initialize a list of 4 spaces??
-		_numLearnedMateria(0)
+	:	_numLearnedMateria(0)
 {
+	for (int i = 0; i < 4; i++)
+		_learnedMateria[i] = NULL;
 }
 
 MateriaSource::MateriaSource(const MateriaSource& src)
-	:	_learnedMateria(new AMateria *[5]),
-		_numLearnedMateria(src._numLearnedMateria)
+	:	_numLearnedMateria(src._numLearnedMateria)
 {
-	//copy over stuff		
+	for (int i = 0; i < _numLearnedMateria; i++)
+		this->_learnedMateria[i] = src._learnedMateria[i]->clone();
 }
 
 MateriaSource::~MateriaSource()
 {
-	for (int i = 0; i++; i < _numLearnedMateria)
+	for (int i = 0; i < _numLearnedMateria; i++)
 		delete _learnedMateria[i];
-	delete[] _learnedMateria;
+}
+
+MateriaSource&	MateriaSource::operator=(const MateriaSource& src)
+{
+	if (this != &src)
+	{
+		for (int i = 0; i < this->_numLearnedMateria; i++)
+		{
+			delete this->_learnedMateria[i];
+			this->_learnedMateria[i] = NULL;
+		}
+		for (int i = 0; i < src._numLearnedMateria; i++)
+			this->_learnedMateria[i] = src._learnedMateria[i]->clone();
+	}
+	return *this;
 }
 
 void	MateriaSource::learnMateria(AMateria* src)
@@ -34,9 +49,12 @@ void	MateriaSource::learnMateria(AMateria* src)
 AMateria*	MateriaSource::createMateria(const std::string& type)
 {
 	int i = 0;
-	while (i++ < _numLearnedMateria)
+	while (i < _numLearnedMateria)
+	{
 		if (_learnedMateria[i]->getType() == type)
 			break ;
+		i++;
+	}
 	if (i == _numLearnedMateria)
 		return (NULL);
 	AMateria *newMateria = _learnedMateria[i]->clone();

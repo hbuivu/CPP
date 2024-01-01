@@ -8,7 +8,7 @@
 class IMateriaSource
 {
 public:
-	virtual ~IMateriaSource();
+	virtual ~IMateriaSource(){};
 
 	virtual void		learnMateria(AMateria*) = 0;
 	virtual AMateria*	createMateria(const std::string& type) = 0;
@@ -17,7 +17,7 @@ public:
 class MateriaSource : public IMateriaSource
 {
 private:
-	AMateria**	_learnedMateria;
+	AMateria*	_learnedMateria[4]; //create an array of 4 AMateria* in stack
 	int			_numLearnedMateria;
 public:
 	MateriaSource();
@@ -31,3 +31,6 @@ public:
 };
 
 #endif
+
+/* NOTES:
+if using new to AMateria **, learnedMateria would only hold the pointer to the first element of the array */

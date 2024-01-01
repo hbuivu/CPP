@@ -10,12 +10,12 @@ class ICharacter;
 class AMateria
 {
 protected:
-	std::string	_type;
+	std::string		_type;
 public:
 	AMateria();
 	AMateria(const std::string& type);
 	AMateria(const AMateria& src);
-	~AMateria();
+	virtual ~AMateria();
 	AMateria&	operator=(const AMateria& src);
 
 	const std::string&	getType() const;
@@ -49,8 +49,18 @@ public:
 	void		use(ICharacter& target);
 };
 
+typedef struct s_AMateriaList
+{
+	AMateria*				materia;
+	struct s_AMateriaList*	next;
+}	AMateriaList;
+
 #endif
 
 /* NOTES:
 const std::string & type and std::string const & type is the same thing
+for virtual functions, in C++11 and later, we can use the override keyword
+and use covariant return types for virtual functions (so instead of AMateria*, use Cure*)
+In C++98 this is not possible and we must use exact matching function signature
+I denotes an interface - a  pure abstract class
 */
