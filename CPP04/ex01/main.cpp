@@ -18,23 +18,20 @@
 
 int main()
 {
-	// Animal **zoo = new Animal*[2];
+	Animal **zoo = new Animal*[100];
 	
-	// for (int i = 0; i < 2; i++)
-	// 	zoo[i] = new Cat();
-	// // // for (int i = 50; i < 100; i++)
-	// // // 	zoo[i] = Dog();
+	for (int i = 0; i < 50; i++)
+		zoo[i] = new Cat();
+	for (int i = 50; i < 100; i++)
+		zoo[i] = new Dog();
+	for (int i = 0; i < 100; i++)
+		delete zoo[i];
+	delete[] zoo;
 
-	// for (int i = 0; i < 2; i++)
-	// 	// (dynamic_cast<Cat*>(zoo[i]))->~Cat();
-	// 	delete zoo[i];
-	// delete[] zoo;
-
-	Dog d;
+	// Dog d;
 	// Dog b(d);
-	Dog a;
-
-	a = d;
+	// Dog a;
+	// Dog c = a;
 
 }
 

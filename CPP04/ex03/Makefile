@@ -14,8 +14,7 @@ NAME = Materia
 
 SRCS = AMateria.cpp ICharacter.cpp IMateriaSource.cpp main.cpp
 
-CXXFLAGS = -Wall -Wextra  -std=c++98
-# -Werror
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
 
 CXX = c++
 

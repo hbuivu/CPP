@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   AMateria.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/02 13:46:20 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/02 13:46:21 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "AMateria.hpp"
 
 AMateria::AMateria()
@@ -95,7 +107,6 @@ Cure&	Cure::operator=(const Cure& src)
 void	Cure::use(ICharacter& target)
 {
 	std::cout << "*heals " << target.getName() << "'s wounds*" << std::endl;
-	//delete material after use?
 }
 
 AMateria*	Cure::clone() const

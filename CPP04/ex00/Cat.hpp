@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 18:27:49 by hbui-vu           #+#    #+#             */
-/*   Updated: 2023/12/26 18:31:10 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/02 13:20:08 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ class Cat : public Animal
 public:
 	Cat();
 	Cat(const Cat& src);
-	~Cat();
+	virtual ~Cat();
 	Cat& operator=(const Cat& src);
 
 	virtual void	makeSound() const;

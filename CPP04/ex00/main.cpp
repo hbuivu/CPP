@@ -18,49 +18,49 @@
 
 int main()
 {
-	// const Animal* meta = new Animal();
-	// const Animal* j = new Dog();
-	// const Animal* i = new Cat();
-	// std::cout << j->getType() << " " << std::endl;
-	// std::cout << i->getType() << " " << std::endl;
-	// i->makeSound(); 
-	// j->makeSound();
-	// meta->makeSound();
+	// const Animal* animal = new Animal();
+	// const Animal* d = new Dog();
+	// const Animal* c = new Cat();
+	// std::cout << d->getType() << " " << std::endl;
+	// std::cout << c->getType() << " " << std::endl;
+	// d->makeSound(); 
+	// c->makeSound();
+	// animal->makeSound();
 
-	// const Cat* catPtr = dynamic_cast<const Cat*>(i);
+	// const Cat* catPtr = dynamic_cast<const Cat*>(c);
 	// if (catPtr)
     // 	catPtr->makeSound();	
 
-	// delete meta;
-	// delete j;
-	// delete i;
+	// delete animal;
+	// delete d;
+	// delete c;
 
-	const WrongAnimal* meta = new WrongAnimal();
-	const Animal* j = new Dog();
-	const WrongAnimal* i = new WrongCat();
-	std::cout << "j is: " << j->getType() << std::endl;
-	std::cout << "i is: " << i->getType() << std::endl;
-	std::cout << "i makes sound: ";
-	i->makeSound(); 
-	std::cout << "j makes sound: ";
-	j->makeSound();
-	std::cout << "meta makes sound: ";
-	meta->makeSound();
+	const WrongAnimal* animal = new WrongAnimal();
+	const Animal* d = new Dog();
+	const WrongAnimal* wc = new WrongCat();
+	std::cout << "d is: " << d->getType() << std::endl;
+	std::cout << "wc is: " << wc->getType() << std::endl;
+	std::cout << "d makes sound: ";
+	d->makeSound(); 
+	std::cout << "wc makes sound: ";
+	wc->makeSound();
+	std::cout << "animal makes sound: ";
+	animal->makeSound();
 
-	const WrongCat* catPtr = dynamic_cast<const WrongCat*>(i);
+	const WrongCat* catPtr = dynamic_cast<const WrongCat*>(wc);
 	if (catPtr)
 	{
 		std::cout << "catptr makes sound: ";
     	catPtr->makeSound();	
 	}
 
-	delete meta;
-	delete j;
-	delete i;
-
-	// WrongCat c;
-	// c.makeSound();
-
-	// const WrongAnimal *wc = new WrongCat();
-	// wc->makeSound();
+	delete animal;
+	delete d;
+	delete wc;
 }
+
+/*
+NOTES:
+dynamic casting is used for safe "downcasting" - casting a parent pointer to a child pointer
+"upcasting" is always allowed and is when we cast a child pointer to a parent pointer
+*/

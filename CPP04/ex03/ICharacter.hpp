@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ICharacter.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/02 13:46:33 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/02 14:02:54 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ICHARACTER_HPP
 # define ICHARACTER_HPP
 
@@ -11,7 +23,7 @@ typedef struct s_AMateriaList AMateriaList; //when using typedef, forward declar
 class ICharacter
 {
 public:
-	virtual ~ICharacter(){}; //don't forget the {}!!! Since the destructor is not set to 0, the destructor needs to be defined somehow. Either 
+	virtual ~ICharacter(){}; //don't forget the {}!!! Since the destructor is not set to 0, the destructor needs to be defined somehow.
 
 	virtual const std::string&	getName() const = 0;
 	virtual void				equip(AMateria* m) = 0;

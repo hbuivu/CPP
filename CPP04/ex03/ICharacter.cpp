@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ICharacter.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/02 13:46:28 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/02 14:00:40 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ICharacter.hpp"
 
 struct s_AMateriaList* Character::_droppedMateria = NULL;
@@ -28,8 +40,7 @@ Character::Character(const Character& src)
 Character::~Character()
 {
 	clearMateria();
-	//use clearDroppedMateria function in main, not in each individual object's destructor
-	//this way we only need to do this once
+	//use clearDroppedMateria function in main, not in each individual object's destructor since it is static
 }
 
 Character&	Character::operator=(const Character &src)
@@ -58,6 +69,15 @@ void	Character::equip(AMateria* m)
 		return ;
 	}
 	int i;
+	//check to see if the source has already been equipped!
+	for (i = 0; i < 4; i++)
+	{
+		if (_materia[i] == m)
+		{
+			std::cout << "Source has already been added to pack!" << std::endl;
+			return ;
+		}
+	}
 	for (i = 0; i < 4; i++)
 	{
 		if (_materia[i] == NULL)
@@ -110,6 +130,7 @@ void	Character::use(int idx, ICharacter& target)
 		std::cout << "There is no materia to use in this slot!" << std::endl;
 	else
 	{
+		std::cout << _name << ": ";
 		_materia[idx]->use(target);
 		delete _materia[idx];
 		_materia[idx] = NULL;

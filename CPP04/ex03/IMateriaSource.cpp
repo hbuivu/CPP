@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   IMateriaSource.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/02 13:46:37 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/02 13:59:23 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "IMateriaSource.hpp"
 
 MateriaSource::MateriaSource()
@@ -42,6 +54,7 @@ void	MateriaSource::learnMateria(AMateria* src)
 		std::cout << "max Materia has been learned" << std::endl;
 		return ;
 	}
+	std::cout << "Materia Source learned " << src->getType() << std::endl;
 	_learnedMateria[_numLearnedMateria] = src->clone();
 	_numLearnedMateria++;
 }
