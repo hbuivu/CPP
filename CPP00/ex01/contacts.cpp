@@ -60,12 +60,12 @@ std::string	Contact::GetInput(std::string str)
 void	Contact::NewContact(int i)
 {
 	std::cout << "All fields must be filled." << std::endl;
-	_firstName = this->GetInput("First name: ");
-	_lastName = this->GetInput("Last name: ");
-	_nickname = this->GetInput("Nickname: ");
-	_phoneNumber = this->GetInput("Phone number: ");
-	_secret = this->GetInput("Secret: ");
-	p_index = i;
+	_firstName		= this->GetInput("First name: ");
+	_lastName		= this->GetInput("Last name: ");
+	_nickname		= this->GetInput("Nickname: ");
+	_phoneNumber	= this->GetInput("Phone number: ");
+	_secret			= this->GetInput("Secret: ");
+	p_index			= i;
 	std::cout << "Contact successfully added!" << std::endl;
 }
 
