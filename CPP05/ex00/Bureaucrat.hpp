@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:15 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/04 19:20:44 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/05 09:17:49 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ class Bureaucrat
 private:
 	const std::string	_name;
 	int					_grade;
-	static const int	_HIGHESTGRADE = 1;
-	static const int	_LOWESTGRADE = 150;
-	Bureaucrat();
 public:
+	Bureaucrat();
 	Bureaucrat(const std::string& name, int grade);
 	Bureaucrat(const Bureaucrat& src);
 	~Bureaucrat();

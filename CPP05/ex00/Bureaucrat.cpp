@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:18 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/04 19:11:09 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/05 09:18:04 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat()
-	:	_grade(0)
+	:	_name("Default"),
+		_grade(75)
 {
-	std::cout << "default constructor should not be called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string& name, int grade)
 	:	_name(name),
 		_grade(grade)
 {
-	if (_grade < _HIGHESTGRADE)
+	if (_grade < 1)
 		throw GradeTooHighException();
-	else if (_grade > _LOWESTGRADE)
+	else if (_grade > 150)
 		throw GradeTooLowException();
 }
 
@@ -32,9 +32,9 @@ Bureaucrat::Bureaucrat(const Bureaucrat& src)
 	:	_name(src._name),
 		_grade(src._grade)
 {
-	if (_grade < _HIGHESTGRADE)
+	if (_grade < 1)
 		throw GradeTooHighException();
-	else if (_grade > _LOWESTGRADE)
+	else if (_grade > 150)
 		throw GradeTooLowException();
 }
 
@@ -45,9 +45,9 @@ Bureaucrat::~Bureaucrat()
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& src)
 {
 	// this->_name = src._name; //we can't do this bc _name is const
-	if (src._grade < _HIGHESTGRADE)
+	if (src._grade < 1)
 		throw GradeTooHighException();
-	else if (src._grade > _LOWESTGRADE)
+	else if (src._grade > 150)
 		throw GradeTooLowException();
 	else
 		this->_grade = src._grade;
@@ -64,26 +64,18 @@ const std::string& Bureaucrat::getName() const
 	return (_name);
 }
 
-void	Bureaucrat::incrementGrade(int incr)
+void	Bureaucrat::incrementGrade()
 {
-	int newGrade = _grade + incr;
-	if (newGrade < _HIGHESTGRADE)
-		throw GradeTooHighException();
-	else if (newGrade > _LOWESTGRADE)
+	if (_grade + 1 > 150)
 		throw GradeTooLowException();
-	else
-		_grade = newGrade;
+	_grade++;
 }
 
-void	Bureaucrat::decrementGrade(int decr)
+void	Bureaucrat::decrementGrade()
 {
-	int newGrade = _grade - decr;
-	if (newGrade < _HIGHESTGRADE)
+	if (_grade - 1 < 1)
 		throw GradeTooHighException();
-	else if (newGrade > _LOWESTGRADE)
-		throw GradeTooLowException();
-	else
-		_grade = newGrade;
+	_grade--;
 }
 
 std::ostream&	operator<<(std::ostream& os, const Bureaucrat&src)
@@ -91,3 +83,7 @@ std::ostream&	operator<<(std::ostream& os, const Bureaucrat&src)
 	os << src.getName() << ", bureaucrat grade: " << src.getGrade();
 	return (os);
 }
+
+/* Once a throw is detected, the rest of the code does not execute
+all try blocks must have at least one associated catch block
+*/
