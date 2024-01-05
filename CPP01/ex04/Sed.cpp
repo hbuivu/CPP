@@ -35,7 +35,7 @@ void	Sed::replace()
 	if (infile.is_open())
 	{
 		//if infile is valid open outfile to be written into
-		std::ofstream outfile(_outfile); //ofstream opens up a file for output
+		 	(_outfile); //ofstream opens up a file for output
 		if (outfile.is_open()) //check that outfile was opened properly
 		{
 			//if s1 is the same as s2, or infile exists but is empty, copy files and exit

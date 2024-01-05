@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 18:01:12 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/05 18:01:12 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "AForm.hpp"
 
-Form::Form()
+AForm::AForm()
 	:	_name("Default"),
 		_signed(false),
-		_signGrade(75),
+		_signedGrade(75),
 		_execGrade(75)
 {
 }
 
-Form::Form(const std::string& name, const int sg, const int eg)
+AForm::AForm(const std::string& name, const int sg, const int eg)
 	:	_name(name),
 		_signed(false),
 		_signedGrade(sg),
@@ -21,7 +33,7 @@ Form::Form(const std::string& name, const int sg, const int eg)
 	
 }
 
-Form::Form(const Form& src)
+AForm::AForm(const AForm& src)
 	:	_name(src._name),
 		_signed(src._signed),
 		_signedGrade(src._signedGrade),
@@ -33,49 +45,50 @@ Form::Form(const Form& src)
 		throw GradeTooLowException();
 }
 
-Form::~Form()
+AForm::~AForm()
 {
 }
 
-Form&	operator=(const Form& src)
+AForm&	AForm::operator=(const AForm& src)
 {
 	if (src._signedGrade < 1 || src._execGrade < 1)
 		throw GradeTooHighException();
 	else if (src._signedGrade > 150 || src._execGrade > 150)
 		throw GradeTooLowException();
 	this->_signed = src._signed;
-	this->_signedGrade = src._signedGrade;
-	this->_execGrade = src._execGrade;
+	return *this;
+	// this->_signedGrade = src._signedGrade; can't be done bc these are constant
+	// this->_execGrade = src._execGrade;
 }
 
-const std::string&	getName() const
+const std::string&	AForm::getName() const
 {
 	return _name;
 }
 
-bool	getSigned() const
+bool	AForm::getSigned() const
 {
 	return _signed;
 }
 
-const int	getSignedGrade() const
+int	AForm::getSignedGrade() const
 {
 	return _signedGrade;
 }
 
-const int getExecGrade() const
+int AForm::getExecGrade() const
 {
-	return getExecGrade;
+	return _execGrade;
 }
 
-void				beSigned(const Bureaucrat& person)
+void	AForm::beSigned(const Bureaucrat& person)
 {
 	if (person.getGrade() > _signedGrade)
 		throw GradeTooLowException();
 	_signed = true;
 }
 
-std::ostream&	operator<<(std::ostream& os, const Form&src)
+std::ostream&	operator<<(std::ostream& os, const AForm&src)
 {
 	os	<< "Name: " << src.getName() << "; "
 		<< "Signed: " << src.getSigned() << "; "

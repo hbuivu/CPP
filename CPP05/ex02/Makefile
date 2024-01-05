@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 10:48:05 by hbui-vu           #+#    #+#              #
-#    Updated: 2024/01/05 16:00:36 by hbui-vu          ###   ########.fr        #
+#    Updated: 2024/01/05 18:25:37 by hbui-vu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Bureaucrat
 
-SRCS =	Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp \
-		RobotomyRequestForm.cpp PresidentialPardonForm.cpp main.cpp
+SRCS =	Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp main.cpp \
+		# RobotomyRequestForm.cpp PresidentialPardonForm.cpp main.cpp
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
 

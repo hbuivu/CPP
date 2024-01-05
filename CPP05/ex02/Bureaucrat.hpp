@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:15 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/05 15:50:55 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/05 18:20:13 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-#include <iostream>
-#include <string>
+# include <iostream>
+# include <string>
+# include "AForm.hpp"
+
+class AForm;
 
 class Bureaucrat
 {
@@ -31,9 +34,9 @@ public:
 	
 	const std::string&	getName() const;
 	int					getGrade() const;
-	void				incrementGrade(int incr);
-	void				decrementGrade(int decr);
-	void				signForm(const Form &form);
+	void				incrementGrade();
+	void				decrementGrade();
+	void				signForm(AForm &form);
 
 	class	GradeTooHighException : public std::exception
 	{

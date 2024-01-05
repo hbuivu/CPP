@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Form.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 18:00:29 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/05 18:00:29 by hbui-vu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Form.hpp"
 
 Form::Form()
 	:	_name("Default"),
 		_signed(false),
-		_signGrade(75),
+		_signedGrade(75),
 		_execGrade(75)
 {
 }
@@ -37,38 +49,39 @@ Form::~Form()
 {
 }
 
-Form&	operator=(const Form& src)
+Form&	Form::operator=(const Form& src)
 {
 	if (src._signedGrade < 1 || src._execGrade < 1)
 		throw GradeTooHighException();
 	else if (src._signedGrade > 150 || src._execGrade > 150)
 		throw GradeTooLowException();
 	this->_signed = src._signed;
-	this->_signedGrade = src._signedGrade;
-	this->_execGrade = src._execGrade;
+	return *this;
+	// this->_signedGrade = src._signedGrade; can't be done bc these are constant
+	// this->_execGrade = src._execGrade;
 }
 
-const std::string&	getName() const
+const std::string&	Form::getName() const
 {
 	return _name;
 }
 
-bool	getSigned() const
+bool	Form::getSigned() const
 {
 	return _signed;
 }
 
-const int	getSignedGrade() const
+int	Form::getSignedGrade() const
 {
 	return _signedGrade;
 }
 
-const int getExecGrade() const
+int Form::getExecGrade() const
 {
-	return getExecGrade;
+	return _execGrade;
 }
 
-void				beSigned(const Bureaucrat& person)
+void	Form::beSigned(const Bureaucrat& person)
 {
 	if (person.getGrade() > _signedGrade)
 		throw GradeTooLowException();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:15 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/05 09:17:49 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/05 17:44:22 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ public:
 
 	const std::string&	getName() const;
 	int					getGrade() const;
-	void				incrementGrade(int incr);
-	void				decrementGrade(int decr);
+	void				incrementGrade();
+	void				decrementGrade();
 
 	class	GradeTooHighException : public std::exception
 	{

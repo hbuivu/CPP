@@ -6,11 +6,13 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:22 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/04 19:24:54 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/05 18:25:14 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 int main()
 {
