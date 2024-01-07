@@ -44,17 +44,13 @@ public:
 	class GradeTooHighException : public std::exception
 	{
 	public:
-		const char *what() const throw(){
-			return "Grade too high. The highest possible grade is 150\n";
-		}
+		const char *what() const throw(){ return "Grade too high. The highest possible grade is 150\n"; }
 	};
 
 	class GradeTooLowException : public std::exception
 	{
 	public:
-		const char *what() const throw(){
-			return "Grade too low. The lowest possible grade is 150\n";
-		}
+		const char *what() const throw(){ return "Grade too low. The lowest possible grade is 150\n"; }
 	};
 };
 
