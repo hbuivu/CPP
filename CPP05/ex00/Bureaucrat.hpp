@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:15 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/05 17:44:22 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/11 13:35:23 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ public:
 	{
 	public:
 		const char*	what() const throw() {
-			return "Grade too high. The highest possible grade is 1\n";
+			return "Grade too high. The highest possible grade is 1";
 		};
 	};
 	
@@ -46,7 +46,7 @@ public:
 	{
 	public:
 		const char *what() const throw(){
-			return "Grade too low. The lowest possible grade is 150\n";
+			return "Grade too low. The lowest possible grade is 150";
 		}
 	};
 };

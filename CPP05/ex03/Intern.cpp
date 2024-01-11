@@ -34,37 +34,44 @@ Intern&	Intern::operator=(const Intern& src)
 AForm*	Intern::makeForm(const std::string& form, const std::string& target) const
 {
 	AForm*	newForm;
-	std::string formType[3] = {"Shrubbery", "Robotomy", "Presidential Pardon"};
+	std::string formType[] = {"Shrubbery", "Robotomy", "Presidential Pardon"};
 	int i = -1;
 	while (++i < 3)
 		if (formType[i] == form)
 			break;
-	switch (i)
+	if (i == 3)
+		throw FormNotRecognizedException();
+	switch (i) 
 	{
-		case 0:
-		{
-			newForm = new ShrubberyCreationForm(target);
-			break;
-		}
-		case 1:
-		{
-			newForm = new RobotomyRequestForm(target);
-			break;
-		}
-		case 2:
-		{
-			newForm = new PresidentialPardonForm(target);
-			break;
-		}
-		default:
-		{
-			newForm = NULL;
-			break;
-		}
+		case 0: newForm = new ShrubberyCreationForm(target); break;
+		case 1: newForm = new RobotomyRequestForm(target); break;
+		case 2: newForm = new PresidentialPardonForm(target); break;
+		default: newForm = NULL; break;
 	}
-	if (newForm)
-		std::cout << "Intern creates " << newForm->getName() << std::endl;
-	else
-		std::cout << "Form not recognized!" << std::endl;
+	std::cout << "Intern creates form " << newForm->getName() << std::endl;
 	return (newForm);
 }
+
+	// switch (i)
+	// {
+	// 	case 0:
+	// 	{
+	// 		newForm = new ShrubberyCreationForm(target);
+	// 		break;
+	// 	}
+	// 	case 1:
+	// 	{
+	// 		newForm = new RobotomyRequestForm(target);
+	// 		break;
+	// 	}
+	// 	case 2:
+	// 	{
+	// 		newForm = new PresidentialPardonForm(target);
+	// 		break;
+	// 	}
+	// 	default:
+	// 	{
+	// 		newForm = NULL;
+	// 		break;
+	// 	}
+	// }

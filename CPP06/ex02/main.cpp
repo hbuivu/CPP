@@ -5,26 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 17:57:14 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 19:08:15 by hbui-vu          ###   ########.fr       */
+/*   Created: 2024/01/10 16:19:04 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/10 16:59:54 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <iostream>
-
-void add_two(int& i)
-{
-	std::cout << i + 2 << "\n";
-}
+#include "Base.hpp"
 
 int main()
 {
-	int array[] = {5, 6, 7, 7, 8, 9, 10};
-	int len = 7;
-	::iter(array, len, &add_two);
+	Base *b = generate();
+	
+	identify(b);
+	identify(*b);
+	
+	delete b;
 }
 
-	// char *str = "hello world\n";
-	// size_t length = 12;
-	// ::iter(array, length, )
+/* 
+NOTES:
+dynamic_cast operator
+-safely converts from a pointer (or reference) to a base type to a pointer (or reference) to a derived type.
+-it answers whether we can SAFELY ASSIGN the address of a pointer to a particular type
+-invovles run time type check
+if the object bound to the pointer is not an object of target type, it fails and value is 0 (for pointers)
+in the case of reference, it will throw an exception(bad cast);
+requires base class to have at least one virtual function
+
+*/

@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:57:29 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 18:58:41 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/10 19:08:09 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // }
 
 template<typename A>
-void iter(A* array, size_t length, void (*f)(const A& element))
+void iter(A* array, size_t length, void (*f)(A& element))
 {
 	for (size_t iterator = 0; iterator < length; iterator++)
 		(*f)(array[iterator]);

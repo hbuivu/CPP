@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:15 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/05 17:59:26 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/11 14:35:06 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ public:
 	int					getGrade() const;
 	void				incrementGrade();
 	void				decrementGrade();
-	void				signForm(Form &form);
+	void				signForm(Form &form) const;
 
 	class	GradeTooHighException : public std::exception
 	{
 	public:
 		const char*	what() const throw() {
-			return "Grade too high. The highest possible grade is 1\n";
+			return "Grade too high. The highest possible grade is 1";
 		};
 	};
 	
@@ -50,7 +50,7 @@ public:
 	{
 	public:
 		const char *what() const throw(){
-			return "Grade too low. The lowest possible grade is 150\n";
+			return "Grade too low. The lowest possible grade is 150";
 		}
 	};
 };

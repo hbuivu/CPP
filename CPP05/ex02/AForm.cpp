@@ -30,7 +30,6 @@ AForm::AForm(const std::string& name, const int sg, const int eg)
 		throw GradeTooHighException();
 	else if (_signedGrade > 150 || _execGrade > 150)
 		throw GradeTooLowException();
-	
 }
 
 AForm::AForm(const AForm& src)
@@ -57,8 +56,6 @@ AForm&	AForm::operator=(const AForm& src)
 		throw GradeTooLowException();
 	this->_signed = src._signed;
 	return *this;
-	// this->_signedGrade = src._signedGrade; can't be done bc these are constant
-	// this->_execGrade = src._execGrade;
 }
 
 const std::string&	AForm::getName() const
@@ -84,7 +81,9 @@ int AForm::getExecGrade() const
 void	AForm::beSigned(const Bureaucrat& person)
 {
 	if (person.getGrade() > _signedGrade)
-		throw GradeTooLowException();
+		throw ExecutorGradeTooLowException();
+	if (_signed == true)
+		throw FormAlreadySignedException();
 	_signed = true;
 }
 
@@ -93,7 +92,7 @@ void	AForm::checkExec(const Bureaucrat& executor) const
 	if (this->getSigned() == false)
 		throw FormNotSignedException();
 	else if (executor.getGrade() > this->getExecGrade())
-		throw GradeTooLowException();
+		throw ExecutorGradeTooLowException();
 }
 
 std::ostream&	operator<<(std::ostream& os, const AForm&src)

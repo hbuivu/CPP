@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:16:32 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 15:41:39 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/10 16:44:35 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define BASE_HPP
 
 # include <string>
+# include <iostream>
+# include <cstdlib>
+# include <ctime>
 
 class Base
 {
@@ -24,15 +27,22 @@ public:
 class A : public Base
 {
 public:
-		
+	~A();
+	void	printType(){std::cout << "A\n";}
 };
 
 class B : public Base
 {
+public:
+	~B();
+	void	printType(){std::cout << "B\n";}
 };
 
 class C : public Base
 {
+public:
+	~C();
+	void	printType(){std::cout << "C\n";}
 };
 
 Base*	generate(void);

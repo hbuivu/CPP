@@ -20,6 +20,7 @@ Form::Form()
 {
 }
 
+//signedGrade and execGrade are const, so must be intialized in list
 Form::Form(const std::string& name, const int sg, const int eg)
 	:	_name(name),
 		_signed(false),
@@ -30,7 +31,6 @@ Form::Form(const std::string& name, const int sg, const int eg)
 		throw GradeTooHighException();
 	else if (_signedGrade > 150 || _execGrade > 150)
 		throw GradeTooLowException();
-	
 }
 
 Form::Form(const Form& src)
@@ -49,6 +49,7 @@ Form::~Form()
 {
 }
 
+//can't copy over signedGrade or execGrade bc they are constants
 Form&	Form::operator=(const Form& src)
 {
 	if (src._signedGrade < 1 || src._execGrade < 1)
@@ -57,8 +58,6 @@ Form&	Form::operator=(const Form& src)
 		throw GradeTooLowException();
 	this->_signed = src._signed;
 	return *this;
-	// this->_signedGrade = src._signedGrade; can't be done bc these are constant
-	// this->_execGrade = src._execGrade;
 }
 
 const std::string&	Form::getName() const
@@ -84,7 +83,9 @@ int Form::getExecGrade() const
 void	Form::beSigned(const Bureaucrat& person)
 {
 	if (person.getGrade() > _signedGrade)
-		throw GradeTooLowException();
+		throw ExecutorGradeTooLowException();
+	if (_signed == true)
+		throw FormAlreadySignedException();
 	_signed = true;
 }
 
@@ -93,6 +94,6 @@ std::ostream&	operator<<(std::ostream& os, const Form&src)
 	os	<< "Name: " << src.getName() << "; "
 		<< "Signed: " << src.getSigned() << "; "
 		<< "Signed Grade: " << src.getSignedGrade() << "; "
-		<< "Execution Grade: " << src.getExecGrade() << std::endl;
+		<< "Execution Grade: " << src.getExecGrade();
 	return (os);
 }

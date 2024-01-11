@@ -42,12 +42,9 @@ RobotomyRequestForm&	RobotomyRequestForm::operator=(const RobotomyRequestForm& s
 
 void	RobotomyRequestForm::execute(const Bureaucrat& executor) const
 {
-	// if (this->getSigned() == false)
-	// 	throw FormNotSignedException();
-	// else if (executor.getGrade() > this->getExecGrade())
-	// 	throw GradeTooLowException();
 	(void)executor;
 	std::cout << "*Makes drilling noises*\n";
+	srand(static_cast<unsigned>(time(NULL)));
 	bool success = rand() % 2;
 	if (success == true)
 		std::cout << _target << " has been robotomized successfully\n";

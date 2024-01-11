@@ -30,6 +30,12 @@ public:
 	Intern&	operator=(const Intern& src);
 
 	AForm*	makeForm(const std::string& form, const std::string& target) const;
+	
+	class FormNotRecognizedException : public std::exception
+	{
+	public:
+		const char *what() const throw() { return "Form not recognized"; }
+	};
 };
 
 #endif

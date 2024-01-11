@@ -31,7 +31,7 @@ public:
 	AForm(const std::string& name, const int sg, const int eg);
 	AForm(const AForm& src);
 	AForm(const std::string);
-	~AForm();
+	virtual ~AForm();
 
 	AForm&	operator=(const AForm& src);
 
@@ -40,25 +40,37 @@ public:
 	int					getSignedGrade() const;
 	int					getExecGrade() const;
 	void				beSigned(const Bureaucrat& person);
-	virtual void		execute(const Bureaucrat& executor) const = 0;
 	void				checkExec(const Bureaucrat& executor) const;
+	virtual void		execute(const Bureaucrat& executor) const = 0;
 
 	class GradeTooHighException : public std::exception
 	{
 	public:
-		const char *what() const throw(){ return "Grade too high. The highest possible grade is 150\n";}
+		const char *what() const throw(){ return "Form grade too high."; }
 	};
 
 	class GradeTooLowException : public std::exception
 	{
 	public:
-		const char *what() const throw(){ return "Grade too low. The lowest possible grade is 150\n";}
+		const char *what() const throw(){ return "Form grade too low."; }
 	};
 
 	class FormNotSignedException : public std::exception
 	{
 	public:
-		const char *what() const throw(){ return "Form not signed\n"; }
+		const char *what() const throw(){ return "Form not signed"; }
+	};
+
+	class ExecutorGradeTooLowException : public std::exception
+	{
+	public:
+		const char *what() const throw(){ return "Executor's grade too low"; }
+	};
+
+	class FormAlreadySignedException : public std::exception
+	{
+	public:
+		const char *what() const throw(){ return "Form already signed"; }
 	};
 };
 

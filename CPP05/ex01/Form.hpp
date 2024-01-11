@@ -30,7 +30,6 @@ public:
 	Form();
 	Form(const std::string& name, const int sg, const int eg);
 	Form(const Form& src);
-	Form(const std::string);
 	~Form();
 
 	Form&	operator=(const Form& src);
@@ -44,13 +43,25 @@ public:
 	class GradeTooHighException : public std::exception
 	{
 	public:
-		const char *what() const throw(){ return "Grade too high. The highest possible grade is 150\n"; }
+		const char *what() const throw(){ return "Form grade too high. The highest possible grade is 150"; }
 	};
 
 	class GradeTooLowException : public std::exception
 	{
 	public:
-		const char *what() const throw(){ return "Grade too low. The lowest possible grade is 150\n"; }
+		const char *what() const throw(){ return "Form grade too low. The lowest possible grade is 150"; }
+	};
+
+	class ExecutorGradeTooLowException : public std::exception
+	{
+	public:
+		const char *what() const throw(){ return "Executor grade too low."; }
+	};
+
+	class FormAlreadySignedException : public std::exception
+	{
+	public:
+		const char *what() const throw(){ return "Form already signed."; }
 	};
 };
 

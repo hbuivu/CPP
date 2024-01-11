@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:22 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/04 19:24:54 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/11 13:41:28 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,30 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << "something\n";
+		std::cerr << e.what() << '\n';
 	}
 	try
 	{
-		Bureaucrat C("C", 100);
-		std::cout << C << " created successfully\n";	
+		Bureaucrat C("C", 2);
+		std::cout << C << " created successfully\n";
+		C.incrementGrade();
+		std::cout << C << " incremented grade succesfully!\n";
+		C.incrementGrade();	
+		std::cout << C << " incremented grade succesfully!\n";
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	try
+	{
+		Bureaucrat C("C", 149);
+		std::cout << C << " created successfully\n";
+		C.decrementGrade();
+		std::cout << C << " decremented grade succesfully!\n";
+		C.decrementGrade();	
+		std::cout << C << " decremented grade succesfully!\n";
 	}
 	catch(const std::exception& e)
 	{

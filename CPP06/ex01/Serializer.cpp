@@ -6,24 +6,17 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:00:13 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/08 19:19:11 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/10 16:22:26 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Serializer.hpp"
 
-Serializer::Serializer()
-{
-}
+Serializer::Serializer(){}
 
-Serializer::Serializer(const Serializer& src)
-{
-	(void) src;
-}
+Serializer::Serializer(const Serializer& src){(void) src;}
 
-Serializer::~Serializer()
-{
-}
+Serializer::~Serializer(){}
 
 Serializer&	Serializer::operator=(const Serializer& src)
 {
