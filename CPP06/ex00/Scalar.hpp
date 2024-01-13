@@ -17,6 +17,8 @@
 # include <iostream>
 # include <iomanip>
 # include <cmath>
+# include <cfloat>
+# include <climits>
 
 class Scalar
 {
@@ -52,12 +54,10 @@ public:
 What is a static class?
 can't be instantiated - so set constructor/destructor to private
 all members are static
+
+implicit cast - automatically casting from one type to another (int -> float for example)
+promotion casts (type widening) - conversion of a type from a smaller type to a larger type (float -> double)
+static cast - a way for the programmer to explicitly cast one compatible type to another
+dynamic cast - used for casting within class hierarchies
 */
 
-/* 
--detect type
--convert to appropriate type
--from og type, convert to other types using static_cast
-characters should be anything printable except for numbers
-numbers can be characters as long as they fall within the 255 (also there's negative ascii)
-*/

@@ -5,19 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/08 14:45:38 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/11 17:10:02 by hbui-vu          ###   ########.fr       */
+/*   Created: 2024/01/12 10:41:07 by hbui-vu           #+#    #+#             */
+/*   Updated: 2024/01/13 10:56:36 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Scalar.hpp"
+#include "Data.hpp"
+#include "Serializer.hpp"
 
-int main(int argc, char **argv)
+int main()
 {
-	if (argc != 2)
-	{
-		std::cerr << "Usage: ./convert <arg>\n";
-		return 1;
-	}
-	Scalar::convert(argv[1]);
+	Data *data = new Data;
+	data->info = "some data\n";
+	uintptr_t serAddress = Serializer::serialize(data);
+	std::cout << "serialized address: " << serAddress << "\n";
+	Data * desAddress = Serializer::deserialize(serAddress);
+	std::cout	<< "data address: " << data << "\n"
+				<< "desAddress:   " << desAddress << "\n";
+	std::cout << data->info;
+	data->info = "hello\n";
+	std::cout << data->info;
 }

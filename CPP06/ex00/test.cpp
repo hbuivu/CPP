@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 
 bool	isMisplacedF(std::string::const_iterator it, const std::string& literal)
 {
@@ -23,15 +25,22 @@ int main(void)
 	// for (; it != str.end(); it++)
 	// 	std::cout << isMisplacedF(it, str);
 
-	try
-	{
-		std::stoi("2147483648");
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << "Hello\n";
-	}
-	
+	// try
+	// {
+	// 	std::stoi("2147483648");
+	// }
+	// catch(const std::exception& e)
+	// {
+	// 	std::cout << "Hello\n";
+	// }
 
+	std::string str = "214748364999";
+	// float f = stof(str);
+	// std::cout << f << "\n";
+	// std::cout << std::fixed << std::setprecision(1) << f << "\n";
+
+	long double stdnum = strtold(str.c_str(), NULL);
+	// int i  = std::atoi(str.c_str());
+	std::cout << std::fixed << std::setprecision(1) << stdnum << "\n";
 }
 

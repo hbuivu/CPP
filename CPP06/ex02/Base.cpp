@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:27:10 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 17:08:24 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/13 11:01:09 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,18 @@ Base*	generate(void)
 	Base *newClass = NULL;
 	switch (pick)
 	{
-		case 0:
-		{
-			newClass = new A();
-			break;
-		}
-		case 1:
-		{
-			newClass = new B();
-			break;
-		}
-		case 2:
-		{
-			newClass = new C();
-			break;
-		}
-		default:
-		{
-			newClass = NULL;
-			break;
-		}
+		case 0: newClass = new A(); break;
+		case 1: newClass = new B(); break;
+		case 2:	newClass = new C(); break;
+		default: newClass = NULL; break;
 	}
 	return (newClass);
 }
 
 void	identify(Base* p)
 {
+	if (p == NULL)
+		return ;
 	if (A* isItA = dynamic_cast<A*>(p))//if it not true, isItA == NULL (or 0)
 		isItA->printType();
 	else if (B* isItB = dynamic_cast<B*>(p))
@@ -90,16 +76,19 @@ void	identify(Base& p)
 	}
 }
 
-// try {
-//     dynamic_cast<A&>(p).printType();
-// } catch (const std::exception& e) {
-//     try {
-//         dynamic_cast<B&>(p).printType();
-//     } catch (const std::exception& e) {
-//         try {
-//             dynamic_cast<C&>(p).printType();
-//         } catch (const std::exception& e) {
-//             std::cout << "UNKNOWN\n";
-//         }
-//     }
-// }
+/* NOTES:
+try {
+    dynamic_cast<A&>(p).printType();
+} catch (const std::exception& e) {
+    try {
+        dynamic_cast<B&>(p).printType();
+    } catch (const std::exception& e) {
+        try {
+            dynamic_cast<C&>(p).printType();
+        } catch (const std::exception& e) {
+            std::cout << "UNKNOWN\n";
+        }
+    }
+}
+Shorter format
+*/

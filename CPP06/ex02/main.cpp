@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 16:19:04 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 16:59:54 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/12 10:53:27 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,25 @@
 int main()
 {
 	Base *b = generate();
-	
 	identify(b);
 	identify(*b);
-	
 	delete b;
+	
+	{
+		Base *a = new A;
+		Base *b = new B;
+		Base *c = new C;
+		
+		identify(a);
+		identify(*a);
+		identify(b);
+		identify(*b);
+		identify(c);
+		identify(*c);
+		delete a;
+		delete b;
+		delete c;	
+	}
 }
 
 /* 
