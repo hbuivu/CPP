@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 15:01:18 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/11 13:40:52 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/12 13:17:14 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,10 @@ std::ostream&	operator<<(std::ostream& os, const Bureaucrat&src)
 
 /* Once a throw is detected, the rest of the code does not execute
 all try blocks must have at least one associated catch block
+
+the throw() part is an exception specification, and it 
+specifies the exceptions the function is allowed to throw
+throw() means that the function is not expected to throw any expceptions
+
+in C++11, we use noexcept to make it clearer
 */

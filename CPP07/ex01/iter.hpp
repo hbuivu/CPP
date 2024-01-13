@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:57:29 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 19:08:09 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/12 13:03:36 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ITER_HPP
 
 # include <cstdlib>
+# include <iostream>
 
 // template<typename A, typename F>
 // void	iter(A* array, size_t length, F func) //does func need to be able to take A
@@ -22,11 +23,17 @@
 // 		func(array[iterator]);
 // }
 
-template<typename A>
-void iter(A* array, size_t length, void (*f)(A& element))
+template<typename T>
+void iter(T* array, size_t length, void (*f)(T& element))
 {
 	for (size_t iterator = 0; iterator < length; iterator++)
 		(*f)(array[iterator]);
+}
+
+template<typename T>
+void	printElement(T& element)
+{
+	std::cout << element << " ";
 }
 
 #endif
