@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:23:09 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/12 13:32:18 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/12 18:13:31 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 	~Array();
 	
 	Array&	operator=(const Array& src);
-	T&	operator[](const int& index);
+	T&	operator[](const size_t& index);
 
 	size_t	size() const;
 

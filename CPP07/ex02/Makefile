@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+         #
+#    By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 10:48:05 by hbui-vu           #+#    #+#              #
-#    Updated: 2024/01/12 13:30:11 by hbui-vu          ###   ########.fr        #
+#    Updated: 2024/01/12 18:09:42 by hbui-vu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Array
 
-SRCS = main.cpp Array.tpp
+SRCS = main.cpp
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
 
