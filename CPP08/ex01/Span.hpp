@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:25:59 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/15 17:49:59 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/15 18:30:22 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ class Span
 {
 private:
 	int					_size;
-	std::multiset<int>	_array; //if numbers are stored in order, we can use first and last to find largest span
-	// std::array<int>		_array; //however, here we have a finite size and we can also just use min_element and max_elemen
+	std::multiset<int>	_array;
 	
 	Span();
 public:
