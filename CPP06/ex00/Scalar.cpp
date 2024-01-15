@@ -24,20 +24,12 @@ Scalar&	Scalar::operator=(const Scalar& src)
 	return *this;
 }
 
-bool	Scalar::isInvalidChar(char c)
-{
-	return (c < '0' ||  c > '9') && c != '.' && c != 'f';
-}
-
-bool	Scalar::isMisplacedF(std::string::const_iterator& it, const std::string& literal)
-{
-	std::string::const_iterator it2 = it + 1;
-	return *it == 'f' && it2 != literal.end();
-}
-
 void	Scalar::checkValidNum(const std::string& literal)
 {
-	int	decimalPoint = 0;
+	int	decimalPoint	= 0;
+	int f				= 0;
+	char lastElem		= literal[literal.size() - 1]; //unfortunately str.back() is not included in c++98
+
 	std::string::const_iterator it = literal.begin();
 	if (*it == '-' || *it == '+')
 		it++;
@@ -45,41 +37,33 @@ void	Scalar::checkValidNum(const std::string& literal)
 	{
 		if (*it == '.')
 			decimalPoint++;
-		if (decimalPoint > 1 || isInvalidChar(*it) || isMisplacedF(it, literal))
+		if (*it == 'f')
+			f++;
+		if (decimalPoint > 1 || f > 1 || 
+			((*it < '0' ||  *it > '9') && *it != '.' && *it != 'f'))
 			throw invalidInputException();
 	}
-}
-
-void	Scalar::checkValidStr(const std::string& literal)
-{
-	if (literal.length() > 5)
-		throw invalidInputException();
-	if (literal != "nan" && literal != "nanf" && literal != "inf" && literal != "+inf" &&
-		literal != "-inf" && literal != "inff" && literal != "+inff" && literal != "-inff")
+	if ((lastElem == 'f' && decimalPoint == 0) || (f > 0 && lastElem != 'f'))
 		throw invalidInputException();
 }
 
-//returns 1 if char, 2 if num, 3 if string
+//returns 1 if str, 2 if char, 3 if num
 int	Scalar::checkString(const std::string& literal)
 {
 	char firstElem = literal.at(0);
-	char secondElem = literal.at(1);
 
+	if (literal == "nan" || literal == "nanf" || literal == "inf" || literal == "+inf" ||
+		literal == "inff" || literal == "+inff" || literal == "-inf" || literal == "-inff")
+		return 1;
 	if ((firstElem < '0' || firstElem > '9') && literal.length() == 1)
-		return 1; 
-	else if ((firstElem >= '0' && firstElem <= '9') || 
-			(firstElem == '-' && secondElem != 'i') || 
-			(firstElem == '+' && secondElem != 'i'))
+		return 2; 
+	if ((firstElem >= '0' && firstElem <= '9') || 
+			firstElem == '-' || firstElem == '+')
 	{
 		checkValidNum(literal);
-		return 2;
-	}
-	else
-	{
-		checkValidStr(literal);
 		return 3;
 	}
-	return (0);
+	throw invalidInputException();
 }
 
 void	Scalar::convertChar(const std::string& literal)
@@ -106,7 +90,7 @@ void	Scalar::convertNum(const std::string& literal)
 	else if ((num >= 0 && num <= 31) || num == 127)
 		std::cout << "char: Non displayable\n";
 	else
-		std::cout << "char: " << static_cast<char>(num) << "\n";
+		std::cout << "char: '" << static_cast<char>(num) << "'\n";
 	if (num > INT_MAX || num < INT_MIN)
 		std::cout << "int: impossible\n";
 	else
@@ -149,9 +133,9 @@ void	Scalar::convert(const std::string& literal)
 		int i = checkString(literal);
 		switch(i)
 		{
-			case 1: convertChar(literal); break;
-			case 2: convertNum(literal); break;
-			case 3: convertStr(literal); break;
+			case 1: convertStr(literal); break;
+			case 2: convertChar(literal); break;
+			case 3: convertNum(literal); break;
 			default: break;
 		}
 	}
@@ -167,11 +151,6 @@ switch statements only apply to numbers in C++98. we can use strings in C++17
 iterators are a bit like pointers, but they are not exactly pointers as they are more generalized. Also some may not support pointer math
 use const_iterator for const strings
 explicit type conversion means using static cast
-
-STILL NEED TO FIX:
-with large numbers we lose accuracy
-Test instantiation
-
 
 The issue you're encountering is related to the fact that the number "2147483647" 
 is at the edge of representable integers for a 32-bit float. 

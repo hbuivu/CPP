@@ -39,8 +39,9 @@ int main(void)
 	// std::cout << f << "\n";
 	// std::cout << std::fixed << std::setprecision(1) << f << "\n";
 
-	long double stdnum = strtold(str.c_str(), NULL);
-	// int i  = std::atoi(str.c_str());
-	std::cout << std::fixed << std::setprecision(1) << stdnum << "\n";
+	// long double stdnum = strtold(str.c_str(), NULL);
+	// // int i  = std::atoi(str.c_str());
+	// std::cout << std::fixed << std::setprecision(1) << stdnum << "\n";
+	std::cout << std::fixed << std::setprecision(1) << 2147483647.0f << "\n";
 }
 

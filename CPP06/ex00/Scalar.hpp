@@ -29,10 +29,7 @@ private:
 
 	Scalar&	operator=(const Scalar& src);
 
-	static bool	isInvalidChar(char c);
-	static bool isMisplacedF(std::string::const_iterator& it, const std::string& literal);
 	static void	checkValidNum(const std::string& literal);
-	static void	checkValidStr(const std::string& literal);
 	static int	checkString(const std::string& literal);
 	static void	convertChar(const std::string& literal);
 	static void	convertNum(const std::string& literal);
