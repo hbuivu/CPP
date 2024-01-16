@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Scalar.cpp                                         :+:      :+:    :+:   */
+/*   ScalarConverter.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,32 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Scalar.hpp"
+#include "ScalarConverter.hpp"
 
-Scalar::Scalar(){}
+ScalarConverter::ScalarConverter(){}
 
-Scalar::Scalar(const Scalar& src){ (void)src; }
+ScalarConverter::ScalarConverter(const ScalarConverter& src){ (void)src; }
 
-Scalar::~Scalar(){}
+ScalarConverter::~ScalarConverter(){}
 
-Scalar&	Scalar::operator=(const Scalar& src)
+ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& src)
 {
 	(void)src;
 	return *this;
 }
 
-bool	Scalar::isInvalidChar(char c)
+bool	ScalarConverter::isInvalidChar(char c)
 {
 	return (c < '0' ||  c > '9') && c != '.' && c != 'f';
 }
 
-bool	Scalar::isMisplacedF(std::string::const_iterator& it, const std::string& literal)
+bool	ScalarConverter::isMisplacedF(std::string::const_iterator& it, const std::string& literal)
 {
 	std::string::const_iterator it2 = it + 1;
 	return *it == 'f' && it2 != literal.end();
 }
 
-void	Scalar::checkValidNum(const std::string& literal)
+void	ScalarConverter::checkValidNum(const std::string& literal)
 {
 	int	decimalPoint = 0;
 	std::string::const_iterator it = literal.begin();
@@ -50,7 +50,7 @@ void	Scalar::checkValidNum(const std::string& literal)
 	}
 }
 
-void	Scalar::checkValidStr(const std::string& literal)
+void	ScalarConverter::checkValidStr(const std::string& literal)
 {
 	if (literal.length() > 5)
 		throw invalidInputException();
@@ -62,7 +62,7 @@ void	Scalar::checkValidStr(const std::string& literal)
 }
 
 //returns 1 if char, 2 if num, 3 if string, don't need to return for invalid since we will throw an error
-int	Scalar::checkString(const std::string& literal)
+int	ScalarConverter::checkString(const std::string& literal)
 {
 	char firstElem = literal.at(0);
 
@@ -81,7 +81,7 @@ int	Scalar::checkString(const std::string& literal)
 	return (0);
 }
 
-void	Scalar::convertChar(const std::string& literal)
+void	ScalarConverter::convertChar(const std::string& literal)
 {
 	char c = *(literal.begin());
 	std::cout	<< "char: '" << c << "'\n"
@@ -90,7 +90,7 @@ void	Scalar::convertChar(const std::string& literal)
 				<< "double: " << std::fixed << std::setprecision(1) << static_cast<double>(c) << std::endl;
 }
 
-void	Scalar::convertNum(const std::string& literal)
+void	ScalarConverter::convertNum(const std::string& literal)
 {
 	try
 	{
@@ -138,7 +138,7 @@ void	Scalar::convertNum(const std::string& literal)
 	}
 }
 
-void	Scalar::convertStr(const std::string& literal)
+void	ScalarConverter::convertStr(const std::string& literal)
 {
 	std::cout	<< "char:: impossible\n"
 				<< "int: impossible\n";
@@ -156,7 +156,7 @@ void	Scalar::convertStr(const std::string& literal)
 					<< "double: +inf" << std::endl;
 }
 
-void	Scalar::convert(const std::string& literal)
+void	ScalarConverter::convert(const std::string& literal)
 {
 	try
 	{

@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 10:41:07 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/13 10:56:36 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:33:05 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ int main()
 	std::cout << data->info;
 	data->info = "hello\n";
 	std::cout << data->info;
+	delete data;
 }

@@ -6,11 +6,11 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:45:38 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/15 14:22:41 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/16 14:02:37 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Scalar.hpp"
+#include "ScalarConverter.hpp"
 
 int main(int argc, char **argv)
 {
@@ -19,6 +19,6 @@ int main(int argc, char **argv)
 		std::cerr << "Usage: ./convert <arg>\n";
 		return 1;
 	}
-	Scalar::convert(argv[1]);
+	ScalarConverter::convert(argv[1]);
 	// Scalar s;
 }

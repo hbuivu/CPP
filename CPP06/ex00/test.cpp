@@ -34,7 +34,8 @@ int main(void)
 	// 	std::cout << "Hello\n";
 	// }
 
-	std::string str = "214748364999";
+	// std::string str = "214748364999";
+
 	// float f = stof(str);
 	// std::cout << f << "\n";
 	// std::cout << std::fixed << std::setprecision(1) << f << "\n";
@@ -42,6 +43,18 @@ int main(void)
 	// long double stdnum = strtold(str.c_str(), NULL);
 	// // int i  = std::atoi(str.c_str());
 	// std::cout << std::fixed << std::setprecision(1) << stdnum << "\n";
-	std::cout << std::fixed << std::setprecision(1) << 2147483647.0f << "\n";
+	// std::cout << std::fixed << std::setprecision(1) << 2147483647.0f << "\n";
+	// std::cout  << static_cast<long double>(100000.14) << "\n";
+	// std::string str1 = "100000.14";
+	std::string str1 = "1000adsfjkadj";
+	// long double num = strtold(str1.c_str(), NULL);
+	double num = atof(str1.c_str());
+	// long double num = stold(str1);
+	// std::cout << num << "\n";
+
+	std::cout << num << "\n";
+    // std::cout << std::fixed << std::setprecision(2) << num << "\n";
+	// std::cout << strtold(str1.c_str(), NULL) << "\n";
+
 }
 

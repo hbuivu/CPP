@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Scalar.cpp                                         :+:      :+:    :+:   */
+/*   ScalarConverter.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Scalar.hpp"
+#include "ScalarConverter.hpp"
 
-Scalar::Scalar(){}
+ScalarConverter::ScalarConverter(){}
 
-Scalar::Scalar(const Scalar& src){ (void)src; }
+ScalarConverter::ScalarConverter(const ScalarConverter& src){ (void)src; }
 
-Scalar::~Scalar(){}
+ScalarConverter::~ScalarConverter(){}
 
-Scalar&	Scalar::operator=(const Scalar& src)
+ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& src)
 {
 	(void)src;
 	return *this;
 }
 
-void	Scalar::checkValidNum(const std::string& literal)
+void	ScalarConverter::checkValidNum(const std::string& literal, int& decPlaces)
 {
 	int	decimalPoint	= 0;
 	int f				= 0;
@@ -39,6 +39,8 @@ void	Scalar::checkValidNum(const std::string& literal)
 			decimalPoint++;
 		if (*it == 'f')
 			f++;
+		if (decimalPoint == 1 && *it != '.')
+			decPlaces++;
 		if (decimalPoint > 1 || f > 1 || 
 			((*it < '0' ||  *it > '9') && *it != '.' && *it != 'f'))
 			throw invalidInputException();
@@ -48,7 +50,7 @@ void	Scalar::checkValidNum(const std::string& literal)
 }
 
 //returns 1 if str, 2 if char, 3 if num
-int	Scalar::checkString(const std::string& literal)
+int	ScalarConverter::checkString(const std::string& literal, int& decPlaces)
 {
 	char firstElem = literal.at(0);
 
@@ -60,13 +62,13 @@ int	Scalar::checkString(const std::string& literal)
 	if ((firstElem >= '0' && firstElem <= '9') || 
 			firstElem == '-' || firstElem == '+')
 	{
-		checkValidNum(literal);
+		checkValidNum(literal, decPlaces);
 		return 3;
 	}
 	throw invalidInputException();
 }
 
-void	Scalar::convertChar(const std::string& literal)
+void	ScalarConverter::convertChar(const std::string& literal)
 {
 	char c = *(literal.begin());
 	std::cout	<< "char: '" << c << "'\n"
@@ -75,10 +77,7 @@ void	Scalar::convertChar(const std::string& literal)
 				<< "double: " << std::fixed << std::setprecision(1) << static_cast<double>(c) << std::endl;
 }
 
-/* check for whole numbers. if wholenum, must have one decimal point after num. 
-otherwise, print out as many decimals as allowed 
-strtold converts string to long double */
-void	Scalar::convertNum(const std::string& literal)
+void	ScalarConverter::convertNum(const std::string& literal, int& decPlaces)
 {
 	bool wholeNum 	= false;
 	long double	num = strtold(literal.c_str(), NULL);
@@ -101,7 +100,8 @@ void	Scalar::convertNum(const std::string& literal)
 		std::cout	<< "float: " << std::fixed << std::setprecision(1)
 					<< static_cast<float>(num) << "f\n";
 	else
-		std::cout << "float: " << static_cast<float>(num) << "f\n";
+		std::cout	<< "float: " <<std::fixed << std::setprecision(decPlaces)
+					<< static_cast<float>(num) << "f\n";
 	if (num > DBL_MAX || num < -DBL_MAX)
 		std::cout << "double: impossible\n";
 	else if (wholeNum == true)
@@ -111,7 +111,7 @@ void	Scalar::convertNum(const std::string& literal)
 		std::cout << "double: "	<< static_cast<double>(num) << "\n";	
 }
 
-void	Scalar::convertStr(const std::string& literal)
+void	ScalarConverter::convertStr(const std::string& literal)
 {
 	std::cout	<< "char: impossible\n"
 				<< "int: impossible\n";
@@ -126,16 +126,17 @@ void	Scalar::convertStr(const std::string& literal)
 					<< "double: +inf" << std::endl;
 }
 
-void	Scalar::convert(const std::string& literal)
+void	ScalarConverter::convert(const std::string& literal)
 {
 	try
 	{
-		int i = checkString(literal);
+		int	decPlaces	= 0;
+		int i			= checkString(literal, decPlaces);
 		switch(i)
 		{
 			case 1: convertStr(literal); break;
 			case 2: convertChar(literal); break;
-			case 3: convertNum(literal); break;
+			case 3: convertNum(literal, decPlaces); break;
 			default: break;
 		}
 	}
@@ -158,4 +159,9 @@ When converting it using std::stof, the precision loss occurs, and you get the n
 representable floating-point value, which is "2147483648.0".
 
 Float has less bits of precision than double (and same for double to long double), and so having larger numbers will start to result in precision loss 	
+
+Code Mechanics:
+check if number is a whole number - if it is, it should only have one decimal place
+count number of decimal places - set precision to that number - once we set precision for num for float, we do not have to reset it for double
+note that default precision ends at around 100000, where no more decimal places are printed out in cout
 */

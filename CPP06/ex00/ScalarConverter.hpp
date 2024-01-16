@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Scalar.hpp                                         :+:      :+:    :+:   */
+/*   ScalarConverter.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALAR_HPP
-# define SCALAR_HPP
+#ifndef SCALARCONVERTER_HPP
+# define SCALARCONVERTER_HPP
 
 # include <string>
 # include <iostream>
@@ -20,19 +20,19 @@
 # include <cfloat>
 # include <climits>
 
-class Scalar
+class ScalarConverter
 {
 private:
-	Scalar();
-	Scalar(const Scalar& src);
-	~Scalar();
+	ScalarConverter();
+	ScalarConverter(const ScalarConverter& src);
+	~ScalarConverter();
 
-	Scalar&	operator=(const Scalar& src);
+	ScalarConverter&	operator=(const ScalarConverter& src);
 
-	static void	checkValidNum(const std::string& literal);
-	static int	checkString(const std::string& literal);
+	static void	checkValidNum(const std::string& literal, int& decPlaces);
+	static int	checkString(const std::string& literal, int& decPlaces);
 	static void	convertChar(const std::string& literal);
-	static void	convertNum(const std::string& literal);
+	static void	convertNum(const std::string& literal, int& decPlaces);
 	static void	convertStr(const std::string& literal);
 public:
 	static void	convert(const std::string& literal);
@@ -42,7 +42,6 @@ public:
 	public:
 		const char* what() const throw() {return "Input is invalid.";};
 	};
-
 };
 
 #endif
