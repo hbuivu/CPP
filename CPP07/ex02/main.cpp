@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:34:24 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/12 18:31:06 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/17 21:54:33 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@ int main()
 {
 	try
 	{
+		Array<int>emptyArray;
+		emptyArray[0];
+		
+		Array<int>array(10);
+		std::cout << array[5] << "\n";
+		array[1] = 100;
+		std::cout <<array[1] << "\n";
+		std::cout << array[10];
+		
 		Array<char>arr1(100);
 		arr1[0] = 'a';
 		arr1[1] = 'b';
@@ -29,11 +38,6 @@ int main()
 
 		for (int i = 0; i < 3; i++)
 			std::cout << arr2[i] << "\n";
-		// Array<int>array(10);
-		// std::cout << array[5] << "\n";
-		// array[1] = 100;
-		// std::cout <<array[1] << "\n"
-		// std::cout << array[10];
 	}
 	catch(const std::exception& e)
 	{
