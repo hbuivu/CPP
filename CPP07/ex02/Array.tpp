@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Array.tpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:42:15 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/12 18:14:05 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/18 14:20:57 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ Array<T>::Array(const Array& src)
 template <typename T>
 Array<T>::~Array()
 {
+	delete [] _array;
 }
 
 template <typename T>
