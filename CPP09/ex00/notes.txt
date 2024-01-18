@@ -1,0 +1,27 @@
+C++ streams are considered type-safe - meaning that extraction to variables are limited to that variable type
+ex:
+	std::string dateString = "2024-01-14";
+	std::istringstream ss(dateString);
+	char dash;
+	ss >> dateStruct.tm_year >> dash >> dateStruct.tm_mon >> dash >> dateStruct.tm_mday;
+	dateStruct.tm_year will only take integers and stops when it encounters a nondata character
+
+Parsing:
+dates must be correct
+numbers must be between 0 and 1000 (int or float)
+
+in input.txt
+check if date is valid
+	-is date a real date
+	-is it between first and last values in data.csv
+check if value is valid
+	-number must be between 0 and 1000
+check string
+	-if there are doubles or incorrect characters
+
+.csv file
+use map -> time struct and number
+if anything is incorrect, throw error and shut down program
+alternatively, process line by line, and skip whichever lines are invalid
+
+

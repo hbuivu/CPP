@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:57:29 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/12 13:03:36 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/18 15:01:40 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,11 @@
 # include <cstdlib>
 # include <iostream>
 
-// template<typename A, typename F>
-// void	iter(A* array, size_t length, F func) //does func need to be able to take A
-// {
-// 	for (size_t iterator = 0; iterator < length; iterator++)
-// 		func(array[iterator]);
-// }
-
-template<typename T>
-void iter(T* array, size_t length, void (*f)(T& element))
+template<typename A, typename F>
+void	iter(A* array, size_t length, F func)
 {
 	for (size_t iterator = 0; iterator < length; iterator++)
-		(*f)(array[iterator]);
+		func(array[iterator]);
 }
 
 template<typename T>
@@ -50,3 +43,10 @@ template <> void func<int>(int param) {} // specialization
 
 Template instantiation has two forms: explicit instantiation and implicit instantiation.
 */
+
+// template<typename T>
+// void iter(T* array, size_t length, void (*f)(T& element))
+// {
+// 	for (size_t iterator = 0; iterator < length; iterator++)
+// 		(*f)(array[iterator]);
+// }
