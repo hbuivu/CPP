@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:57:14 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/12 13:09:03 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/17 21:40:44 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,3 @@ int main()
 	std::cout << "\n";
 	::iter(a4, len4, &printElement);
 }
-
-	// char *str = "hello world\n";
-	// size_t length = 12;
-	// ::iter(array, length, )

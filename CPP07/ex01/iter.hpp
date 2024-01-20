@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iter.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:57:29 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/12 13:03:36 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/17 21:40:31 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void iter(T* array, size_t length, void (*f)(T& element))
 template<typename T>
 void	printElement(T& element)
 {
-	std::cout << element << " ";
+	std::cout << element << "\n";
 }
 
 #endif
