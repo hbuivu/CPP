@@ -1,12 +1,12 @@
 #include "BitcoinExchange.hpp"
 #include <cstring>
 
-std::map<std::tm, double, >	BitcoinExchange::_db;
-// std::map<std::tm, double>	BitcoinExchange::_db;
+//initialize with overloaded operator<
+std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> BitcoinExchange::_db(&operator<);
 std::tm		BitcoinExchange::_date;
 double		BitcoinExchange::_value = 0;
-std::string	BitcoinExchange::_input;
-std::string	BitcoinExchange::_line;
+std::string	BitcoinExchange::_input = "";
+std::string	BitcoinExchange::_line = "";
 
 std::string&	BitcoinExchange::getLine()
 {
@@ -30,16 +30,6 @@ void	BitcoinExchange::parseDatabase()
 		{
 			// std::memset(&_date, 0, sizeof(_date));
 			std::cout << "line is: " << _line << "\n";
-			// _date = {0}; //not available in c++98
-			_date.tm_sec = 0;
-			_date.tm_min = 0;
-			_date.tm_hour = 0;
-			_date.tm_mday = 0;
-			_date.tm_mon = 0;
-			_date.tm_year = 0;
-			_date.tm_wday = 0;
-			_date.tm_yday = 0;
-			_date.tm_isdst = 0;
 			std::istringstream ss(_line);
 			char dash1, dash2, comma;
 			double exchangeRate;
@@ -139,7 +129,22 @@ void	BitcoinExchange::parseDatabase()
 
 // }
 
-/* NOTES:
-//ss.fail() - did extraction fail
-//ss.get() != EOF - are there still extra characters in string line
+
+/* 
+NOTES:
+ss.fail() - did extraction fail
+ss.get() != EOF - are there still extra characters in string line
+_date = {0}; - only available in later C++
+*/
+
+/* DRAFTS:
+	_date.tm_sec = 0;
+	_date.tm_min = 0;
+	_date.tm_hour = 0;
+	_date.tm_mday = 0;
+	_date.tm_mon = 0;
+	_date.tm_year = 0;
+	_date.tm_wday = 0;
+	_date.tm_yday = 0;
+	_date.tm_isdst = 0;
 */

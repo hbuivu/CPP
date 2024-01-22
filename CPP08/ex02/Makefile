@@ -6,15 +6,15 @@
 #    By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 10:48:05 by hbui-vu           #+#    #+#              #
-#    Updated: 2024/01/22 17:16:25 by hbui-vu          ###   ########.fr        #
+#    Updated: 2024/01/22 15:39:13 by hbui-vu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = BitcoinExchange
+NAME = MutantStack
 
-SRCS = main.cpp BitcoinExchange.cpp
+SRCS = main.cpp
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
 
 CXX = c++
 

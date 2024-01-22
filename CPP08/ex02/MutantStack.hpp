@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MutantStack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:56:51 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/18 09:33:30 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:47:57 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,37 @@
 
 # include <iterator>
 # include <stack>
+# include <deque>
 
-template<typename T, typename Container = std::deque<T>>
+template<typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container>
 {
 public:
-	MutantStack();
-	~MutantStack();
-	MutantStack<T, Container>(MutantStack<T, Container> const & src);
-	MutantStack<T, Container> & operator=(MutantStack<T, Container> const & rhs);
+	MutantStack(){}; //DON'T FORGET THAT THESE HAVE TO BE DEFINED
+	~MutantStack(){};
+	MutantStack<T, Container>(MutantStack<T, Container>const & src) //can also write const MutantStack<T, Containger>& src, but not as clear
+		:	std::stack<T, Container>(src) {}; //call base class copy constructor
+	MutantStack<T, Container> & operator=(MutantStack<T, Container> const & src){
+		*this  = src; //base class std::stack supports operator=
+		return (*this);
+	};
 
-	// typedef typename Container::iterator iterator;
-	// typedef typename Container::const_iterator const_iterator;
-	// typedef typename Container::reverse_iterator reverse_iterator;
-	// typedef typename Container::const_reverse_iterator const_reverse_iterator;
+	//rename iterators
+	typedef typename Container::iterator iterator;
+	typedef typename Container::const_iterator const_iterator;
+	typedef typename Container::reverse_iterator reverse_iterator;
+	typedef typename Container::const_reverse_iterator const_reverse_iterator;
 
-	// // c is the underlying container
-	// iterator begin() {return this->c.begin();}
-	// iterator end() {return this->c.end();}
-	// const_iterator begin() const {return this->c.begin();}
-	// const_iterator end() const {return this->c.end();}
-	// reverse_iterator rbegin() {return this->c.rbegin();}
-	// reverse_iterator rend() {return this->c.rend();}
-	// const_reverse_iterator rbegin() const {return this->c.rbegin();}
-	// const_reverse_iterator rend() const {return this->c.rend();}
-
-}
+	//stack as member c that represents underlying container - in this case deque
+	iterator begin() {return this->c.begin();}
+	iterator end() {return this->c.end();}
+	const_iterator begin() const {return this->c.begin();}
+	const_iterator end() const {return this->c.end();}
+	reverse_iterator rbegin() {return this->c.rbegin();}
+	reverse_iterator rend() {return this->c.rend();}
+	const_reverse_iterator rbegin() const {return this->c.rbegin();}
+	const_reverse_iterator rend() const {return this->c.rend();}
+};
 
 #endif
 

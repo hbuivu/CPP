@@ -20,23 +20,17 @@
 # define CYAN	"\x1B[36m"
 # define RESET	"\x1B[0m"
 
-// struct TmComparator {
-//     bool operator()(std::tm& lhs, std::tm& rhs) const {
-//         return std::mktime(&lhs) < std::mktime(&rhs);
-//     }
-// };
-
-bool operator < (std::tm& t1, std::tm& t2)
+//don't forget to const cast std::tm!
+bool operator < (const std::tm& t1, const std::tm& t2)
 {
-	return (std::mktime(&t1) < std::mktime(&t2));
+	return (std::mktime(const_cast<std::tm*>(&t1)) < std::mktime(const_cast<std::tm*>(&t2)));
 };
-
+//third parameter in <> is the type of function. we will initialize with actual function in cpp file
 class BitcoinExchange
 {
 private:
-	static std::map<std::tm, double, >	_db;
-	// static std::map<std::tm, double>	_db;
-	// static std::tm		_date;
+	static std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> _db;
+	static std::tm		_date;
 	static double		_value;
 	static std::string	_input;
 	static std::string	_line;
@@ -56,10 +50,7 @@ public:
 	};
 	class BadInputException : public std::exception{
 	public:
-		const char *what() const throw(){
-			std::string msg = "Error: Bad input => " + BitcoinExchange::getLine();
-			return msg.c_str();
-		}
+		const char *what() const throw(){return "Error: Bad input => ";}
 	};
 	class NegativeNumberException : public std::exception{
 	public:
@@ -91,5 +82,20 @@ map<key, value, CompareType, AllocatorType>
 2. AllocatorType - specify custom allocator for memory management
 	default std::allocator
 
+// struct TmComparator {
+//     bool operator()(std::tm& lhs, std::tm& rhs) const {
+//         return std::mktime(&lhs) < std::mktime(&rhs);
+//     }
+// };
+
+below can cause issue bc msg is local variable, and what returns pointer to cstring inside msg
+however msg might be deallocated once the program exits. 
+class BadInputException : public std::exception{
+	public:
+		const char *what() const throw(){
+			std::string msg = "Error: Bad input => " + BitcoinExchange::getLine();
+			return msg.c_str();
+		}
+	};
 
 */

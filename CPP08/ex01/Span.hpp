@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:25:59 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/16 17:03:55 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:58:05 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <iostream>
 # include <set>
 # include <iterator>
+# include <algorithm>
 
 class Span
 {
@@ -23,8 +24,8 @@ private:
 	unsigned int		_size;
 	std::multiset<int>	_array;
 	
-	Span();
 public:
+	Span();
 	Span(unsigned int N);
 	Span(const Span& src);
 	~Span();
@@ -38,20 +39,16 @@ public:
 	template <class IT>
 	void	addSequence(IT start, IT end)
 	{
-		//check that range will not exceed N
-		if (std::distance(start, end) + _array.size() > N)
+		if (std::distance(start, end) + _array.size() > _size)
 			throw FullArrayException();
 		_array.insert(start, end);	
-	}
-
-	class	FullArrayException : public std::exception
-	{
-	public:
-		const char* what() const throw() {return "Array is full";};
 	};
 
-	class	NoSpanException : public std::exception
-	{
+	class	FullArrayException : public std::exception{
+	public:
+		const char* what() const throw() {return "Array is full";};
+	}; 
+	class	NoSpanException : public std::exception{
 	public:
 		const char *what() const throw() {return "No span found";};
 	};
@@ -114,4 +111,6 @@ Container Adapters - applied to existing containers as wrappers
 1. stack
 2. queue
 3. priority queue
+
+<string> implicitly contains <algorithm> header
 */

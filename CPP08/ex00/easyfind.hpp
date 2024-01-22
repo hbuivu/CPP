@@ -14,18 +14,12 @@
 # define EASYFIND_HPP
 
 # include <cstdlib>
+# include <algorithm>
 
-//returns a pointer to array.cend() if can't find i
 template<typename T>
 typename T::const_iterator	easyfind(const T& array, int i)
 {
-	typename T::const_iterator it = array.cbegin();
-	for (; it != array.cend(); it++)
-	{
-		if (*it == i)
-			return (it);
-	}
-	return (it);
+	return(std::find(array.begin(), array.end(), i));
 };
 
 #endif
@@ -41,4 +35,17 @@ dependent name - nested type - any name that depends on a type containing a temp
 		->therefore, when using it in a template, must have typename before it
 
 T is already the template type, we do not need to provide any additional template info
+
+template <class InputIterator, class T>   InputIterator find (InputIterator first, InputIterator last, const T& val);
+if val is not found, it returns last
+*/
+
+/* DRAFTS:
+typename T::const_iterator it = array.cbegin(); //cbeing bc const iterator
+	for (; it != array.cend(); it++)
+	{
+		if (*it == i)
+			return (it);
+	}
+	return (it);
 */
