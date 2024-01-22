@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 	try
 	{
 		BitcoinExchange::parseDatabase();
-		// BitcoinExchange::parseInput(argv[1]);
+		BitcoinExchange::parseInput(argv[1]);
 	}
 	catch(const std::exception& e)
 	{

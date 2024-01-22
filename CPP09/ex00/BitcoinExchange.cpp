@@ -1,35 +1,30 @@
 #include "BitcoinExchange.hpp"
 #include <cstring>
+#include <iomanip>
 
 //initialize with overloaded operator<
 std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> BitcoinExchange::_db(&operator<);
 std::tm		BitcoinExchange::_date;
 double		BitcoinExchange::_value = 0;
-std::string	BitcoinExchange::_input = "";
 std::string	BitcoinExchange::_line = "";
 
-std::string&	BitcoinExchange::getLine()
+bool operator < (const std::tm& t1, const std::tm& t2)
 {
-	return _line;
-}
+	return (std::mktime(const_cast<std::tm*>(&t1)) < std::mktime(const_cast<std::tm*>(&t2)));
+};
 
 void	BitcoinExchange::parseDatabase()
 {
-	//open database file and check if it opened properly
 	std::ifstream infile("data.csv"); 
 	if (!infile.is_open())
 		throw InvalidFileException();
 	std::getline(infile, _line);
-	std::cout << "line is: " << _line << "\n";
-	//check that headers are correct
 	if (_line != "date,exchange_rate")
 		throw InvalidFileException();
 	while (std::getline(infile, _line))
 	{
 		try
 		{
-			// std::memset(&_date, 0, sizeof(_date));
-			std::cout << "line is: " << _line << "\n";
 			std::istringstream ss(_line);
 			char dash1, dash2, comma;
 			double exchangeRate;
@@ -47,12 +42,13 @@ void	BitcoinExchange::parseDatabase()
 			_date.tm_mon -= 1; //month range 0-11
 			if (std::mktime(&_date) == -1)
 				throw BadInputException();
-			std::cout << "Here\n";
-			// if (_db.find(_date) != _db.end()) //if a copy is found already
-			// 	throw DuplicateException();
-			std::cout << "adding to map\n";
+			if (_db.find(_date) != _db.end()) //if a copy is found already
+				throw DuplicateException();
 			_db[_date] = exchangeRate;
-			std::cout << "added to map successfully\n";
+		}
+		catch(BadInputException &e)
+		{
+			std::cerr << e.what() << _line << "\n";
 		}
 		catch(const std::exception& e)
 		{
@@ -61,80 +57,102 @@ void	BitcoinExchange::parseDatabase()
 	}
 }
 
-// void	BitcoinExchange::parseInput(std::string Input)
-// {
-// 	std::ifstream infile(Input);
-// 	if (!infile.is_open())
-// 		throw InvalidFileException();
-// 	std::string _line;
-// 	std::getline(infile, _line);
-// 	if (_line != "date | value")
-// 		throw InvalidFileException();
-// 	while (std::getline(infile, _line))
-// 	{
-// 		_date = {0};
-// 		std::istringstream ss(_line);
-// 		char dash1, dash2, pipe; //istringstream ignores leading white spaces
-// 		ss	>> _date.tm_year >> dash1 >> _date.tm_mon >> dash2
-// 			>> _date.tm_mday >> pipe >> _value;
-// 		if (ss.fail() || ss.get() != EOF ||
-// 			dash1 != '-' ||dash2 != '-' || pipe != '|')
-// 			throw BadInputException();
-// 		else if (_value < 0)
-// 			throw NegativeNumberException();
-// 		else if (_value > 1000)
-// 			throw LargeNumberException(); 
-// 		//adjust year and month to match data requirements in struct
-// 		_date.tm_year -= 1900; //year range starts from 1900
-// 		_date.tm_mon -= 1 //month range 0-11
-// 		if (std::mktime(&_date) == -1)
-// 			throw BadInputException();
-// 		if (_date < _database.begin() || _date > database.end()) //somethign like this
-// 			throw DateRangeException();
-// 		if(_database.find(_date) != _database.end())
-// 			printData(NULL);
-// 		// else
-// 		// {
-// 		// 	try
-// 		// 	{
-// 		// 		std::tm *closestDate = checkDate();
-// 		// 		printData(closestDate);
-// 		// 	}
-// 		// 	catch(const std::exception& e)
-// 		// 	{
-// 		// 		std::cerr << e.what() << '\n';
-// 		// 	}
+//have a function that checks if container is empty. if it is, return ;
+
+void	BitcoinExchange::parseInput(std::string Input)
+{
+	std::ifstream infile(Input.c_str());
+	if (!infile.is_open())
+		throw InvalidFileException();
+	std::string _line;
+	std::getline(infile, _line);
+	if (_line != "date | value")
+		throw InvalidFileException();
+	while (std::getline(infile, _line))
+	{
+		try
+		{
+			//convert std::string _line to a stringstream
+			std::istringstream ss(_line);
+			char dash1, dash2, pipe; //istringstream ignores leading white spaces
+			ss	>> _date.tm_year >> dash1 >> _date.tm_mon >> dash2
+				>> _date.tm_mday >> pipe >> _value;
 			
-// 		// }
-// 			//use while loop to iterate over database to check when _date becomes bigger than input _date
-// 			//is it possible to match year and month too?
-// 	}
-// }
+			//ss.fail() - if extraction fails
+			//ss.get() - if there is still more in the string
+			if (ss.fail() || ss.get() != EOF ||
+				dash1 != '-' ||dash2 != '-' || pipe != '|')
+				throw BadInputException();
+			else if (_value < 0)
+				throw NegativeNumberException();
+			else if (_value > 1000)
+				throw LargeNumberException(); 
 
-// void	BitcoinExchange::printData(std::tm* closestDate)
-// {	
-// 	int	finalValue
-// 	if (closestDate == NULL)
-// 		finalValue = _value * _db[_date]; //we do this bc we modify _date to get the correctly printed year and month
-// 	else
-// 		finalValue = _value * closestDate->second;
-// 	_date.tm_year += 1900;
-// 	_date.tm_mon += 1;
-// 	std::cout	<< _date.tm_year << "-" << _date.tm_mon << "-" << _date.tm_mday 
-// 				<< " => " << _value << " = " << finalValue << "\n";
-// }
+			//adjust year and month to match data requirements in struct
+			_date.tm_year -= 1900; //year range starts from 1900
+			_date.tm_mon -= 1; //month range 0-11
 
-// std::tm*	BitcoinExchange::checkDate()
-// {
+			//check if the date is valid;
+			if (std::mktime(&_date) == -1)
+				throw BadInputException();
+			
+			//check if date is falls outside of range in data.csv
+			if (_date < _db.begin()->first || _db.rbegin()->first < _date) //we switch the statement in the second half because we only defined operator <
+				throw DateRangeException();
+			if(_db.find(_date) != _db.end())
+				printData();
+			else
+				printClosestDateData();
+		}
+		catch(BadInputException &e)
+		{
+			std::cerr << e.what() << _line << "\n";
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}	
+	
+	}
+}
 
-// }
+void	BitcoinExchange::printData()
+{	
+	double	finalValue = _value * _db[_date]; //we do this bc we modify _date to get the correctly printed year and month
+	std::cout	<< (_date.tm_year + 1900) << "-" 
+				<< std::setw(2) << std::setfill('0') << (_date.tm_mon + 1) << "-" 
+				<< std::setw(2) << std::setfill('0') << _date.tm_mday << " => " 
+				<< _value << " = " << finalValue << "\n";
+}
 
+void	BitcoinExchange::printClosestDateData()
+{
+	std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)>::iterator it = _db.begin();
+	while (it->first < _date)
+		it++;
+	it--;
+	double finalValue = _value * it->second;
+	std::cout	<< (_date.tm_year + 1900) << "-" 
+				<< std::setw(2) << std::setfill('0') << (_date.tm_mon + 1) << "-" 
+				<< std::setw(2) << std::setfill('0') << _date.tm_mday << " => " 
+				<< _value << " = " << finalValue << "\n";
+
+}
 
 /* 
 NOTES:
 ss.fail() - did extraction fail
 ss.get() != EOF - are there still extra characters in string line
 _date = {0}; - only available in later C++
+
+initially we were getting segmentation fault when trying to find and adding a second key/value pair to map
+this was because we didn't define the operator< properly and map was unable to order the keys
+map uses operator< to order keys (maps is an ordered container)
+std::tm does not have a builtin operator< 
+
+if (_date < _db.begin()->first || _date > std::prev(_db.rbegin()->first))
+getting an error bc we only defined < and not > 
+
 */
 
 /* DRAFTS:
@@ -147,4 +165,7 @@ _date = {0}; - only available in later C++
 	_date.tm_wday = 0;
 	_date.tm_yday = 0;
 	_date.tm_isdst = 0;
+
+		// std::memset(&_date, 0, sizeof(_date));
+		
 */

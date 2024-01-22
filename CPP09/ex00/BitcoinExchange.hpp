@@ -21,10 +21,9 @@
 # define RESET	"\x1B[0m"
 
 //don't forget to const cast std::tm!
-bool operator < (const std::tm& t1, const std::tm& t2)
-{
-	return (std::mktime(const_cast<std::tm*>(&t1)) < std::mktime(const_cast<std::tm*>(&t2)));
-};
+//including a function definition in a .h file means that it will appear in every translation unit, violating the one definition rule
+bool operator < (const std::tm& t1, const std::tm& t2);
+
 //third parameter in <> is the type of function. we will initialize with actual function in cpp file
 class BitcoinExchange
 {
@@ -32,7 +31,6 @@ private:
 	static std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> _db;
 	static std::tm		_date;
 	static double		_value;
-	static std::string	_input;
 	static std::string	_line;
 	
 	BitcoinExchange();
@@ -42,7 +40,9 @@ private:
 public:
 	static void			parseDatabase();
 	static std::string&	getLine();
-	// static void	parseInput(std::string Input);
+	static void			parseInput(std::string Input);
+	static void			printData();
+	static void 		printClosestDateData();
 
 	class InvalidFileException : public std::exception{
 	public:
