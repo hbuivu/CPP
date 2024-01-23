@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 16:25:59 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/22 16:58:05 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/23 16:32:19 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SPAN_HPP
 
 # include <iostream>
-# include <set>
+# include <vector>
 # include <iterator>
 # include <algorithm>
 
@@ -22,18 +22,18 @@ class Span
 {
 private:
 	unsigned int		_size;
-	std::multiset<int>	_array;
+	std::vector<int>	_array;
 	
 public:
 	Span();
-	Span(unsigned int N);
+	explicit Span(unsigned int N); //use explicit keyword for single parameter constructor. see more below
 	Span(const Span& src);
 	~Span();
 
 	Span&	operator=(const Span& src);
 	
 	void	addNumber(const int i);
-	int		shortestSpan() const;
+	int		shortestSpan();
 	int		longestSpan() const;
 	
 	template <class IT>
@@ -41,7 +41,7 @@ public:
 	{
 		if (std::distance(start, end) + _array.size() > _size)
 			throw FullArrayException();
-		_array.insert(start, end);	
+		_array.insert(_array.end(), start, end);	
 	};
 
 	class	FullArrayException : public std::exception{
@@ -112,5 +112,10 @@ Container Adapters - applied to existing containers as wrappers
 2. queue
 3. priority queue
 
-<string> implicitly contains <algorithm> header
+<string> implicitly contains <algorithm> header (maybe)
+
+Using explicit keyword:
+ex: 
+foo(class(int));
+foo(5); <- without explicit, foo will automatically initialize class to 5 and pass it as a parameter
 */

@@ -1,44 +1,62 @@
-#include <stack>
-#include <iostream>
+#include "RPN.hpp"
 
-int main(int argc, char **argv)
+std::stack<long double>	RPN::_stack;
+
+RPN::RPN()
 {
-	std::stack<int> stack;
-	if (argc < 2)
-		std::cout << "error\n";
-	int i = 1;
-	while (argv[i])
-	{
-		if (argv[i] >= "0" && argv[i] <= "9")
-			stack.push(argv[i] - "0");
-		else if (argv[i] == "/" || argv[i] == "+" || argv[i] == "-" || argv[i] == "*")
-		{
-			//check stack for two numbers
-			if (stack.size() < 2)
-				throw Exception();
-			int i = stack.top();
-			stack.pop();
-			int j = stack.top();
-			stack.pop();
-			stack.push(applyOperator(i, j, argv[i]));
-			//pop off two numbers, apply operator, put back on stack
-		}
-		else
-			throw Exception();
-	} 
-	if (stack.size() != 1)
-		throw Exception();
-	int finalValue = stack.top();
 }
 
-int applyOperator(int i, int j, std::string operator)
+RPN::RPN(const RPN& src)
 {
-	if (operator == "+")
-		return (i + j);
-	if (operator == "-")
-		return (i - j);
-	if (operator == "*")
-		return (i * j);
-	if (operator == "/")
-		return (i / j);
+	(void)src;
+}
+
+RPN::~RPN()
+{
+}
+
+RPN&	RPN::operator=(const RPN& src)
+{
+	(void)src;
+	return *this;
+}
+
+void RPN::calcRPN(std::string const & statement)
+{
+	for (std::string::const_iterator it = statement.begin(); it != statement.end(); it++)
+	{
+		if (*it >= '0' && *it <= '9')
+			_stack.push(*it - '0');
+		else if (*it == '/' || *it == '+' || *it == '-' || *it == '*')
+		{
+			if (_stack.size() < 2)
+				throw InvalidStatementException();
+			_stack.push(applyOperator(*it));
+		}
+		else if (*it != ' ')
+			throw InvalidStatementException();
+	} 
+	if (_stack.size() != 1)
+		throw InvalidStatementException();
+	std::cout << _stack.top() << "\n";
+}
+
+long double RPN::applyOperator(char sign)
+{
+	long double num1 = _stack.top();
+	_stack.pop();
+	long double num2 = _stack.top();
+	_stack.pop();
+	long double finalValue = 0.0;
+	if (sign == '+')
+		finalValue = num2 + num1;
+	else if (sign == '-')
+		finalValue = num2 - num1;
+	else if (sign == '*')
+		finalValue = num2 * num1;
+	else if (sign == '/')
+		finalValue = num2 / num1;
+	if (finalValue > DBL_MAX || finalValue < -(DBL_MAX))
+		throw ReturnValueOverflowException();
+	return (finalValue);
 }

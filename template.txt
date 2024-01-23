@@ -28,4 +28,5 @@ ABC::~ABC()
 
 ABC&	ABC::operator=(const ABC& src)
 {
+	return *this;
 }

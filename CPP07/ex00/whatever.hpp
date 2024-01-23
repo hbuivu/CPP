@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:35:19 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/10 17:53:01 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/23 16:26:39 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 template<typename T> //template parameter declaration, needs to be declared above each template function
 void swap(T& x, T& y)
 {
-	T tmp;
-	tmp = x;
+	T tmp (x); //default constructor could be deleted or private; STL uses copy constructor so it wouldn't compile if copy constructor was also not available
+	// tmp = x;
 	x = y;
 	y = tmp;
 }

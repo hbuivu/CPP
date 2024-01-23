@@ -6,7 +6,7 @@
 /*   By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:56:51 by hbui-vu           #+#    #+#             */
-/*   Updated: 2024/01/22 16:47:57 by hbui-vu          ###   ########.fr       */
+/*   Updated: 2024/01/23 17:18:31 by hbui-vu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ public:
 	//stack as member c that represents underlying container - in this case deque
 	iterator begin() {return this->c.begin();}
 	iterator end() {return this->c.end();}
-	const_iterator begin() const {return this->c.begin();}
-	const_iterator end() const {return this->c.end();}
+	const_iterator begin() const {return this->c.cbegin();}
+	const_iterator end() const {return this->c.cend();}
 	reverse_iterator rbegin() {return this->c.rbegin();}
 	reverse_iterator rend() {return this->c.rend();}
 	const_reverse_iterator rbegin() const {return this->c.rbegin();}
