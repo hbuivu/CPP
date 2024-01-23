@@ -25,6 +25,9 @@ public:
 	class ReturnValueOverflowException : public std::exception{
 		const char *what() const throw(){return "Return value too large";}
 	};
+	class DivideByZeroException : public std::exception{
+		const char *what() const throw(){return "Division by zero";}
+	};
 };
 
 #endif
