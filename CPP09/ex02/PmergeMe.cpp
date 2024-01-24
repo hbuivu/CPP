@@ -1,5 +1,8 @@
 #include "PmergeMe.hpp"
 
+std::deque<int>		PmergeMe::_deck;
+std::vector<int>	PmergeMe::_vect;
+
 PmergeMe::PmergeMe()
 {
 }
@@ -39,24 +42,30 @@ void	PmergeMe::printList(std::string const & str)
 		std::cout << "Before: ";
 	else if (str == "After")
 		std::cout << "After: ";
-	for (std::vector<int>::iterator it; it != _vect.end(); it++)
+	std::cout << "Deque:\n";
+	for (std::deque<int>::iterator it = _deck.begin(); it != _deck.end(); it++)
 		std::cout << *it << " ";
-	std::cout << std::endl;
+	std::cout << "\n";
+	std::cout << "Vector:\n";
+	for (std::vector<int>::iterator it = _vect.begin(); it != _vect.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\n";
 }
 
 void	PmergeMe::sortDeque()
 {
+	//check if size of list is 1
+	if (_deck.size() == 1)
+		return ;
+
 	//check for straggler - if array is odd number
 	int straggler = -1;
 	if (_deck.size() % 2 == 1)
-	{
 		straggler = _deck.back();
-		_deck.pop_back();
-	}
 
 	//create pair, order pair, insert pair into new deque pairs
-	std::deque<std::pair<int, int>> pairs;
-	for (int i = 0; i < _deck.size(); i+= 2) //deck has indices!
+	std::deque<std::pair<int, int> > pairs;
+	for (size_t i = 0; i < _deck.size(); i+= 2) //deck has indices!
 	{
 		std::pair<int, int> p = std::make_pair(_deck[i], _deck[i + 1]);
 		if (p.first < p.second)
@@ -66,19 +75,20 @@ void	PmergeMe::sortDeque()
 	
 	//sort pairs. if no comparator is specified, sort uses first element to sort
 	//might have to write custom recursive sort function here
-	std::sort(pairs.begin(), pairs.end());
+	// std::sort(pairs.begin(), pairs.end());
+	mergeSort<std::deque<std::pair<int, int> > >(pairs);
 
 	//create main chain and pend
 	std::deque<int> mainChain;
 	std::deque<int> pend;
-	for (int i = 0; i < pairs.size(); i++)
+	for (size_t i = 0; i < pairs.size(); i++)
 	{
 		mainChain.push_back(pairs[i].first);
 		pend.push_back(pairs[i].second);
 	}
 	
 	//create Jacobsthal Sequence
-	std::deque<int> jacob = genJacobIndex<std::deque<int>>(pend.size());
+	std::deque<int> jacob = genJacobIndex<std::deque<int> >(pend.size());
 
 	//push first number in
 	mainChain.push_front(pend.front());
@@ -86,7 +96,7 @@ void	PmergeMe::sortDeque()
 	//insert pend elements using index from jacob list and binary search
 	for (std::deque<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
 	{
-		if (*it < pend.size())
+		if (static_cast<size_t>(*it) < pend.size())
 		{
 			std::deque<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pend[*it]);
 			mainChain.insert(insertPos, pend[*it]);
@@ -99,7 +109,7 @@ void	PmergeMe::sortDeque()
 		std::deque<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), straggler);
 		mainChain.insert(insertPos, straggler);
 	}
-
+	_deck = mainChain;
 }
 
 int PmergeMe::Jacobsthal(int n)
@@ -113,7 +123,51 @@ int PmergeMe::Jacobsthal(int n)
 
 void	PmergeMe::sortVector()
 {
+	if (_vect.size() == 1)
+		return ;
 
+	int straggler = -1;
+	if (_vect.size() % 2 == 1)
+		straggler = _vect.back();
+
+	std::vector<std::pair<int, int> > pairs;
+	for (size_t i = 0; i < _vect.size(); i+= 2)
+	{
+		std::pair<int, int> p = std::make_pair(_vect[i], _vect[i + 1]);
+		if (p.first < p.second)
+			std::swap(p.first, p.second);
+		pairs.push_back(p);
+	}
+	
+	mergeSort<std::vector<std::pair<int, int> > >(pairs);
+
+	std::vector<int> mainChain;
+	std::vector<int> pend;
+	for (size_t i = 0; i < pairs.size(); i++)
+	{
+		mainChain.push_back(pairs[i].first);
+		pend.push_back(pairs[i].second);
+	}
+	
+	std::vector<int> jacob = genJacobIndex<std::vector<int> >(pend.size());
+
+	mainChain.insert(mainChain.begin(), pend.front());
+
+	for (std::vector<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
+	{
+		if (static_cast<size_t>(*it) < pend.size())
+		{
+			std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pend[*it]);
+			mainChain.insert(insertPos, pend[*it]);
+		}
+	}	
+
+	if (straggler != -1)
+	{
+		std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), straggler);
+		mainChain.insert(insertPos, straggler);
+	}
+	_vect = mainChain;
 }
 /* NOTES:
 std::pair is a type

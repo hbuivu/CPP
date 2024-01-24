@@ -3,10 +3,10 @@
 # include <deque>
 # include <vector>
 # include <sstream>
+# include <fstream>
 # include <iostream>
 # include <algorithm>
 # include <utility>
-# include <type_traits>
 
 class PmergeMe
 {
@@ -37,7 +37,7 @@ public:
 		int	prevJacobNum = 1;
 		int	jacobNum = 3;
 		int i = 3;
-		while (size > jacobNum)
+		while (size > static_cast<size_t>(jacobNum))
 		{
 			jacobNum = Jacobsthal(i);
 			container.push_back(jacobNum);
@@ -49,10 +49,101 @@ public:
 		return (container);
 	};
 
+	//merging and sorting left and right arrays back into bigger array
+	//REMEMBER TO PASS BY REF, NOT BY COPY. otherwise the sorting won't translate 
 	template<typename T>
-	static void	sortPairs(T container)
+	static void	merge(T & left, T & right, T & array)
 	{
+		// std::cout << "printing left: \n";
+		// printArray(left);
+		// std::cout << "printing right: \n";
+		// printArray(right);
+
+		//find sizes of left and right array
+		size_t lsize = left.size();
+		size_t rsize = right.size();
+
+		//set index counters for left, right, and array
+		size_t l = 0;
+		size_t r = 0;
+		size_t a = 0;
+
+		//sort numbers from left and right into array, comparing the lowest indexed elements from left and right
+		while (l < lsize && r < rsize)
+		{
+			if (left[l].first <= right[r].first)
+			{
+				array[a] = left[l];
+				l++;
+			}
+			else
+			{
+				array[a] = right[r];
+				r++;
+			}
+			a++;
+		}
+
+		//if there are any leftovers from the left or right array, add to array as well
+		while (l < lsize)
+		{
+			array[a] = left[l];
+			l++;
+			a++;
+		}
+		while (r < rsize)
+		{
+			array[a] = right[r];
+			r++;
+			a++;
+		}
+
+		// std::cout << "sorted array: \n";
+		// printArray(array);
+	};
+
+	template<typename T>
+	static void	mergeSort(T & array)
+	{
+		// std::cout << "starting out with this array: \n";
+		// printArray(array);
+
+		//find size of array
+		size_t arraySize = array.size();
+
+		//base case
+		if (array.size() < 2)
+			return ;
+
+		//get the middle index of array. Don't forget that if array has odd number elements, left side is smaller
+		size_t mid = arraySize / 2;
+		// std::cout << "mid is" << mid << "\n";
+
+		//divide up array into left and right array
+		T left; //we can technically do left[i] = array[i], but then we would need to initialize left and right deque with a size
+		T right;
+		size_t i = 0;
+		for (; i < mid; i++)
+			left.push_back(array[i]);
+		for (; i < arraySize; i++)
+			right.push_back(array[i]);
+		// std::cout << "sending left and right arrays in: \n";
 		
+		// printArray(left);
+		// printArray(right);
+
+		//recursively divide up the left and right arrays
+		mergeSort(left);
+		mergeSort(right);
+		merge(left, right, array);
+	};
+
+	template<typename T>
+	static void	printArray(T array)
+	{
+		for (typename T::iterator it = array.begin(); it != array.end(); it++)
+			std::cout << "(" << it->first << "," << it->second << ") ";
+		std::cout << "\n";
 	}
 };
 
