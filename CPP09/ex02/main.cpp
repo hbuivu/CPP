@@ -10,6 +10,6 @@ int main(int argc, char **argv)
 	PmergeMe::populateContainers(argv);
 	PmergeMe::printList("Before");
 	PmergeMe::sortDeque();
-	PmergeMe::sortVector();
+	// PmergeMe::sortVector();
 	PmergeMe::printList("After");
 }

@@ -2,6 +2,7 @@
 
 std::deque<int>		PmergeMe::_deck;
 std::vector<int>	PmergeMe::_vect;
+std::list<int>		PmergeMe::_list;
 
 PmergeMe::PmergeMe()
 {
@@ -33,6 +34,7 @@ void	PmergeMe::populateContainers(char **argv)
 			throw InvalidInputException();
 		_deck.push_back(num);
 		_vect.push_back(num);
+		_list.push_back(num);
 	}
 }
 
@@ -46,10 +48,10 @@ void	PmergeMe::printList(std::string const & str)
 	for (std::deque<int>::iterator it = _deck.begin(); it != _deck.end(); it++)
 		std::cout << *it << " ";
 	std::cout << "\n";
-	std::cout << "Vector:\n";
-	for (std::vector<int>::iterator it = _vect.begin(); it != _vect.end(); it++)
-		std::cout << *it << " ";
-	std::cout << "\n";
+	// std::cout << "Vector:\n";
+	// for (std::vector<int>::iterator it = _vect.begin(); it != _vect.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << "\n";
 }
 
 void	PmergeMe::sortDeque()
@@ -61,7 +63,10 @@ void	PmergeMe::sortDeque()
 	//check for straggler - if array is odd number
 	int straggler = -1;
 	if (_deck.size() % 2 == 1)
+	{
 		straggler = _deck.back();
+		_deck.pop_back(); //we need this, because we don't want to create a pair with this number
+	}
 
 	//create pair, order pair, insert pair into new deque pairs
 	std::deque<std::pair<int, int> > pairs;
@@ -128,7 +133,10 @@ void	PmergeMe::sortVector()
 
 	int straggler = -1;
 	if (_vect.size() % 2 == 1)
+	{
 		straggler = _vect.back();
+		_vect.pop_back();
+	}
 
 	std::vector<std::pair<int, int> > pairs;
 	for (size_t i = 0; i < _vect.size(); i+= 2)
@@ -168,6 +176,61 @@ void	PmergeMe::sortVector()
 		mainChain.insert(insertPos, straggler);
 	}
 	_vect = mainChain;
+}
+
+void	PmergeMe::sortList()
+{
+	if (_list.size() == 1)
+		return ;
+
+	int straggler = -1;
+	if (_list.size() % 2 == 1)
+	{
+		straggler = _list.back();
+		_list.pop_back();
+	}
+	
+	std::list<std::pair<int, int> > pairs;
+	for (std::list<int>::iterator it = _list.begin(); it != _list.end(); it++)
+	{
+		std::pair<int, int> p = std::make_pair(*it, *(++it));
+		if (p.first < p.second)
+			std::swap(p.first, p.second);
+		pairs.push_back(p);
+	}
+	
+	mergeSort<std::list<std::pair<int, int> > >(pairs);
+
+	std::list<int> mainChain;
+	std::list<int> pend;
+	for (std::list<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); it++)
+	{
+		mainChain.push_back(it->first);
+		pend.push_back(it->second);
+	}
+	
+	std::list<int> jacob = genJacobIndex<std::list<int> >(pend.size());
+
+	mainChain.insert(mainChain.begin(), pend.front());
+	
+
+	for (std::list<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
+	{
+		if (static_cast<size_t>(*it) < pend.size())
+		{
+			std::list<int>::iterator pendIT = pend.begin();
+			std::advance(pendIT, *it);
+			std::list<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), *pendIT);
+			mainChain.insert(insertPos, *pendIT);
+		}
+	}	
+
+	if (straggler != -1)
+	{
+		std::list<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), straggler);
+		mainChain.insert(insertPos, straggler);
+	}
+	_list = mainChain;
 }
 /* NOTES:
 std::pair is a type

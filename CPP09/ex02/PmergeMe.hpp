@@ -2,17 +2,20 @@
 
 # include <deque>
 # include <vector>
+# include <list>
 # include <sstream>
 # include <fstream>
 # include <iostream>
 # include <algorithm>
 # include <utility>
+# include <iterator>
 
 class PmergeMe
 {
 private:
 	static std::deque<int>	_deck;
 	static std::vector<int>	_vect;
+	static std::list<int>	_list;
 
 	PmergeMe();
 	PmergeMe(PmergeMe const & src);
@@ -23,6 +26,7 @@ private:
 public:
 	static void	sortDeque();
 	static void	sortVector();
+	static void	sortList();
 	static void	populateContainers(char **argv);
 	static void printList(std::string const & str);
 
@@ -51,87 +55,170 @@ public:
 
 	//merging and sorting left and right arrays back into bigger array
 	//REMEMBER TO PASS BY REF, NOT BY COPY. otherwise the sorting won't translate 
+	// template<typename T>
+	// static void	merge(T & left, T & right, T & array)
+	// {
+	// 	// std::cout << "printing left: \n";
+	// 	// printArray(left);
+	// 	// std::cout << "printing right: \n";
+	// 	// printArray(right);
+
+	// 	//find sizes of left and right array
+	// 	size_t lsize = left.size();
+	// 	size_t rsize = right.size();
+
+	// 	//set index counters for left, right, and array
+	// 	size_t l = 0;
+	// 	size_t r = 0;
+	// 	size_t a = 0;
+
+	// 	//sort numbers from left and right into array, comparing the lowest indexed elements from left and right
+	// 	while (l < lsize && r < rsize)
+	// 	{
+	// 		if (left[l].first <= right[r].first)
+	// 		{
+	// 			array[a] = left[l];
+	// 			l++;
+	// 		}
+	// 		else
+	// 		{
+	// 			array[a] = right[r];
+	// 			r++;
+	// 		}
+	// 		a++;
+	// 	}
+
+	// 	//if there are any leftovers from the left or right array, add to array as well
+	// 	while (l < lsize)
+	// 	{
+	// 		array[a] = left[l];
+	// 		l++;
+	// 		a++;
+	// 	}
+	// 	while (r < rsize)
+	// 	{
+	// 		array[a] = right[r];
+	// 		r++;
+	// 		a++;
+	// 	}
+
+	// 	// std::cout << "sorted array: \n";
+	// 	// printArray(array);
+	// };
+
+	// template<typename T>
+	// static void	mergeSort(T & array)
+	// {
+	// 	// std::cout << "starting out with this array: \n";
+	// 	// printArray(array);
+
+	// 	//find size of array
+	// 	size_t arraySize = array.size();
+
+	// 	//base case
+	// 	if (array.size() < 2)
+	// 		return ;
+
+	// 	//get the middle index of array. Don't forget that if array has odd number elements, left side is smaller
+	// 	size_t mid = arraySize / 2;
+	// 	// std::cout << "mid is" << mid << "\n";
+
+	// 	//divide up array into left and right array
+	// 	T left; //we can technically do left[i] = array[i], but then we would need to initialize left and right deque with a size
+	// 	T right;
+	// 	size_t i = 0;
+	// 	for (; i < mid; i++)
+	// 		left.push_back(array[i]);
+	// 	for (; i < arraySize; i++)
+	// 		right.push_back(array[i]);
+	// 	// std::cout << "sending left and right arrays in: \n";
+		
+	// 	// printArray(left);
+	// 	// printArray(right);
+
+	// 	//recursively divide up the left and right arrays
+	// 	mergeSort(left);
+	// 	mergeSort(right);
+	// 	merge(left, right, array);
+	// };
+
+	//iterator version to work with lists as well
 	template<typename T>
 	static void	merge(T & left, T & right, T & array)
 	{
-		// std::cout << "printing left: \n";
-		// printArray(left);
-		// std::cout << "printing right: \n";
-		// printArray(right);
+		typename T::iterator leftIT = left.begin();
+		typename T::iterator rightIT = right.begin();
+		typename T::iterator arrayIT = array.begin();
+		
 
-		//find sizes of left and right array
-		size_t lsize = left.size();
-		size_t rsize = right.size();
-
-		//set index counters for left, right, and array
-		size_t l = 0;
-		size_t r = 0;
-		size_t a = 0;
-
-		//sort numbers from left and right into array, comparing the lowest indexed elements from left and right
-		while (l < lsize && r < rsize)
+		while (leftIT != left.end() && rightIT != right.end())
 		{
-			if (left[l].first <= right[r].first)
+			if (*leftIT <= *rightIT)
 			{
-				array[a] = left[l];
-				l++;
+				array.insert(arrayIT, *leftIT); //DON"T USE INSERT
+				leftIT++;
 			}
 			else
 			{
-				array[a] = right[r];
-				r++;
+				array.insert(arrayIT, *rightIT);
+				rightIT++;
 			}
-			a++;
+			arrayIT++;
 		}
 
 		//if there are any leftovers from the left or right array, add to array as well
-		while (l < lsize)
+		while (leftIT != left.end())
 		{
-			array[a] = left[l];
-			l++;
-			a++;
+			array.insert(arrayIT, *leftIT);
+			leftIT++;
+			arrayIT++;
 		}
-		while (r < rsize)
+		while (rightIT != right.end())
 		{
-			array[a] = right[r];
-			r++;
-			a++;
-		}
-
-		// std::cout << "sorted array: \n";
-		// printArray(array);
+			array.insert(arrayIT, *rightIT);
+			rightIT++;
+			arrayIT++;
+		}	
+		std::cout << "merging left and right arrays:\n";
+		printArray(left);
+		printArray(right);
+		std::cout << "merged array: \n";
+		printArray(array);
 	};
 
 	template<typename T>
 	static void	mergeSort(T & array)
 	{
-		// std::cout << "starting out with this array: \n";
-		// printArray(array);
+		std::cout << "starting out with this array: \n";
+		printArray(array);
 
-		//find size of array
 		size_t arraySize = array.size();
 
-		//base case
 		if (array.size() < 2)
 			return ;
 
-		//get the middle index of array. Don't forget that if array has odd number elements, left side is smaller
 		size_t mid = arraySize / 2;
-		// std::cout << "mid is" << mid << "\n";
 
+		typename T::iterator arrayIT = array.begin();
+		//left.push_back(*(arrayIT + i)); ->iterators don't support direct addition;
 		//divide up array into left and right array
 		T left; //we can technically do left[i] = array[i], but then we would need to initialize left and right deque with a size
 		T right;
 		size_t i = 0;
 		for (; i < mid; i++)
-			left.push_back(array[i]);
+		{
+			left.push_back(*arrayIT);
+			arrayIT++;
+		}
 		for (; i < arraySize; i++)
-			right.push_back(array[i]);
-		// std::cout << "sending left and right arrays in: \n";
-		
-		// printArray(left);
-		// printArray(right);
+		{
+			right.push_back(*arrayIT);
+			arrayIT++;
+		}
 
+		std::cout << "divided array into: \n";
+		printArray(left);
+		printArray(right);
 		//recursively divide up the left and right arrays
 		mergeSort(left);
 		mergeSort(right);
