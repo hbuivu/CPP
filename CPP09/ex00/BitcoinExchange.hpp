@@ -39,10 +39,9 @@ private:
 	BitcoinExchange&	operator=(const BitcoinExchange& src);
 public:
 	static void			parseDatabase();
-	static std::string&	getLine();
 	static void			parseInput(std::string Input);
-	static void			printData();
-	static void 		printClosestDateData();
+	static void			printData() const;
+	static void 		printClosestDateData() const;
 
 	class InvalidFileException : public std::exception{
 	public:

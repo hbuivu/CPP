@@ -116,7 +116,7 @@ void	BitcoinExchange::parseInput(std::string Input)
 	}
 }
 
-void	BitcoinExchange::printData()
+void	BitcoinExchange::printData() const;
 {	
 	double	finalValue = _value * _db[_date]; //we do this bc we modify _date to get the correctly printed year and month
 	std::cout	<< (_date.tm_year + 1900) << "-" 
@@ -125,7 +125,7 @@ void	BitcoinExchange::printData()
 				<< _value << " = " << finalValue << "\n";
 }
 
-void	BitcoinExchange::printClosestDateData()
+void	BitcoinExchange::printClosestDateData() const;
 {
 	std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)>::iterator it = _db.begin();
 	while (it->first < _date)

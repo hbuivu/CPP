@@ -23,7 +23,6 @@ RPN&	RPN::operator=(const RPN& src)
 
 void RPN::calcRPN(std::string const & statement)
 {
-	//DIVIDE BY 0;
 	for (std::string::const_iterator it = statement.begin(); it != statement.end(); it++)
 	{
 		if (*it >= '0' && *it <= '9')
