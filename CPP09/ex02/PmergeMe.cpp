@@ -1,3 +1,5 @@
+//REPLACE LOWER BOUND WITH OWN FUNCTION
+
 #include "PmergeMe.hpp"
 
 std::deque<int>		PmergeMe::_deck;
@@ -41,15 +43,19 @@ void	PmergeMe::populateContainers(char **argv)
 void	PmergeMe::printList(std::string const & str)
 {
 	if (str == "Before")
-		std::cout << "Before: ";
+		std::cout << "Before:\n";
 	else if (str == "After")
-		std::cout << "After: ";
-	std::cout << "Deque:\n";
+		std::cout << "After:\n";
+	std::cout << "Deque:  ";
 	for (std::deque<int>::iterator it = _deck.begin(); it != _deck.end(); it++)
 		std::cout << *it << " ";
 	std::cout << "\n";
-	// std::cout << "Vector:\n";
+	// std::cout << "Vector: ";
 	// for (std::vector<int>::iterator it = _vect.begin(); it != _vect.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << "\n";
+	// std::cout << "List:   ";
+	// for (std::list<int>::iterator it = _list.begin(); it != _list.end(); it++)
 	// 	std::cout << *it << " ";
 	// std::cout << "\n";
 }
@@ -82,6 +88,8 @@ void	PmergeMe::sortDeque()
 	//might have to write custom recursive sort function here
 	// std::sort(pairs.begin(), pairs.end());
 	mergeSort<std::deque<std::pair<int, int> > >(pairs);
+	// std::cout << "sorted pairs is: ";
+	// printArray(pairs);
 
 	//create main chain and pend
 	std::deque<int> mainChain;
@@ -91,9 +99,23 @@ void	PmergeMe::sortDeque()
 		mainChain.push_back(pairs[i].first);
 		pend.push_back(pairs[i].second);
 	}
-	
+
+	// std::cout << "Main Chain: ";
+	// for (std::deque<int>::iterator it = mainChain.begin(); it != mainChain.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << "\n";
+	// std::cout << "pend: ";
+	// for (std::deque<int>::iterator it = pend.begin(); it != pend.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << "\n";
+
 	//create Jacobsthal Sequence
 	std::deque<int> jacob = genJacobIndex<std::deque<int> >(pend.size());
+
+	// std::cout << "Jacob: ";
+	// for (std::deque<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << "\n";
 
 	//push first number in
 	mainChain.push_front(pend.front());
@@ -101,17 +123,27 @@ void	PmergeMe::sortDeque()
 	//insert pend elements using index from jacob list and binary search
 	for (std::deque<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
 	{
-		if (static_cast<size_t>(*it) < pend.size())
+		if (static_cast<size_t>(*it - 1) < pend.size())
 		{
-			std::deque<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pend[*it]);
-			mainChain.insert(insertPos, pend[*it]);
+			// std::cout << "it is: " << static_cast<size_t>(*it) << "\n";
+			// std::cout << "pend at it is" << pend[*it] << "\n";
+			std::deque<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), pend[*it - 1]);
+			// std::cout << "index to insert at " << (*it - 1) << "\n";
+			// std::cout << "number to insert from pend " << pend[*it - 1] << "\n";
+			// std::cout << "number at insert position " << *insertPos << "\n";
+			mainChain.insert(insertPos, pend[*it - 1]);
+			// std::cout << "new mainchain: ";
+			// for (std::deque<int>::iterator it = mainChain.begin(); it != mainChain.end(); it++)
+			// 	std::cout << *it << " ";
+			// std::cout << "\n";
+
 		}
 	}	
 	
 	//insert straggler
 	if (straggler != -1)
 	{
-		std::deque<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), straggler);
+		std::deque<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), straggler);
 		mainChain.insert(insertPos, straggler);
 	}
 	_deck = mainChain;
@@ -163,16 +195,16 @@ void	PmergeMe::sortVector()
 
 	for (std::vector<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
 	{
-		if (static_cast<size_t>(*it) < pend.size())
+		if (static_cast<size_t>(*it - 1) < pend.size())
 		{
-			std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pend[*it]);
-			mainChain.insert(insertPos, pend[*it]);
+			std::vector<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), pend[*it - 1]);
+			mainChain.insert(insertPos, pend[*it - 1]);
 		}
 	}	
 
 	if (straggler != -1)
 	{
-		std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), straggler);
+		std::vector<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), straggler);
 		mainChain.insert(insertPos, straggler);
 	}
 	_vect = mainChain;
@@ -213,25 +245,29 @@ void	PmergeMe::sortList()
 
 	mainChain.insert(mainChain.begin(), pend.front());
 	
-
 	for (std::list<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
 	{
-		if (static_cast<size_t>(*it) < pend.size())
+		if (static_cast<size_t>(*it - 1) < pend.size())
 		{
 			std::list<int>::iterator pendIT = pend.begin();
-			std::advance(pendIT, *it);
-			std::list<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), *pendIT);
+			std::advance(pendIT, (*it - 1));
+			std::list<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), *pendIT);
 			mainChain.insert(insertPos, *pendIT);
 		}
 	}	
 
 	if (straggler != -1)
 	{
-		std::list<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), straggler);
+		std::list<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), straggler);
 		mainChain.insert(insertPos, straggler);
 	}
 	_list = mainChain;
 }
+
+
 /* NOTES:
 std::pair is a type
-std::make_pair is a utility function that helps to make std::pair with type deduction*/
+std::make_pair is a utility function that helps to make std::pair with type deduction
+ftLowerBound uses binary search and we could have used that to insert numbers into mainchain
+however the subject asked us to write our own algorithms sadly
+*/

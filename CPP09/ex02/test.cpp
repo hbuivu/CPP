@@ -68,4 +68,12 @@ int main(int argc, char **argv)
 	for (std::deque<int>::iterator it = jacobSeq.begin(); it != jacobSeq.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
+
+	std::deque<int>::iterator it = jacobSeq.begin();
+	std::deque<int>::iterator oldit = it;
+	std::cout << "before advancing 2: " << *it << "\n";
+	std::advance(it, 2);
+	std::cout << "after advancing 2: " << *it << "\n";
+
+	std::cout << std::distance(oldit, it) << "\n";
 }

@@ -9,7 +9,24 @@ int main(int argc, char **argv)
 	}
 	PmergeMe::populateContainers(argv);
 	PmergeMe::printList("Before");
+	// clock_t	dStart = clock();
 	PmergeMe::sortDeque();
+	// clock_t	dEnd = clock();
+
+	// clock_t	vStart = clock();
 	// PmergeMe::sortVector();
+	// clock_t	vEnd = clock();
+
+	// clock_t	lStart = clock();
+	// PmergeMe::sortList();
+	// clock_t	lEnd = clock();
+
+	// double dTime = static_cast<double>(dEnd - dStart) / CLOCKS_PER_SEC * 1e6;
+	// double vTime = static_cast<double>(vEnd - vStart) / CLOCKS_PER_SEC * 1e6;
+	// double lTime = static_cast<double>(lEnd - lStart) / CLOCKS_PER_SEC * 1e6;
+	// std::cout << "dTime is: " << dTime << "\n";
+	// std::cout << "vTime is: " << vTime << "\n";
+	// std::cout << "lTime is: " << lTime << "\n";
+
 	PmergeMe::printList("After");
 }

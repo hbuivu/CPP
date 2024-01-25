@@ -155,12 +155,14 @@ public:
 		{
 			if (*leftIT <= *rightIT)
 			{
-				array.insert(arrayIT, *leftIT); //DON"T USE INSERT
+				//DON"T USE INSERT - we need to replace the element
+				*arrayIT = *leftIT;
 				leftIT++;
 			}
 			else
 			{
-				array.insert(arrayIT, *rightIT);
+				// array.insert(arrayIT, *rightIT);
+				*arrayIT = *rightIT;
 				rightIT++;
 			}
 			arrayIT++;
@@ -169,28 +171,28 @@ public:
 		//if there are any leftovers from the left or right array, add to array as well
 		while (leftIT != left.end())
 		{
-			array.insert(arrayIT, *leftIT);
+			*arrayIT = *leftIT;
 			leftIT++;
 			arrayIT++;
 		}
 		while (rightIT != right.end())
 		{
-			array.insert(arrayIT, *rightIT);
+			*arrayIT = *rightIT;
 			rightIT++;
 			arrayIT++;
 		}	
-		std::cout << "merging left and right arrays:\n";
-		printArray(left);
-		printArray(right);
-		std::cout << "merged array: \n";
-		printArray(array);
+		// std::cout << "merging left and right arrays:\n";
+		// printArray(left);
+		// printArray(right);
+		// std::cout << "merged array: \n";
+		// printArray(array);
 	};
 
 	template<typename T>
 	static void	mergeSort(T & array)
 	{
-		std::cout << "starting out with this array: \n";
-		printArray(array);
+		// std::cout << "starting out with this array: \n";
+		// printArray(array);
 
 		size_t arraySize = array.size();
 
@@ -216,9 +218,9 @@ public:
 			arrayIT++;
 		}
 
-		std::cout << "divided array into: \n";
-		printArray(left);
-		printArray(right);
+		// std::cout << "divided array into: \n";
+		// printArray(left);
+		// printArray(right);
 		//recursively divide up the left and right arrays
 		mergeSort(left);
 		mergeSort(right);
@@ -231,7 +233,67 @@ public:
 		for (typename T::iterator it = array.begin(); it != array.end(); it++)
 			std::cout << "(" << it->first << "," << it->second << ") ";
 		std::cout << "\n";
-	}
+	};
+
+	template<typename Iterator>
+	// static typename T::iterator ftLowerBound(typename T::iterator beginIT, typename T::iterator endIT, int numToFind)
+	static Iterator ftLowerBound(Iterator beginIT, Iterator endIT, int numToFind)
+	{
+		// if there is only one element, return iterator
+		if (beginIT == endIT)
+			return (beginIT);
+
+		//size of std::distance can be negative in bidirectional or ranandom access containers
+		//find size of array between two inputed iterators and middle index
+		int arraySize = std::distance(beginIT, endIT) + 1; 
+		int mid = arraySize / 2;
+
+		//if array has 2 elements, check number against both elements
+		if (arraySize == 2)
+		{
+			if (*beginIT >= numToFind)
+				return beginIT;
+			else
+				return endIT;
+		}
+		//save beginIT in oldBeginIT and convert begin to mid(move beginIT to middle)
+		//if even sized array, move beginIT to one less than mid (end of left side);
+		//if num == mid, return mid
+		//if num < mid, search begin to mid (DON'T FORGET TO INCLUDE MID!) - 
+			//this is bc we want to return the first number that is bigger than number, so mid might still be this number
+		//if num > mid, search mid + 1 to end (DON'T NEED TO INCLUDE MID!)
+		// typename T::iterator oldBeginIT = beginIT;
+		Iterator oldBeginIT = beginIT;
+		if (arraySize % 2 == 1)
+		{
+			// std::cout << "odd array, mid is " << mid << "\n";
+			std::advance(beginIT, mid);
+		}
+		else
+		{
+			// std::cout << "even array, mid is " << mid << "\n";
+			std::advance(beginIT, mid - 1);
+		}
+		if (numToFind == *beginIT)
+			return beginIT;
+		if (numToFind < *beginIT)
+		{
+			// std::cout << "checking left side with distance of " << std::distance(oldBeginIT, beginIT) + 1 << "\n";
+			// std::cout << "oldBeginIT " << *oldBeginIT << "\n";
+			// std::cout << "beginIT " << *beginIT << "\n";
+			
+			// Iterator testIT = oldBeginIT;
+			// testIT++;
+			// std::cout << "testIT " << *testIT << "\n";
+
+			return ftLowerBound(oldBeginIT, beginIT, numToFind);
+		}
+		else
+		{
+			beginIT++;
+			return ftLowerBound(beginIT, endIT, numToFind);
+		}
+	};
 };
 
 /* NOTES:
