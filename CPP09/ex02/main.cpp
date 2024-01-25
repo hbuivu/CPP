@@ -7,7 +7,15 @@ int main(int argc, char **argv)
 		std::cerr << "Usage: ./PmergeMe <array of positive ints>\n";
 		return (1);
 	}
-	PmergeMe::populateContainers(argv);
+	try
+	{
+		PmergeMe::populateContainers(argv);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
 	PmergeMe::printList("Before");
 	// clock_t	dStart = clock();
 	PmergeMe::sortDeque();

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PMERGEME_HPP
+# define PMERGEME_HPP
 
 # include <deque>
 # include <vector>
@@ -23,6 +24,15 @@ private:
 	PmergeMe &	operator=(PmergeMe const & src);
 
 	static int Jacobsthal(int s);
+
+	template<typename T>
+	static T	genJacobIndex(size_t size);
+	template<typename T>
+	static void	merge(T & left, T & right, T & array);
+	template<typename T>
+	static void	mergeSort(T & array);
+	template<typename Iterator>
+	static Iterator ftLowerBound(Iterator beginIT, Iterator endIT, int numToFind);
 public:
 	static void	sortDeque();
 	static void	sortVector();
@@ -33,268 +43,10 @@ public:
 	class InvalidInputException : public std::exception{
 		const char *what() const throw(){return "Invalid input detected";};
 	};
-	
-	template<typename T>
-	static T	genJacobIndex(size_t size)
-	{
-		T container;
-		int	prevJacobNum = 1;
-		int	jacobNum = 3;
-		int i = 3;
-		while (size > static_cast<size_t>(jacobNum))
-		{
-			jacobNum = Jacobsthal(i);
-			container.push_back(jacobNum);
-			for (int index = jacobNum - 1; index > prevJacobNum; index--)
-				container.push_back(index);
-			i++;
-			prevJacobNum = jacobNum;
-		}
-		return (container);
-	};
-
-	//merging and sorting left and right arrays back into bigger array
-	//REMEMBER TO PASS BY REF, NOT BY COPY. otherwise the sorting won't translate 
-	// template<typename T>
-	// static void	merge(T & left, T & right, T & array)
-	// {
-	// 	// std::cout << "printing left: \n";
-	// 	// printArray(left);
-	// 	// std::cout << "printing right: \n";
-	// 	// printArray(right);
-
-	// 	//find sizes of left and right array
-	// 	size_t lsize = left.size();
-	// 	size_t rsize = right.size();
-
-	// 	//set index counters for left, right, and array
-	// 	size_t l = 0;
-	// 	size_t r = 0;
-	// 	size_t a = 0;
-
-	// 	//sort numbers from left and right into array, comparing the lowest indexed elements from left and right
-	// 	while (l < lsize && r < rsize)
-	// 	{
-	// 		if (left[l].first <= right[r].first)
-	// 		{
-	// 			array[a] = left[l];
-	// 			l++;
-	// 		}
-	// 		else
-	// 		{
-	// 			array[a] = right[r];
-	// 			r++;
-	// 		}
-	// 		a++;
-	// 	}
-
-	// 	//if there are any leftovers from the left or right array, add to array as well
-	// 	while (l < lsize)
-	// 	{
-	// 		array[a] = left[l];
-	// 		l++;
-	// 		a++;
-	// 	}
-	// 	while (r < rsize)
-	// 	{
-	// 		array[a] = right[r];
-	// 		r++;
-	// 		a++;
-	// 	}
-
-	// 	// std::cout << "sorted array: \n";
-	// 	// printArray(array);
-	// };
-
-	// template<typename T>
-	// static void	mergeSort(T & array)
-	// {
-	// 	// std::cout << "starting out with this array: \n";
-	// 	// printArray(array);
-
-	// 	//find size of array
-	// 	size_t arraySize = array.size();
-
-	// 	//base case
-	// 	if (array.size() < 2)
-	// 		return ;
-
-	// 	//get the middle index of array. Don't forget that if array has odd number elements, left side is smaller
-	// 	size_t mid = arraySize / 2;
-	// 	// std::cout << "mid is" << mid << "\n";
-
-	// 	//divide up array into left and right array
-	// 	T left; //we can technically do left[i] = array[i], but then we would need to initialize left and right deque with a size
-	// 	T right;
-	// 	size_t i = 0;
-	// 	for (; i < mid; i++)
-	// 		left.push_back(array[i]);
-	// 	for (; i < arraySize; i++)
-	// 		right.push_back(array[i]);
-	// 	// std::cout << "sending left and right arrays in: \n";
-		
-	// 	// printArray(left);
-	// 	// printArray(right);
-
-	// 	//recursively divide up the left and right arrays
-	// 	mergeSort(left);
-	// 	mergeSort(right);
-	// 	merge(left, right, array);
-	// };
-
-	//iterator version to work with lists as well
-	template<typename T>
-	static void	merge(T & left, T & right, T & array)
-	{
-		typename T::iterator leftIT = left.begin();
-		typename T::iterator rightIT = right.begin();
-		typename T::iterator arrayIT = array.begin();
-		
-
-		while (leftIT != left.end() && rightIT != right.end())
-		{
-			if (*leftIT <= *rightIT)
-			{
-				//DON"T USE INSERT - we need to replace the element
-				*arrayIT = *leftIT;
-				leftIT++;
-			}
-			else
-			{
-				// array.insert(arrayIT, *rightIT);
-				*arrayIT = *rightIT;
-				rightIT++;
-			}
-			arrayIT++;
-		}
-
-		//if there are any leftovers from the left or right array, add to array as well
-		while (leftIT != left.end())
-		{
-			*arrayIT = *leftIT;
-			leftIT++;
-			arrayIT++;
-		}
-		while (rightIT != right.end())
-		{
-			*arrayIT = *rightIT;
-			rightIT++;
-			arrayIT++;
-		}	
-		// std::cout << "merging left and right arrays:\n";
-		// printArray(left);
-		// printArray(right);
-		// std::cout << "merged array: \n";
-		// printArray(array);
-	};
-
-	template<typename T>
-	static void	mergeSort(T & array)
-	{
-		// std::cout << "starting out with this array: \n";
-		// printArray(array);
-
-		size_t arraySize = array.size();
-
-		if (array.size() < 2)
-			return ;
-
-		size_t mid = arraySize / 2;
-
-		typename T::iterator arrayIT = array.begin();
-		//left.push_back(*(arrayIT + i)); ->iterators don't support direct addition;
-		//divide up array into left and right array
-		T left; //we can technically do left[i] = array[i], but then we would need to initialize left and right deque with a size
-		T right;
-		size_t i = 0;
-		for (; i < mid; i++)
-		{
-			left.push_back(*arrayIT);
-			arrayIT++;
-		}
-		for (; i < arraySize; i++)
-		{
-			right.push_back(*arrayIT);
-			arrayIT++;
-		}
-
-		// std::cout << "divided array into: \n";
-		// printArray(left);
-		// printArray(right);
-		//recursively divide up the left and right arrays
-		mergeSort(left);
-		mergeSort(right);
-		merge(left, right, array);
-	};
-
-	template<typename T>
-	static void	printArray(T array)
-	{
-		for (typename T::iterator it = array.begin(); it != array.end(); it++)
-			std::cout << "(" << it->first << "," << it->second << ") ";
-		std::cout << "\n";
-	};
-
-	template<typename Iterator>
-	// static typename T::iterator ftLowerBound(typename T::iterator beginIT, typename T::iterator endIT, int numToFind)
-	static Iterator ftLowerBound(Iterator beginIT, Iterator endIT, int numToFind)
-	{
-		// if there is only one element, return iterator
-		if (beginIT == endIT)
-			return (beginIT);
-
-		//size of std::distance can be negative in bidirectional or ranandom access containers
-		//find size of array between two inputed iterators and middle index
-		int arraySize = std::distance(beginIT, endIT) + 1; 
-		int mid = arraySize / 2;
-
-		//if array has 2 elements, check number against both elements
-		if (arraySize == 2)
-		{
-			if (*beginIT >= numToFind)
-				return beginIT;
-			else
-				return endIT;
-		}
-		//save beginIT in oldBeginIT and convert begin to mid(move beginIT to middle)
-		//if even sized array, move beginIT to one less than mid (end of left side);
-		//if num == mid, return mid
-		//if num < mid, search begin to mid (DON'T FORGET TO INCLUDE MID!) - 
-			//this is bc we want to return the first number that is bigger than number, so mid might still be this number
-		//if num > mid, search mid + 1 to end (DON'T NEED TO INCLUDE MID!)
-		// typename T::iterator oldBeginIT = beginIT;
-		Iterator oldBeginIT = beginIT;
-		if (arraySize % 2 == 1)
-		{
-			// std::cout << "odd array, mid is " << mid << "\n";
-			std::advance(beginIT, mid);
-		}
-		else
-		{
-			// std::cout << "even array, mid is " << mid << "\n";
-			std::advance(beginIT, mid - 1);
-		}
-		if (numToFind == *beginIT)
-			return beginIT;
-		if (numToFind < *beginIT)
-		{
-			// std::cout << "checking left side with distance of " << std::distance(oldBeginIT, beginIT) + 1 << "\n";
-			// std::cout << "oldBeginIT " << *oldBeginIT << "\n";
-			// std::cout << "beginIT " << *beginIT << "\n";
-			
-			// Iterator testIT = oldBeginIT;
-			// testIT++;
-			// std::cout << "testIT " << *testIT << "\n";
-
-			return ftLowerBound(oldBeginIT, beginIT, numToFind);
-		}
-		else
-		{
-			beginIT++;
-			return ftLowerBound(beginIT, endIT, numToFind);
-		}
-	};
 };
+
+#include "PmergeMe.tpp"
+#endif
 
 /* NOTES:
 -create two different containers - list and probably vector/deque

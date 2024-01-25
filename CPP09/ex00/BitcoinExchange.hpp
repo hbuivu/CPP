@@ -1,8 +1,6 @@
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
-//check if pragma once works in valgrind
-
 # include <iostream>
 # include <string>
 # include <map>
@@ -10,6 +8,8 @@
 # include <sstream>
 # include <fstream>
 # include <climits>
+# include <cstring>
+# include <iomanip>
 
 # define GREY	"\x1B[30m"
 # define RED	"\x1B[31m"
@@ -20,28 +20,29 @@
 # define CYAN	"\x1B[36m"
 # define RESET	"\x1B[0m"
 
-//don't forget to const cast std::tm!
+//don't forget to const cast std::tm and don't try to define this in header file!
 //including a function definition in a .h file means that it will appear in every translation unit, violating the one definition rule
 bool operator < (const std::tm& t1, const std::tm& t2);
 
-//third parameter in <> is the type of function. we will initialize with actual function in cpp file
+//third parameter in std::map<> is the type of function. we will initialize with actual function in cpp file
 class BitcoinExchange
 {
 private:
 	static std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> _db;
-	static std::tm		_date;
-	static double		_value;
-	static std::string	_line;
+	static std::tm _date;
+	static double _value;
+	static std::string _line;
 	
 	BitcoinExchange();
 	BitcoinExchange(const BitcoinExchange& src);
 	~BitcoinExchange();
 	BitcoinExchange&	operator=(const BitcoinExchange& src);
 public:
-	static void			parseDatabase();
-	static void			parseInput(std::string Input);
-	static void			printData() const;
-	static void 		printClosestDateData() const;
+	static void	parseDatabase();
+	static void	parseInput(std::string Input);
+	static void	printData();
+	static void printClosestDateData();
+	static bool	checkEmptyContainer();
 
 	class InvalidFileException : public std::exception{
 	public:
@@ -66,6 +67,10 @@ public:
 	class DateRangeException : public std::exception{
 	public:
 		const char *what() const throw(){return "Error: date out of range";}
+	};
+	class NoDataException : public std::exception{
+	public:
+		const char *what() const throw(){return "No data available";}
 	};
 };
 

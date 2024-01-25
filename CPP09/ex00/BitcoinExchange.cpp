@@ -1,12 +1,10 @@
 #include "BitcoinExchange.hpp"
-#include <cstring>
-#include <iomanip>
 
 //initialize with overloaded operator<
 std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> BitcoinExchange::_db(&operator<);
-std::tm		BitcoinExchange::_date;
-double		BitcoinExchange::_value = 0;
-std::string	BitcoinExchange::_line = "";
+std::tm	BitcoinExchange::_date;
+double BitcoinExchange::_value = 0;
+std::string BitcoinExchange::_line = "";
 
 bool operator < (const std::tm& t1, const std::tm& t2)
 {
@@ -37,16 +35,15 @@ void	BitcoinExchange::parseDatabase()
 				throw NegativeNumberException();
 			else if (exchangeRate > INT_MAX)
 				throw LargeNumberException();
-			//adjust year and month to match data requirements in struct
-			_date.tm_year -= 1900; //year range starts from 1900
-			_date.tm_mon -= 1; //month range 0-11
+			_date.tm_year -= 1900;
+			_date.tm_mon -= 1;
 			if (std::mktime(&_date) == -1)
 				throw BadInputException();
 			if (_db.find(_date) != _db.end()) //if a copy is found already
 				throw DuplicateException();
 			_db[_date] = exchangeRate;
 		}
-		catch(BadInputException &e)
+		catch(BadInputException &e) // special catch for BadInputException
 		{
 			std::cerr << e.what() << _line << "\n";
 		}
@@ -57,10 +54,17 @@ void	BitcoinExchange::parseDatabase()
 	}
 }
 
-//have a function that checks if container is empty. if it is, return ;
+bool	BitcoinExchange::checkEmptyContainer()
+{
+	if (_db.empty())
+		return true;
+	return false;
+}
 
 void	BitcoinExchange::parseInput(std::string Input)
 {
+	if (checkEmptyContainer())
+		throw NoDataException();
 	std::ifstream infile(Input.c_str());
 	if (!infile.is_open())
 		throw InvalidFileException();
@@ -77,7 +81,6 @@ void	BitcoinExchange::parseInput(std::string Input)
 			char dash1, dash2, pipe; //istringstream ignores leading white spaces
 			ss	>> _date.tm_year >> dash1 >> _date.tm_mon >> dash2
 				>> _date.tm_mday >> pipe >> _value;
-			
 			//ss.fail() - if extraction fails
 			//ss.get() - if there is still more in the string
 			if (ss.fail() || ss.get() != EOF ||
@@ -112,20 +115,19 @@ void	BitcoinExchange::parseInput(std::string Input)
 		{
 			std::cerr << e.what() << '\n';
 		}	
-	
 	}
 }
 
-void	BitcoinExchange::printData() const;
+void	BitcoinExchange::printData()
 {	
 	double	finalValue = _value * _db[_date]; //we do this bc we modify _date to get the correctly printed year and month
-	std::cout	<< (_date.tm_year + 1900) << "-" 
+	std::cout	<< BLUE << (_date.tm_year + 1900) << "-" 
 				<< std::setw(2) << std::setfill('0') << (_date.tm_mon + 1) << "-" 
 				<< std::setw(2) << std::setfill('0') << _date.tm_mday << " => " 
 				<< _value << " = " << finalValue << "\n";
 }
 
-void	BitcoinExchange::printClosestDateData() const;
+void	BitcoinExchange::printClosestDateData()
 {
 	std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)>::iterator it = _db.begin();
 	while (it->first < _date)
@@ -152,6 +154,8 @@ std::tm does not have a builtin operator<
 
 if (_date < _db.begin()->first || _date > std::prev(_db.rbegin()->first))
 getting an error bc we only defined < and not > 
+
+static members cannot be const bc const is related to this and this does not exist in const
 
 */
 
