@@ -1,8 +1,7 @@
 #include "PmergeMe.hpp"
-#include "PmergeMe.tpp"
 
-std::deque<int> PmergeMe::_deck;
 std::vector<int> PmergeMe::_vect;
+std::vector<int> PmergeMe::_bvect;
 std::list<int> PmergeMe::_list;
 
 PmergeMe::PmergeMe()
@@ -24,80 +23,6 @@ PmergeMe&	PmergeMe::operator=(const PmergeMe& src)
 	return *this;
 }
 
-void	PmergeMe::populateContainers(char **argv)
-{
-	for (int i = 1; argv[i]; i++)
-	{
-		std::istringstream ss(argv[i]);
-		int num;
-		ss >> num;
-		if (ss.fail() || ss.get() != EOF || num < 0)
-			throw InvalidInputException();
-		_deck.push_back(num);
-		_vect.push_back(num);
-		_list.push_back(num);
-	}
-}
-
-void	PmergeMe::printList(std::string const & str)
-{
-	if (str == "Before")
-		std::cout << "Before: ";
-	else if (str == "After")
-		std::cout << "After: ";
-	for (std::deque<int>::iterator it = _deck.begin(); it != _deck.end(); it++)
-		std::cout << *it << " ";
-	std::cout << "\n";
-}
-
-void	PmergeMe::sortDeque()
-{
-	if (_deck.size() == 1)
-		return ;
-
-	int straggler = -1;
-	std::deque<std::pair<int, int> > pairs;
-	std::deque<int> mainChain;
-	std::deque<int> pend;
-	
-	if (_deck.size() % 2 == 1)
-	{
-		straggler = _deck.back();
-		_deck.pop_back();
-	}
-	for (size_t i = 0; i < _deck.size(); i+= 2)
-	{
-		std::pair<int, int> p = std::make_pair(_deck[i], _deck[i + 1]);
-		if (p.first < p.second)
-			std::swap(p.first, p.second);
-		pairs.push_back(p);
-	}
-	mergeSort<std::deque<std::pair<int, int> > >(pairs);
-	for (size_t i = 0; i < pairs.size(); i++)
-	{
-		mainChain.push_back(pairs[i].first);
-		pend.push_back(pairs[i].second);
-	}
-	
-	std::deque<int> jacob = genJacobIndex<std::deque<int> >(pend.size());
-	
-	mainChain.push_front(pend.front());
-	for (std::deque<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
-	{
-		if (static_cast<size_t>(*it - 1) < pend.size())
-		{
-			std::deque<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), pend[*it - 1]);
-			mainChain.insert(insertPos, pend[*it - 1]);
-		}
-	}	
-	if (straggler != -1)
-	{
-		std::deque<int>::iterator insertPos = ftLowerBound(mainChain.begin(), mainChain.end(), straggler);
-		mainChain.insert(insertPos, straggler);
-	}
-	_deck = mainChain;
-}
-
 int PmergeMe::Jacobsthal(int n)
 {
     if (n == 0)
@@ -107,8 +32,186 @@ int PmergeMe::Jacobsthal(int n)
     return Jacobsthal(n - 1) + 2 * Jacobsthal(n - 2);
 }
 
-void	PmergeMe::sortVector()
+void	PmergeMe::vMerge(std::vector<std::pair<int, int> > & left, std::vector<std::pair<int, int> > & right, std::vector<std::pair<int, int> > & array)
 {
+	size_t lsize = left.size();
+	size_t rsize = right.size();
+	size_t l = 0;
+	size_t r = 0;
+	size_t a = 0;
+
+	while (l < lsize && r < rsize)
+	{
+		if (left[l].first <= right[r].first)
+		{
+			array[a] = left[l];
+			l++;
+		}
+		else
+		{
+			array[a] = right[r];
+			r++;
+		}
+		a++;
+	}
+	while (l < lsize)
+	{
+		array[a] = left[l];
+		l++;
+		a++;
+	}
+	while (r < rsize)
+	{
+		array[a] = right[r];
+		r++;
+		a++;
+	}
+}
+
+void	PmergeMe::vMergeSort(std::vector<std::pair<int, int> > & array)
+{
+	size_t arraySize = array.size();
+	if (array.size() < 2)
+		return ;
+	size_t mid = arraySize / 2;
+	std::vector<std::pair<int, int> > left; 
+	std::vector<std::pair<int, int> > right;
+	size_t i = 0;
+	for (; i < mid; i++)
+		left.push_back(array[i]);
+	for (; i < arraySize; i++)
+		right.push_back(array[i]);
+	vMergeSort(left);
+	vMergeSort(right);
+	vMerge(left, right, array);
+}
+
+void	PmergeMe::lMerge(std::list<std::pair<int, int> > & left, std::list<std::pair<int, int> > & right, std::list<std::pair<int, int> > & array)
+{
+	std::list<std::pair<int, int> >::iterator leftIT = left.begin();
+	std::list<std::pair<int, int> >::iterator rightIT = right.begin();
+	std::list<std::pair<int, int> >::iterator arrayIT = array.begin();
+	
+	while (leftIT != left.end() && rightIT != right.end())
+	{
+		if (*leftIT <= *rightIT)
+		{
+			*arrayIT = *leftIT;
+			leftIT++;
+		}
+		else
+		{
+			*arrayIT = *rightIT;
+			rightIT++;
+		}
+		arrayIT++;
+	}
+	while (leftIT != left.end())
+	{
+		*arrayIT = *leftIT;
+		leftIT++;
+		arrayIT++;
+	}
+	while (rightIT != right.end())
+	{
+		*arrayIT = *rightIT;
+		rightIT++;
+		arrayIT++;
+	}	
+}
+
+void	PmergeMe::lMergeSort(std::list<std::pair<int, int> > & array)
+{
+	size_t arraySize = array.size();
+	if (array.size() < 2)
+		return ;
+	size_t mid = arraySize / 2;
+	std::list<std::pair<int, int> >::iterator arrayIT = array.begin();
+	std::list<std::pair<int, int> > left;
+	std::list<std::pair<int, int> > right;
+	size_t i = 0;
+	for (; i < mid; i++)
+	{
+		left.push_back(*arrayIT);
+		arrayIT++;
+	}
+	for (; i < arraySize; i++)
+	{
+		right.push_back(*arrayIT);
+		arrayIT++;
+	}
+	// std::cout << "left: ";
+	// for (std::list<std::pair<int, int> >::iterator it = left.begin(); it != left.end(); it++)
+	// 	std::cout << "(" << it->first << "," << it->second << ") ";
+	// std::cout << "\n";
+	// std::cout << "right: ";
+	// for (std::list<std::pair<int, int> >::iterator it = right.begin(); it != right.end(); it++)
+	// 	std::cout << "(" << it->first << "," << it->second << ") ";
+	// std::cout << "\n";
+	lMergeSort(left);
+	lMergeSort(right);
+	lMerge(left, right, array);
+}
+
+void	PmergeMe::populateVect(char **argv)
+{
+	for (int i = 1; argv[i]; i++)
+	{
+		std::istringstream ss(argv[i]);
+		int num;
+		ss >> num;
+		if (ss.fail() || ss.get() != EOF || num < 0)
+			throw InvalidInputException();
+		_vect.push_back(num);
+	}
+}
+
+void	PmergeMe::populateList(char **argv)
+{
+	for (int i = 1; argv[i]; i++)
+	{
+		std::istringstream ss(argv[i]);
+		int num;
+		ss >> num;
+		if (ss.fail() || ss.get() != EOF || num < 0)
+			throw InvalidInputException();
+		_list.push_back(num);
+	}
+}
+void	PmergeMe::printList(std::string const & str)
+{
+	if (str == "Before")
+	{
+		std::cout << "Before: ";
+		for (std::vector<int>::iterator it = _bvect.begin(); it != _bvect.end(); it++)
+			std::cout << *it << " ";
+	}
+	else if (str == "After")
+	{
+		std::cout << "After:\n";
+		std::cout << "Vector: ";
+		for (std::vector<int>::iterator it = _vect.begin(); it != _vect.end(); it++)
+			std::cout << *it << " ";
+		std::cout << "\n";
+		std::cout << "List:   ";
+		for (std::list<int>::iterator it = _list.begin(); it != _list.end(); it++)
+			std::cout << *it << " ";
+	}
+	std::cout << "\n";
+}
+
+void	PmergeMe::sortVector(char **argv)
+{
+	try
+	{
+		populateVect(argv);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	_bvect = _vect;
+	
 	if (_vect.size() == 1)
 		return ;
 	
@@ -129,14 +232,17 @@ void	PmergeMe::sortVector()
 			std::swap(p.first, p.second);
 		pairs.push_back(p);
 	}
-	mergeSort<std::vector<std::pair<int, int> > >(pairs);
+	vMergeSort(pairs);
 	for (size_t i = 0; i < pairs.size(); i++)
 	{
 		mainChain.push_back(pairs[i].first);
 		pend.push_back(pairs[i].second);
 	}
-	
 	std::vector<int> jacob = genJacobIndex<std::vector<int> >(pend.size());
+	// std::cout << "jacob: \n";
+	// for (std::vector<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << "\n";
 	
 	mainChain.insert(mainChain.begin(), pend.front());
 	for (std::vector<int>::iterator it = jacob.begin(); it != jacob.end(); it++)
@@ -155,8 +261,16 @@ void	PmergeMe::sortVector()
 	_vect = mainChain;
 }
 
-void	PmergeMe::sortList()
+void	PmergeMe::sortList(char **argv)
 {
+	try
+	{
+		populateList(argv);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 	if (_list.size() == 1)
 		return ;
 	
@@ -170,14 +284,19 @@ void	PmergeMe::sortList()
 		straggler = _list.back();
 		_list.pop_back();
 	}
+
 	for (std::list<int>::iterator it = _list.begin(); it != _list.end(); it++)
 	{
-		std::pair<int, int> p = std::make_pair(*it, *(++it));
+		int firstVal = *it;
+		int secondVal = *(++it);
+		std::pair<int, int> p = std::make_pair(firstVal, secondVal);
 		if (p.first < p.second)
 			std::swap(p.first, p.second);
 		pairs.push_back(p);
 	}
-	mergeSort<std::list<std::pair<int, int> > >(pairs);
+
+	lMergeSort(pairs);
+
 	for (std::list<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); it++)
 	{
 		mainChain.push_back(it->first);
@@ -205,9 +324,17 @@ void	PmergeMe::sortList()
 	_list = mainChain;
 }
 
+size_t	PmergeMe::getSize()
+{
+	return _vect.size();
+}
+
 /* NOTES:
 std::pair is a type
 std::make_pair is a utility function that helps to make std::pair with type deduction
 ftLowerBound uses binary search and we could have used that to insert numbers into mainchain
 however the subject asked us to write our own algorithms sadly
+
+std::pair<int, int> p = std::make_pair(*it, *(++it)); //this will give undefined behavior. we are modifying it before it can be evaluated
+
 */

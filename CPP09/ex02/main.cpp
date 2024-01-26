@@ -7,34 +7,26 @@ int main(int argc, char **argv)
 		std::cerr << "Usage: ./PmergeMe <array of positive ints>\n";
 		return (1);
 	}
-	try
-	{
-		PmergeMe::populateContainers(argv);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
+
+	clock_t	vStart = clock();
+	PmergeMe::sortVector(argv);
+	clock_t	vEnd = clock();
+
+	clock_t	lStart = clock();
+	PmergeMe::sortList(argv);
+	clock_t	lEnd = clock();
 
 	PmergeMe::printList("Before");
-	// clock_t	dStart = clock();
-	PmergeMe::sortDeque();
-	// clock_t	dEnd = clock();
-
-	// clock_t	vStart = clock();
-	// PmergeMe::sortVector();
-	// clock_t	vEnd = clock();
-
-	// clock_t	lStart = clock();
-	// PmergeMe::sortList();
-	// clock_t	lEnd = clock();
-
-	// double dTime = static_cast<double>(dEnd - dStart) / CLOCKS_PER_SEC * 1e6;
-	// double vTime = static_cast<double>(vEnd - vStart) / CLOCKS_PER_SEC * 1e6;
-	// double lTime = static_cast<double>(lEnd - lStart) / CLOCKS_PER_SEC * 1e6;
-	// std::cout << "dTime is: " << dTime << "\n";
-	// std::cout << "vTime is: " << vTime << "\n";
-	// std::cout << "lTime is: " << lTime << "\n";
-
 	PmergeMe::printList("After");
+
+	double vTime = static_cast<double>(vEnd - vStart);
+	double lTime = static_cast<double>(lEnd - lStart);
+	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::vector: " << vTime << "us\n";
+	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::list: " << lTime << "us\n";
 }
+
+/* NOTES:
+clock returns the amount of time (clock ticks) spent in program
+CLOCKS_PER_SEC - there are 1,000,000 clock ticks per second
+us - microsecond = 1/millionth of a second
+ */

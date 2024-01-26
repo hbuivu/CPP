@@ -14,8 +14,8 @@
 class PmergeMe
 {
 private:
+	static std::deque<int>	_deck;
 	static std::vector<int>	_vect;
-	static std::vector<int>	_bvect;
 	static std::list<int>	_list;
 
 	PmergeMe();
@@ -23,80 +23,29 @@ private:
 	~PmergeMe();
 	PmergeMe &	operator=(PmergeMe const & src);
 
-	static int	Jacobsthal(int s);
-	static void	vMerge(std::vector<std::pair<int, int> > & left, std::vector<std::pair<int, int> > & right, std::vector<std::pair<int, int> > & array);
-	static void	vMergeSort(std::vector<std::pair<int, int> > & array);
-	static void	lMerge(std::list<std::pair<int, int> > & left, std::list<std::pair<int, int> > & right, std::list<std::pair<int, int> > & array);
-	static void	lMergeSort(std::list<std::pair<int, int> > & array);
-	static void	populateVect(char **argv);
-	static void	populateList(char **argv);
+	static int Jacobsthal(int s);
 
 	template<typename T>
-	static T	genJacobIndex(size_t size)
-	{
-		T container;
-		int prevJacobNum = 1;
-		int jacobNum = 3;
-		int i = 3;
-		
-		if (size == 2 || size == 3) //manually do this since we start jacobNUm at 3
-		{
-			container.push_back(3);
-			container.push_back(2);
-		}
-
-		while (size > static_cast<size_t>(jacobNum))
-		{
-			jacobNum = Jacobsthal(i);
-			container.push_back(jacobNum);
-			for (int index = jacobNum - 1; index > prevJacobNum; index--)
-				container.push_back(index);
-			i++;
-			prevJacobNum = jacobNum;
-		}
-		return (container);
-	};
-
+	static T	genJacobIndex(size_t size);
+	template<typename T>
+	static void	merge(T & left, T & right, T & array);
+	template<typename T>
+	static void	mergeSort(T & array);
 	template<typename Iterator>
-	static Iterator ftLowerBound(Iterator beginIT, Iterator endIT, int numToFind)
-	{
-		if (beginIT == endIT)
-			return (beginIT);
-		int arraySize = std::distance(beginIT, endIT) + 1; 
-		int mid = arraySize / 2;
-		if (arraySize == 2)
-		{
-			if (*beginIT >= numToFind)
-				return beginIT;
-			else
-				return endIT;
-		}
-		Iterator oldBeginIT = beginIT;
-		if (arraySize % 2 == 1)
-			std::advance(beginIT, mid);
-		else
-			std::advance(beginIT, mid - 1);
-		if (numToFind == *beginIT)
-			return beginIT;
-		if (numToFind < *beginIT)
-			return ftLowerBound(oldBeginIT, beginIT, numToFind);
-		else
-		{
-			beginIT++;
-			return ftLowerBound(beginIT, endIT, numToFind);
-		}
-	};
+	static Iterator ftLowerBound(Iterator beginIT, Iterator endIT, int numToFind);
 public:
-	static void		sortVector(char **argv);
-	static void		sortList(char **argv);
-	static void 	printList(std::string const & str);
-	static size_t	getSize();
+	static void	sortDeque();
+	static void	sortVector();
+	static void	sortList();
+	static void	populateContainers(char **argv);
+	static void printList(std::string const & str);
 
 	class InvalidInputException : public std::exception{
 		const char *what() const throw(){return "Invalid input detected";};
 	};
 };
 
+#include "PmergeMe.tpp"
 #endif
 
 /* NOTES:
