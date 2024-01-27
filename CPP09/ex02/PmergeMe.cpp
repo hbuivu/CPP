@@ -188,13 +188,8 @@ void	PmergeMe::printList(std::string const & str)
 	}
 	else if (str == "After")
 	{
-		std::cout << "After:\n";
-		std::cout << "Vector: ";
+		std::cout << "After:  ";
 		for (std::vector<int>::iterator it = _vect.begin(); it != _vect.end(); it++)
-			std::cout << *it << " ";
-		std::cout << "\n";
-		std::cout << "List:   ";
-		for (std::list<int>::iterator it = _list.begin(); it != _list.end(); it++)
 			std::cout << *it << " ";
 	}
 	std::cout << "\n";

@@ -19,10 +19,10 @@ int main(int argc, char **argv)
 	PmergeMe::printList("Before");
 	PmergeMe::printList("After");
 
-	double vTime = static_cast<double>(vEnd - vStart);
-	double lTime = static_cast<double>(lEnd - lStart);
-	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::vector: " << vTime << "us\n";
-	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::list: " << lTime << "us\n";
+	double vTime = static_cast<double>(vEnd - vStart) / CLOCKS_PER_SEC * 1000;
+	double lTime = static_cast<double>(lEnd - lStart) / CLOCKS_PER_SEC * 1000;
+	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::vector: " << vTime << "ms\n";
+	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::list: " << lTime << "ms\n";
 }
 
 /* NOTES:
