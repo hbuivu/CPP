@@ -10,15 +10,7 @@
 # include <climits>
 # include <cstring>
 # include <iomanip>
-
-# define GREY	"\x1B[30m"
-# define RED	"\x1B[31m"
-# define GREEN	"\x1B[32m"
-# define YELLOW	"\x1B[33m"
-# define BLUE	"\x1B[34m"
-# define PURPLE	"\x1B[35m"
-# define CYAN	"\x1B[36m"
-# define RESET	"\x1B[0m"
+# include <cctype>
 
 //don't forget to const cast std::tm and don't try to define this in header file!
 //including a function definition in a .h file means that it will appear in every translation unit, violating the one definition rule
@@ -32,17 +24,25 @@ private:
 	static std::tm _date;
 	static double _value;
 	static std::string _line;
+	static std::ifstream _dataFile;
+	static std::ifstream _inputFile;
 	
 	BitcoinExchange();
 	BitcoinExchange(const BitcoinExchange& src);
 	~BitcoinExchange();
 	BitcoinExchange&	operator=(const BitcoinExchange& src);
-public:
-	static void	parseDatabase();
-	static void	parseInput(std::string Input);
+
+	static void checkString(std::string option);
+	static void checkDate(std::string option);
 	static void	printData();
 	static void printClosestDateData();
-	static bool	checkEmptyContainer();
+public:
+	static void	openFiles(std::string Input);
+	static void	closeFiles();
+	static void	parseDatabase();
+	static void	parseInput();
+
+	static std::string getLine();
 
 	class InvalidFileException : public std::exception{
 	public:
@@ -60,10 +60,6 @@ public:
 	public:
 		const char *what() const throw(){return "Error: number too large";}
 	};
-	class DuplicateException : public std::exception{
-	public:
-		const char *what() const throw(){return "Error: duplicate date found";}
-	};
 	class DateRangeException : public std::exception{
 	public:
 		const char *what() const throw(){return "Error: date out of range";}
@@ -71,6 +67,10 @@ public:
 	class NoDataException : public std::exception{
 	public:
 		const char *what() const throw(){return "No data available";}
+	};
+	class DuplicateException : public std::exception{
+	public:
+		const char *what() const throw(){return "Error: duplicate date found";}
 	};
 };
 
@@ -101,5 +101,15 @@ class BadInputException : public std::exception{
 			return msg.c_str();
 		}
 	};
+
+DRAFTS
+# define GREY	"\x1B[30m"
+# define RED	"\x1B[31m"
+# define GREEN	"\x1B[32m"
+# define YELLOW	"\x1B[33m"
+# define BLUE	"\x1B[34m"
+# define PURPLE	"\x1B[35m"
+# define CYAN	"\x1B[36m"
+# define RESET	"\x1B[0m"
 
 */

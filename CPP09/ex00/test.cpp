@@ -21,25 +21,32 @@
 
 #include "test.hpp"
 
-std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> Test::_db(&operator<);
+// std::map<std::tm, double, bool(*)(const std::tm&, const std::tm&)> Test::_db(&operator<);
 
-void Test::fun()
-{
-	std::tm date;
-	date.tm_year = 2009 - 1900;
-	date.tm_mon = 10 - 1;
-	date.tm_mday = 1;
+// void Test::fun()
+// {
+// 	std::tm date;
+// 	date.tm_year = 2009 - 1900;
+// 	date.tm_mon = 10 - 1;
+// 	date.tm_mday = 1;
 
-	_db[date] = 1;
+// 	_db[date] = 1;
 
-	date.tm_year = 2010 - 1900;
-	date.tm_mon = 11 - 1;
-	date.tm_mday = 2;
+// 	date.tm_year = 2010 - 1900;
+// 	date.tm_mon = 11 - 1;
+// 	date.tm_mday = 2;
 
-	_db[date] = 1;
-}
+// 	_db[date] = 1;
+// }
 
 int main()
 {
-	Test::fun();
+	// Test::fun();
+	std::istringstream iss("00000000002");
+	int num;
+	iss >> std::dec >> num;
+	if (iss.fail())
+		std::cout << "failure\n";
+	else
+		std::cout << num << "\n";
 }

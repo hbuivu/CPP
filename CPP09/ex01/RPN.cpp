@@ -48,17 +48,17 @@ long double RPN::applyOperator(char sign)
 	long double num2 = _stack.top();
 	_stack.pop();
 	long double finalValue = 0.0;
-	if (sign == '+')
-		finalValue = num2 + num1;
-	else if (sign == '-')
-		finalValue = num2 - num1;
-	else if (sign == '*')
-		finalValue = num2 * num1;
-	else if (sign == '/')
+	switch(sign)
 	{
-		if (num1 == 0)
-			throw DivideByZeroException();
-		finalValue = num2 / num1;
+		case '+': finalValue = num2 + num1; break;
+		case '-': finalValue = num2 - num1; break;
+		case '*': finalValue = num2 * num1; break;
+		case '/': 
+			if (num1 == 0)
+				throw DivideByZeroException();
+			finalValue = num2 / num1;
+			break;
+		default: break;
 	}
 	if (finalValue > DBL_MAX || finalValue < -(DBL_MAX))
 		throw ReturnValueOverflowException();
