@@ -8,21 +8,30 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	clock_t	vStart = clock();
-	PmergeMe::sortVector(argv);
-	clock_t	vEnd = clock();
+	try
+	{
+		clock_t	vStart = clock();
+		PmergeMe::populateVect(argv);
+		PmergeMe::sortVector();
+		clock_t	vEnd = clock();
 
-	clock_t	lStart = clock();
-	PmergeMe::sortList(argv);
-	clock_t	lEnd = clock();
+		clock_t	lStart = clock();
+		PmergeMe::populateList(argv);
+		PmergeMe::sortList();
+		clock_t	lEnd = clock();
 
-	PmergeMe::printList("Before");
-	PmergeMe::printList("After");
+		PmergeMe::printList("Before");
+		PmergeMe::printList("After");
 
-	double vTime = static_cast<double>(vEnd - vStart) / CLOCKS_PER_SEC * 1000;
-	double lTime = static_cast<double>(lEnd - lStart) / CLOCKS_PER_SEC * 1000;
-	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::vector: " << vTime << "ms\n";
-	std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::list: " << lTime << "ms\n";
+		double vTime = static_cast<double>(vEnd - vStart) / CLOCKS_PER_SEC * 1000;
+		double lTime = static_cast<double>(lEnd - lStart) / CLOCKS_PER_SEC * 1000;
+		std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::vector: " << vTime << "ms\n";
+		std::cout << "time to process a range of " << PmergeMe::getSize() << " elements with std::list: " << lTime << "ms\n";
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 }
 
 /* NOTES:

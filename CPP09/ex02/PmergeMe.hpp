@@ -28,8 +28,6 @@ private:
 	static void	vMergeSort(std::vector<std::pair<int, int> > & array);
 	static void	lMerge(std::list<std::pair<int, int> > & left, std::list<std::pair<int, int> > & right, std::list<std::pair<int, int> > & array);
 	static void	lMergeSort(std::list<std::pair<int, int> > & array);
-	static void	populateVect(char **argv);
-	static void	populateList(char **argv);
 
 	template<typename T>
 	static T	genJacobIndex(size_t size)
@@ -87,8 +85,10 @@ private:
 		}
 	};
 public:
-	static void		sortVector(char **argv);
-	static void		sortList(char **argv);
+	static void		populateVect(char **argv);
+	static void		populateList(char **argv);
+	static void		sortVector();
+	static void		sortList();
 	static void 	printList(std::string const & str);
 	static size_t	getSize();
 

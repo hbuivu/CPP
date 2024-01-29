@@ -195,16 +195,8 @@ void	PmergeMe::printList(std::string const & str)
 	std::cout << "\n";
 }
 
-void	PmergeMe::sortVector(char **argv)
+void	PmergeMe::sortVector()
 {
-	try
-	{
-		populateVect(argv);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
 	_bvect = _vect;
 	
 	if (_vect.size() == 1)
@@ -256,16 +248,8 @@ void	PmergeMe::sortVector(char **argv)
 	_vect = mainChain;
 }
 
-void	PmergeMe::sortList(char **argv)
+void	PmergeMe::sortList()
 {
-	try
-	{
-		populateList(argv);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
 	if (_list.size() == 1)
 		return ;
 	
