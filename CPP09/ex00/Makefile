@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbui-vu <hbui-vu@student.42.fr>            +#+  +:+       +#+         #
+#    By: hbui-vu <hbui-vu@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 10:48:05 by hbui-vu           #+#    #+#              #
-#    Updated: 2024/01/23 18:07:21 by hbui-vu          ###   ########.fr        #
+#    Updated: 2024/01/30 09:48:02 by hbui-vu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = BitcoinExchange
+NAME = btc
 
 SRCS = main.cpp BitcoinExchange.cpp
 
