@@ -71,6 +71,13 @@ void	BitcoinExchange::openFiles(std::string Input)
 	_dataFile.open("data.csv"); 
 	if (!_dataFile.is_open())
 		throw InvalidFileException();
+	
+	//check if input file is a directory
+	struct stat fileStat;
+	if (stat(Input.c_str(), &fileStat) == -1)
+		throw InvalidFileException();
+	if (!S_ISDIR(fileStat.st_mode))
+		throw InvalidFileException();
 	_inputFile.open(Input.c_str());
 	if (!_inputFile.is_open())
 		throw InvalidFileException();

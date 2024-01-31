@@ -11,6 +11,7 @@
 # include <cstring>
 # include <iomanip>
 # include <cctype>
+# include <sys/stat.h>
 
 //don't forget to const cast std::tm and don't try to define this in header file!
 //including a function definition in a .h file means that it will appear in every translation unit, violating the one definition rule
