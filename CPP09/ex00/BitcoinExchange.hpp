@@ -47,7 +47,7 @@ public:
 
 	class InvalidFileException : public std::exception{
 	public:
-		const char *what() const throw(){return "Error: Could not open file";}
+		const char *what() const throw(){return "Error: Invalid file";}
 	};
 	class BadInputException : public std::exception{
 	public:
